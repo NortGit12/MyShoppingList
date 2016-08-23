@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1775EF1D6CC09700604DFA /* StoreCategoryModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */; };
 		1F85619D1D6BA27C009A6B7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */; };
 		1F8561A21D6BA27C009A6B7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F8561A01D6BA27C009A6B7A /* Main.storyboard */; };
 		1F8561A51D6BA27C009A6B7A /* MyShoppingApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561A31D6BA27C009A6B7A /* MyShoppingApp.xcdatamodeld */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreCategoryModelController.swift; sourceTree = "<group>"; };
 		1F8561991D6BA27C009A6B7A /* MyShoppingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyShoppingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F8561A11D6BA27C009A6B7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F1775F01D6CC09F00604DFA /* ModelController */ = {
+			isa = PBXGroup;
+			children = (
+				1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */,
+			);
+			name = ModelController;
+			sourceTree = "<group>";
+		};
 		1F8561901D6BA27C009A6B7A = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 			children = (
 				1F8561C81D6BB3F7009A6B7A /* Model */,
 				1F8561E01D6BB643009A6B7A /* OtherController */,
+				1F1775F01D6CC09F00604DFA /* ModelController */,
 				1F8561DF1D6BB633009A6B7A /* ViewController */,
 				1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */,
 				1F8561A61D6BA27C009A6B7A /* Assets.xcassets */,
@@ -197,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F1775EF1D6CC09700604DFA /* StoreCategoryModelController.swift in Sources */,
 				1F8561D61D6BB5B1009A6B7A /* Store.swift in Sources */,
 				1F8561DE1D6BB5C1009A6B7A /* CloudKitManagedObject.swift in Sources */,
 				1F8561B21D6BB149009A6B7A /* StoreCategoriesCollectionViewController.swift in Sources */,
@@ -364,6 +376,7 @@
 				1F8561B01D6BA27C009A6B7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

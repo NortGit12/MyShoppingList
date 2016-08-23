@@ -16,7 +16,6 @@ protocol CloudKitManagedObject {
     // MARK: - Stored Properties
     
     // In the Core Data SyncableObject to support syncing, so it's childen get it
-    var timestamp: NSDate { get set }
     var recordIDData: NSData? { get set }
     var recordName: String { get set }
     

@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CloudKit
 
-
+@objc
 class StoreCategory: SyncableObject, CloudKitManagedObject {
 
     //==================================================
@@ -22,19 +22,29 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
     static let imageKey = "image"
     static let storesKey = "stores"
     
-    let name: String
-    let image: NSData
-    var stores = [Store]()
-    
-    var recordName: String { return self.recordName }
+    var recordType: String { return StoreCategory.type }
     
     var cloudKitRecord: CKRecord? {
         
         let recordID = CKRecordID(recordName: self.recordName)
         let record = CKRecord(recordType: StoreCategory.type, recordID: recordID)
+        
         record[StoreCategory.nameKey] = self.name
         record[StoreCategory.imageKey] = self.image
-        record[StoreCategory.storesKey] = []
+        
+        var storesReferencesArray = [CKReference]()
+        guard let stores = self.stores else { return nil }
+        for store in stores {
+            
+            guard let recordIDData = store.recordIDData
+                , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
+                else { break }
+            
+            let storeReference = CKReference(recordID: recordID, action: .DeleteSelf)
+            storesReferencesArray.append(storeReference)
+        }
+        
+        record[StoreCategory.storesKey] = [storesReferencesArray]
         
         return record
     }
@@ -43,12 +53,45 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
     // MARK: - Initializer(s)
     //==================================================
     
-    convenience init(name: String, image: UIImage, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+    convenience init?(name: String, image: NSData, stores: [Store] = [Store](), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
-        guard let storeCategoryEntity = NSEntityDescription.entityForName(StoreCategory.type, inManagedObjectContext: context) else { return }
+        guard let storeCategoryEntity = NSEntityDescription.entityForName(StoreCategory.type, inManagedObjectContext: context) else {
+        
+            NSLog("Error: Could not initialize the \(StoreCategory.type)")
+            return nil
+        }
         
         self.init(entity: storeCategoryEntity, insertIntoManagedObjectContext: context)
         
+        self.recordName = nameForManagedObject()
+        self.name = name
+        self.image = image
+        
+        let storesMutableOrderedSet = NSMutableOrderedSet()
+        for store in stores {
+            
+            storesMutableOrderedSet.addObject(store)
+        }
+        
+        self.stores = storesMutableOrderedSet.copy() as? NSOrderedSet
+    }
+    
+    convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+        
+        guard let name = record[StoreCategory.nameKey] as? String
+            , image = record[StoreCategory.imageKey] as? NSData
+            else {
+        
+                NSLog("Error: Could not create the Store Category from the CloudKit record.")
+                return nil
+        }
+        
+        guard let storeCategoryEntity = NSEntityDescription.entityForName(StoreCategory.type, inManagedObjectContext: context) else { return nil }
+        
+        self.init(entity: storeCategoryEntity, insertIntoManagedObjectContext: context)
+        
+        self.recordName = record.recordID.recordName
+        self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         self.name = name
         self.image = image
     }

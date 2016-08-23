@@ -14,16 +14,16 @@
     <entity name="StoreCategory" representedClassName=".StoreCategory" parentEntity="SyncableObject" syncable="YES">
         <attribute name="image" attributeType="Binary" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="stores" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Store" inverseName="categories" inverseEntity="Store" syncable="YES"/>
+        <relationship name="stores" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Store" inverseName="categories" inverseEntity="Store" syncable="YES"/>
     </entity>
     <entity name="SyncableObject" representedClassName=".SyncableObject" syncable="YES">
         <attribute name="recordIDData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="recordName" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SyncableObject" positionX="-63" positionY="-18" width="128" height="73"/>
-        <element name="StoreCategory" positionX="-261" positionY="108" width="128" height="88"/>
-        <element name="Store" positionX="-65" positionY="108" width="128" height="88"/>
         <element name="Item" positionX="124" positionY="108" width="128" height="103"/>
+        <element name="Store" positionX="-65" positionY="108" width="128" height="88"/>
+        <element name="StoreCategory" positionX="-261" positionY="108" width="128" height="88"/>
+        <element name="SyncableObject" positionX="-63" positionY="-18" width="128" height="73"/>
     </elements>
 </model>
