@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Wd9-Ae-f6o">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Categories-->
+        <scene sceneID="mOe-fF-Slr">
+            <objects>
+                <viewController id="qvb-F9-ETm" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MFe-6b-hd6"/>
+                        <viewControllerLayoutGuide type="bottom" id="bgc-1H-HpX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ik7-0w-usC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TfZ-DN-7hA">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="My Shopping App" id="nYB-Dm-Jdn"/>
+                                </items>
+                            </navigationBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LLN-BI-USW">
+                                <rect key="frame" x="0.0" y="44" width="320" height="75"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="udn-ue-t66">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4dy-wu-Oup">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="TfZ-DN-7hA" firstAttribute="top" secondItem="Ik7-0w-usC" secondAttribute="top" id="9wh-g4-Oop"/>
+                            <constraint firstAttribute="trailing" secondItem="TfZ-DN-7hA" secondAttribute="trailing" id="WAI-AB-zVR"/>
+                            <constraint firstItem="TfZ-DN-7hA" firstAttribute="leading" secondItem="Ik7-0w-usC" secondAttribute="leading" id="dao-jy-xiV"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Categories" id="jGR-MG-hJM">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-15"/>
+                    </tabBarItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CwI-pC-SpR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1867" y="441"/>
+        </scene>
+        <!--All Stores-->
+        <scene sceneID="r5Q-Kg-z6O">
+            <objects>
+                <viewController id="jFg-xF-KfV" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KPV-gZ-uM5"/>
+                        <viewControllerLayoutGuide type="bottom" id="4yg-c7-SDJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sZG-cd-XKx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kL9-zN-OhR">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="My Shopping App" id="Rby-D2-Y6W"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="kL9-zN-OhR" firstAttribute="top" secondItem="sZG-cd-XKx" secondAttribute="top" id="LqS-8q-lBW"/>
+                            <constraint firstItem="kL9-zN-OhR" firstAttribute="leading" secondItem="sZG-cd-XKx" secondAttribute="leading" id="Wwa-RB-h1Y"/>
+                            <constraint firstAttribute="trailing" secondItem="kL9-zN-OhR" secondAttribute="trailing" id="xCR-y9-izn"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="All Stores" id="iRW-Oo-qwW">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-15"/>
+                    </tabBarItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aWG-9i-gKy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1867" y="1092"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="YII-Ci-VS6">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Wd9-Ae-f6o" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Tbn-DS-kfc">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="qvb-F9-ETm" kind="relationship" relationship="viewControllers" id="4MQ-4a-6m8"/>
+                        <segue destination="jFg-xF-KfV" kind="relationship" relationship="viewControllers" id="Apf-1e-FYw"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eib-Xe-FvG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1195" y="766"/>
+        </scene>
+    </scenes>
+</document>
