@@ -95,16 +95,42 @@ class PersistenceController {
                         // New CoreData StoreCategory
                         guard let _ = StoreCategory(record: record) else {
                             
-                            NSLog("Error: Could not create a new Store Category from the CloudKit record")
+                            NSLog("Error: Could not create a new Store Category from the CloudKit record.")
                             return
                         }
                         
                         return
                     }
                     
-                    // TODO: Implement for Stores and Items
+                case Store.type:
                     
-                    //                case Store.type:
+                    // Existing CoreData Store
+                    guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
+                        
+                        // New CoreData Store
+                        guard let _ = Store(record: record) else {
+                            
+                            NSLog("Error: Could not create a new Store from the CloudKit record.")
+                            return
+                        }
+                        
+                        return
+                    }
+                
+                case Item.type:
+                    
+                    // Existing CoreData Item
+                    guard let _ = ItemModelController.sharedController.getItemByIdName(record.recordID.recordName) else {
+                        
+                        // New CoreData Item
+                        guard let _ = Item(record: record) else {
+                            
+                            NSLog("Error: Could not create a new Item from the CloudKit record.")
+                            return
+                        }
+                        
+                        return
+                    }
                     
                 default: return
                 }
@@ -126,10 +152,10 @@ class PersistenceController {
     
     func pushChangesToCloudKit(completion: ((success: Bool, error: NSError?) -> Void)? = nil) {
         
-        let unsyncedManagedObjectsArray = self.unsyncedManagedObjects(StoreCategory.type)  // TODO: Add Stores and Items here
+        let unsyncedManagedObjectsArray = self.unsyncedManagedObjects(StoreCategory.type) + self.unsyncedManagedObjects(Store.type) + self.unsyncedManagedObjects(Item.type)
         let unsyncedRecordsArray = unsyncedManagedObjectsArray.flatMap({ $0.cloudKitRecord })
         
-        cloudKitManager.saveRecords(unsyncedRecordsArray, perRecordCompletion: { (record, error) in
+        cloudKitManager.saveRecords(unsyncedRecordsArray, perRecordCompletion: { (record, error) in     // per record block
             
             if error != nil {
                 print("Error: Could not push unsynced record to CloudKit: \(error)")
@@ -181,12 +207,16 @@ class PersistenceController {
                 
                 self.fetchNewRecords(StoreCategory.type) {
                     
-                    // TODO: Add Stores and Items here and nest the rest inside of that call
-                    
-                    self.isSyncing = false
-                    
-                    if let completion = completion {
-                        completion()
+                    self.fetchNewRecords(Store.type) {
+                        
+                        self.fetchNewRecords(Item.type) {
+                            
+                            self.isSyncing = false
+                            
+                            if let completion = completion {
+                                completion()
+                            }
+                        }
                     }
                 }
             })

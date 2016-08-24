@@ -6,6 +6,118 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--New Store View Controller-->
+        <scene sceneID="NN1-9k-GXJ">
+            <objects>
+                <viewController id="cjJ-nN-Fbh" customClass="NewStoreViewController" customModule="MyShoppingApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zNk-df-sjr"/>
+                        <viewControllerLayoutGuide type="bottom" id="jJI-5b-dj5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="84m-m5-nlX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yZU-zL-7YL">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Obx-8L-fsb"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Title" id="M9q-X4-oxL">
+                                        <barButtonItem key="leftBarButtonItem" title="&lt; Cancel" id="oVo-BH-ao0">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="cjJ-nN-Fbh" id="1aH-jC-PDd"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="vWZ-Y1-kLt"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A2o-G3-fVo">
+                                <rect key="frame" x="16" y="70" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="431-zx-d89">
+                                <rect key="frame" x="85" y="108" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="FxJ-cf-A5J"/>
+                                    <constraint firstAttribute="height" constant="150" id="joJ-7L-tnd"/>
+                                </constraints>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MpE-IC-1aW">
+                                <rect key="frame" x="16" y="289" width="288" height="214"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="newStoreCategoryCell" id="mqL-Sl-stF" customClass="NewStoreCategoryTableViewCell" customModule="MyShoppingApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="288" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mqL-Sl-stF" id="yKy-98-Ndy">
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store Category Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3E-L6-Xjl">
+                                                    <rect key="frame" x="26" y="11" width="200" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="h3E-L6-Xjl" secondAttribute="trailing" constant="54" id="LaC-1x-QMu"/>
+                                                <constraint firstItem="h3E-L6-Xjl" firstAttribute="leading" secondItem="yKy-98-Ndy" secondAttribute="leadingMargin" constant="18" id="rUs-hK-OC4"/>
+                                                <constraint firstItem="h3E-L6-Xjl" firstAttribute="centerY" secondItem="yKy-98-Ndy" secondAttribute="centerY" id="wEB-TT-cpl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="h3E-L6-Xjl" id="TcV-8V-8o3"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="cjJ-nN-Fbh" id="chy-xZ-m36"/>
+                                    <outlet property="delegate" destination="cjJ-nN-Fbh" id="2IP-7b-QY8"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store Categories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbf-xT-u6c">
+                                <rect key="frame" x="16" y="266" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="A2o-G3-fVo" firstAttribute="trailing" secondItem="84m-m5-nlX" secondAttribute="trailingMargin" id="BHc-u9-uQy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qbf-xT-u6c" secondAttribute="trailing" id="Ccb-zM-9kY"/>
+                            <constraint firstItem="431-zx-d89" firstAttribute="top" secondItem="A2o-G3-fVo" secondAttribute="bottom" constant="8" id="NS3-gu-XZf"/>
+                            <constraint firstItem="MpE-IC-1aW" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leadingMargin" id="Ob2-ic-SQo"/>
+                            <constraint firstItem="MpE-IC-1aW" firstAttribute="top" secondItem="qbf-xT-u6c" secondAttribute="bottom" constant="2" id="QW0-4V-mOV"/>
+                            <constraint firstItem="MpE-IC-1aW" firstAttribute="trailing" secondItem="84m-m5-nlX" secondAttribute="trailingMargin" id="U7M-tz-NjU"/>
+                            <constraint firstItem="jJI-5b-dj5" firstAttribute="top" secondItem="MpE-IC-1aW" secondAttribute="bottom" constant="16" id="WR5-Kd-KJm"/>
+                            <constraint firstItem="yZU-zL-7YL" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leading" id="Xh1-oy-lWw"/>
+                            <constraint firstAttribute="trailing" secondItem="yZU-zL-7YL" secondAttribute="trailing" id="Y8w-EJ-nFH"/>
+                            <constraint firstItem="yZU-zL-7YL" firstAttribute="top" secondItem="84m-m5-nlX" secondAttribute="top" id="j7b-VM-eHU"/>
+                            <constraint firstItem="A2o-G3-fVo" firstAttribute="top" secondItem="yZU-zL-7YL" secondAttribute="bottom" constant="20" id="n3V-2R-5yp"/>
+                            <constraint firstItem="qbf-xT-u6c" firstAttribute="top" secondItem="431-zx-d89" secondAttribute="bottom" constant="8" id="ooX-Dq-9W7"/>
+                            <constraint firstItem="431-zx-d89" firstAttribute="centerX" secondItem="84m-m5-nlX" secondAttribute="centerX" id="sV1-Cu-dYe"/>
+                            <constraint firstItem="qbf-xT-u6c" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leadingMargin" id="sYq-br-sgB"/>
+                            <constraint firstItem="A2o-G3-fVo" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leadingMargin" id="yka-LD-uh6"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="imageView" destination="431-zx-d89" id="2lD-Vw-brO"/>
+                        <outlet property="nameTextField" destination="A2o-G3-fVo" id="dLE-yA-gR6"/>
+                        <outlet property="storeCategoriesTableView" destination="MpE-IC-1aW" id="ap6-QR-2iQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1ga-hh-MYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2308" y="441"/>
+        </scene>
         <!--Categories-->
         <scene sceneID="mOe-fF-Slr">
             <objects>
@@ -19,16 +131,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TfZ-DN-7hA">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="lcO-Dj-BhS"/>
+                                    <constraint firstAttribute="height" constant="50" id="lcO-Dj-BhS"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="My Shopping App" id="nYB-Dm-Jdn"/>
+                                    <navigationItem title="My Shopping App" id="nYB-Dm-Jdn">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="oO0-rA-l3t">
+                                            <connections>
+                                                <segue destination="cjJ-nN-Fbh" kind="show" id="U29-3f-cxf"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LLN-BI-USW">
-                                <rect key="frame" x="0.0" y="44" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="50" width="320" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="EHO-Jd-zmY"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="QAs-Y1-Fft"/>

@@ -45,7 +45,7 @@ class Item: SyncableObject, CloudKitManagedObject {
     // MARK: - Initializers
     //==================================================
     
-    convenience init?(name: String, quantity: String, notes: String, store: Store, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+    convenience init?(name: String, quantity: String, notes: String? = nil, store: Store, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
         guard let itemEntity = NSEntityDescription.entityForName(Item.type, inManagedObjectContext: context) else { return nil }
         
@@ -53,7 +53,12 @@ class Item: SyncableObject, CloudKitManagedObject {
         
         self.name = name
         self.quantity = quantity
-        self.notes = notes
+        
+        if let notes = notes {
+            
+            self.notes = notes
+        }
+        
         self.store = store
     }
     

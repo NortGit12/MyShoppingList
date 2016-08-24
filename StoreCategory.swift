@@ -69,13 +69,13 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         self.name = name
         self.image = image
         
-        let storesMutableOrderedSet = NSMutableOrderedSet()
-        for store in stores {
-            
-            storesMutableOrderedSet.addObject(store)
-        }
-        
-        self.stores = storesMutableOrderedSet.copy() as? NSOrderedSet
+//        let storesMutableOrderedSet = NSMutableOrderedSet()
+//        for store in stores {
+//            
+//            storesMutableOrderedSet.addObject(store)
+//        }
+//        
+//        self.stores = storesMutableOrderedSet.copy() as? NSOrderedSet
     }
     
     convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
