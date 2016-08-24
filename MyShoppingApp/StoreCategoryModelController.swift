@@ -93,10 +93,10 @@ class StoreCategoryModelController {
     func createMockData() {
         
         createStoreCategory("Cars", image: UIImage(named: "cars")!)
-        createStoreCategory("Clothing", image: UIImage(named: "t-shirt")!)
+        createStoreCategory("Clothing", image: UIImage(named: "clothing")!)
         createStoreCategory("Department", image: UIImage(named: "department-store")!)
         createStoreCategory("Electronics", image: UIImage(named: "tv")!)
-        createStoreCategory("Grocery", image: UIImage(named: "grocery-bag")!)
+        createStoreCategory("Grocery", image: UIImage(named: "groceries")!)
         createStoreCategory("Health & Beauty", image: UIImage(named: "yoga")!)
         createStoreCategory("Home Improvement", image: UIImage(named: "home-improvement")!)
         createStoreCategory("Misc", image: UIImage(named: "misc")!)

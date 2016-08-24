@@ -17,10 +17,10 @@
 		1F34762E1D6E45EA00B74073 /* ItemModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F34762D1D6E45EA00B74073 /* ItemModelController.swift */; };
 		1F3476301D6E527D00B74073 /* NewStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */; };
 		1F3476341D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */; };
+		1F3476361D6E5BE900B74073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F3476351D6E5BE900B74073 /* Assets.xcassets */; };
 		1F85619D1D6BA27C009A6B7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */; };
 		1F8561A21D6BA27C009A6B7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F8561A01D6BA27C009A6B7A /* Main.storyboard */; };
 		1F8561A51D6BA27C009A6B7A /* MyShoppingApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561A31D6BA27C009A6B7A /* MyShoppingApp.xcdatamodeld */; };
-		1F8561A71D6BA27C009A6B7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F8561A61D6BA27C009A6B7A /* Assets.xcassets */; };
 		1F8561AA1D6BA27C009A6B7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F8561A81D6BA27C009A6B7A /* LaunchScreen.storyboard */; };
 		1F8561B71D6BB1B2009A6B7A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561B51D6BB1B2009A6B7A /* Model.xcdatamodeld */; };
 		1F8561CC1D6BB4FF009A6B7A /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561CB1D6BB4FF009A6B7A /* Stack.swift */; };
@@ -47,11 +47,11 @@
 		1F34762D1D6E45EA00B74073 /* ItemModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemModelController.swift; sourceTree = "<group>"; };
 		1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewStoreViewController.swift; sourceTree = "<group>"; };
 		1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewStoreCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		1F3476351D6E5BE900B74073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F8561991D6BA27C009A6B7A /* MyShoppingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyShoppingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F8561A11D6BA27C009A6B7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1F8561A41D6BA27C009A6B7A /* MyShoppingApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyShoppingApp.xcdatamodel; sourceTree = "<group>"; };
-		1F8561A61D6BA27C009A6B7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F8561A91D6BA27C009A6B7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F8561AB1D6BA27C009A6B7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F8561B61D6BB1B2009A6B7A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 				1F1775F01D6CC09F00604DFA /* ModelController */,
 				1F8561DF1D6BB633009A6B7A /* ViewController */,
 				1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */,
-				1F8561A61D6BA27C009A6B7A /* Assets.xcassets */,
+				1F3476351D6E5BE900B74073 /* Assets.xcassets */,
 				1F8561AB1D6BA27C009A6B7A /* Info.plist */,
 				1F8561A81D6BA27C009A6B7A /* LaunchScreen.storyboard */,
 				1F8561A01D6BA27C009A6B7A /* Main.storyboard */,
@@ -231,7 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8561AA1D6BA27C009A6B7A /* LaunchScreen.storyboard in Resources */,
-				1F8561A71D6BA27C009A6B7A /* Assets.xcassets in Resources */,
+				1F3476361D6E5BE900B74073 /* Assets.xcassets in Resources */,
 				1F8561A21D6BA27C009A6B7A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
