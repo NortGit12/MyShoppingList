@@ -78,7 +78,7 @@ class Item: SyncableObject, CloudKitManagedObject {
         self.notes = notes
         
         let storeIDName = storeReference.recordID.recordName
-        guard let store = StoreController.sharedController.getStoreByIdName(storeIDName) else { return nil }
+        guard let store = StoreModelController.sharedController.getStoreByIdName(storeIDName) else { return nil }
         
         self.store = store
     }

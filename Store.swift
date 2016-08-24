@@ -69,7 +69,7 @@ class Store: SyncableObject, CloudKitManagedObject {
     // MARK: - Initializers
     //==================================================
 
-    convenience init?(name: String, image: NSData, categories: [StoreCategory], items: [Item], context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+    convenience init?(name: String, image: NSData, categories: [StoreCategory], items: [Item] = [Item](), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
         guard let storeEntity = NSEntityDescription.entityForName(Store.type, inManagedObjectContext: context) else { return nil }
         
@@ -134,7 +134,7 @@ class Store: SyncableObject, CloudKitManagedObject {
             for itemReference in itemsReferencesArray {
                 
                 let itemIDName = itemReference.recordID.recordName
-                if let item = ItemController.sharedController.getItemByIdName(itemIDName) {
+                if let item = ItemModelController.sharedController.getItemByIdName(itemIDName) {
                     
                     itemsArray.append(item)
                 }
