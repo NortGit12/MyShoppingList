@@ -60,7 +60,7 @@ extension CloudKitManagedObject {
         return NSUUID().UUIDString
     }
     
-    func update(record: CKRecord) {
+    func updateRecordIDData(record: CKRecord) {
         
         self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         

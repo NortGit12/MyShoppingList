@@ -33,15 +33,17 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         record[StoreCategory.imageKey] = self.image
         
         var storesReferencesArray = [CKReference]()
-        guard let stores = self.stores else { return nil }
-        for store in stores {
+        if let stores = self.stores {
             
-            guard let recordIDData = store.recordIDData
-                , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
-                else { break }
-            
-            let storeReference = CKReference(recordID: recordID, action: .DeleteSelf)
-            storesReferencesArray.append(storeReference)
+            for store in stores {
+                
+                guard let recordIDData = store.recordIDData
+                    , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
+                    else { continue }
+                
+                let storeReference = CKReference(recordID: recordID, action: .DeleteSelf)
+                storesReferencesArray.append(storeReference)
+            }
         }
         
         record[StoreCategory.storesKey] = [storesReferencesArray]
@@ -53,7 +55,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
     // MARK: - Initializer(s)
     //==================================================
     
-    convenience init?(name: String, image: NSData, stores: [Store] = [Store](), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+    convenience init?(name: String, image: NSData, stores: [Store] = [Store](), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {      // stores: [Store] = [Store](),
         
         guard let storeCategoryEntity = NSEntityDescription.entityForName(StoreCategory.type, inManagedObjectContext: context) else {
         
@@ -94,5 +96,20 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         self.name = name
         self.image = image
+        
+//        var storesArray = [Store]()
+//        if let storesReferencesArray = record[StoreCategory.storesKey] as? [CKReference] {
+//            
+//            for storeReference in storesReferencesArray {
+//                
+//                let storeIDName = storeReference.recordID.recordName
+//                if let store = StoreController.sharedController.getStoreByIdName(storeIDName) {
+//                    
+//                    storesArray.append(store)
+//                }
+//            }
+//            
+//            self.stores = NSOrderedSet(array: storesArray)
+//        }
     }
 }
