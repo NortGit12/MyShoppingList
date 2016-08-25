@@ -16,8 +16,9 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var categoriesCollectionView: UICollectionView!
     @IBOutlet weak var categoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
-    @IBOutlet weak var selectedStoreCategoryLabel: UILabel!
     var selectedStoreCategory: StoreCategory?
+    @IBOutlet weak var storeCollectionView: UICollectionView!
+    @IBOutlet weak var storeCollectionViewFlowLayout: UICollectionViewFlowLayout!
     
     //==================================================
     // MARK: - General
@@ -28,6 +29,9 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         categoriesCollectionView.allowsMultipleSelection = false
         categoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
+        
+        storeCollectionView.allowsMultipleSelection = false
+        storeCollectionViewFlowLayout.scrollDirection = .Vertical
     }
     
     //==================================================
@@ -36,26 +40,65 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return StoreCategoryModelController.sharedController.getStoreCategories()?.count ?? 0
+        var numberOfItemsInSection = 0
+        
+        if collectionView == categoriesCollectionView {
+            
+            numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoreCategories()?.count ?? 0
+            
+        } else if collectionView == storeCollectionView {
+            
+            if let selectedStoreCategory = self.selectedStoreCategory {
+                
+                numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?.count ?? 0
+            }
+        }
+        
+        return numberOfItemsInSection
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCategoryCollectionViewCell", forIndexPath: indexPath) as? StoreCategoryCollectionViewCell
-            , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
-            else { return UICollectionViewCell() }
+        var returningCell = UICollectionViewCell()
         
-        cell.updateWithStoreCategory(storeCategory)
+        if collectionView == categoriesCollectionView {
+            
+            guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCategoryCollectionViewCell", forIndexPath: indexPath) as? StoreCategoryCollectionViewCell
+                , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
+                else { return UICollectionViewCell() }
+            
+            cell.updateWithStoreCategory(storeCategory)
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 2.0
+                cell.backgroundColor = UIColor.orangeColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.whiteColor()
+            }
+            
+            returningCell = cell
+            
+        } else if collectionView == storeCollectionView {
         
-        if cell.selected == true {
-            cell.layer.borderWidth = 2.0
-            cell.backgroundColor = UIColor.orangeColor()
-        } else {
-            cell.layer.borderWidth = 0.0
-            cell.backgroundColor = UIColor.whiteColor()
+            guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
+                , store = StoreModelController.sharedController.getStores()?[indexPath.row]
+                else { return UICollectionViewCell() }
+            
+            cell.updateWithStore(store)
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 2.0
+                cell.backgroundColor = UIColor.orangeColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.whiteColor()
+            }
+            
+            returningCell = cell
         }
         
-        return cell
+        return returningCell
     }
     
     //==================================================
@@ -64,35 +107,61 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell
-            , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
-            else { return }
-        
-        if cell.selected == true {
-            cell.layer.borderWidth = 2.0
-            cell.backgroundColor = UIColor.blueColor()
-        } else {
-            cell.layer.borderWidth = 0.0
-            cell.backgroundColor = UIColor.greenColor()
-        }
-        
-        self.selectedStoreCategory = storeCategory
-        
-        if let selectedStoreCategory = selectedStoreCategory {
-            selectedStoreCategoryLabel.text = "Selected Store Category = \(selectedStoreCategory.name)"
+        if collectionView == categoriesCollectionView {
+            
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell
+                else { return }
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 2.0
+                cell.backgroundColor = UIColor.blueColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.greenColor()
+            }
+            
+        } else if collectionView == storeCollectionView {
+            
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell
+                else { return }
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 2.0
+                cell.backgroundColor = UIColor.blueColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.greenColor()
+            }
+            
         }
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell else { return }
-        
-        if cell.selected == true {
-            cell.layer.borderWidth = 2.0
-            cell.backgroundColor = UIColor.purpleColor()
-        } else {
-            cell.layer.borderWidth = 0.0
-            cell.backgroundColor = UIColor.darkGrayColor()
+        if collectionView == categoriesCollectionView {
+            
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell else { return }
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 2.0
+                cell.backgroundColor = UIColor.purpleColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.darkGrayColor()
+            }
+            
+        } else if collectionView == storeCollectionView {
+            
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell else { return }
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 2.0
+                cell.backgroundColor = UIColor.purpleColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.darkGrayColor()
+            }
+            
         }
     }
     

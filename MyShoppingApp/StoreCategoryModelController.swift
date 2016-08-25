@@ -90,6 +90,26 @@ class StoreCategoryModelController {
         return (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory] ?? nil
     }
     
+    /*
+     func getThreadsForParticipant(participant: User) -> [Thread]? {
+     
+     guard let threadsSet = participant.threads
+     , threadsArray = threadsSet.array as? [Thread]
+     else { return nil }
+     
+     return threadsArray
+     }
+     */
+    
+    func getStoresForStoreCategory(storeCategory: StoreCategory) -> [Store]? {
+        
+        guard let storesSet = storeCategory.stores
+            , storesArray = storesSet.array as? [Store]
+            else { return nil }
+        
+        return storesArray
+    }
+    
     func createMockData() {
         
         createStoreCategory("Cars", image: UIImage(named: "cars")!)

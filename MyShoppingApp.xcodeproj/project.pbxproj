@@ -33,6 +33,7 @@
 		1F8561DB1D6BB5B1009A6B7A /* StoreCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561D31D6BB5B1009A6B7A /* StoreCategory+CoreDataProperties.swift */; };
 		1F8561DC1D6BB5B1009A6B7A /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561D41D6BB5B1009A6B7A /* StoreCategory.swift */; };
 		1F8561DE1D6BB5C1009A6B7A /* CloudKitManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561DD1D6BB5C1009A6B7A /* CloudKitManagedObject.swift */; };
+		1FEE27AB1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE27AA1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		1F8561D31D6BB5B1009A6B7A /* StoreCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoreCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1F8561D41D6BB5B1009A6B7A /* StoreCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreCategory.swift; sourceTree = "<group>"; };
 		1F8561DD1D6BB5C1009A6B7A /* CloudKitManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManagedObject.swift; sourceTree = "<group>"; };
+		1FEE27AA1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			children = (
 				1F1775F51D6CE38000604DFA /* CategoriesViewController.swift */,
 				1F1775F71D6CE91100604DFA /* StoreCategoryCollectionViewCell.swift */,
+				1FEE27AA1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift */,
 				1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */,
 				1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */,
 			);
@@ -245,6 +248,7 @@
 			files = (
 				1F1775EF1D6CC09700604DFA /* StoreCategoryModelController.swift in Sources */,
 				1F8561D61D6BB5B1009A6B7A /* Store.swift in Sources */,
+				1FEE27AB1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift in Sources */,
 				1F34762C1D6E425500B74073 /* StoreModelController.swift in Sources */,
 				1F1775F61D6CE38000604DFA /* CategoriesViewController.swift in Sources */,
 				1F8561DE1D6BB5C1009A6B7A /* CloudKitManagedObject.swift in Sources */,
