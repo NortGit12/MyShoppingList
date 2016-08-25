@@ -16,6 +16,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var categoriesCollectionView: UICollectionView!
     @IBOutlet weak var categoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var selectedStoreCategoryLabel: UILabel!
+    var selectedStoreCategory: StoreCategory?
     
     //==================================================
     // MARK: - General
@@ -62,22 +64,23 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell else {
-            
-            print("Exiting in the else of didSelectItemAtIndexPath")
-            return
-        }
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell
+            , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
+            else { return }
         
         if cell.selected == true {
             cell.layer.borderWidth = 2.0
             cell.backgroundColor = UIColor.blueColor()
         } else {
             cell.layer.borderWidth = 0.0
-            cell.backgroundColor = UIColor.whiteColor()
+            cell.backgroundColor = UIColor.greenColor()
         }
         
-//        cell.layer.borderWidth = 2.0
-//        cell.layer.backgroundColor = UIColor.blueColor().CGColor
+        self.selectedStoreCategory = storeCategory
+        
+        if let selectedStoreCategory = selectedStoreCategory {
+            selectedStoreCategoryLabel.text = "Selected Store Category = \(selectedStoreCategory.name)"
+        }
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
@@ -86,14 +89,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if cell.selected == true {
             cell.layer.borderWidth = 2.0
-            cell.backgroundColor = UIColor.blueColor()
+            cell.backgroundColor = UIColor.purpleColor()
         } else {
             cell.layer.borderWidth = 0.0
-            cell.backgroundColor = UIColor.whiteColor()
+            cell.backgroundColor = UIColor.darkGrayColor()
         }
-        
-        //        cell.layer.borderWidth = 2.0
-        //        cell.layer.backgroundColor = UIColor.blueColor().CGColor
     }
     
     //==================================================

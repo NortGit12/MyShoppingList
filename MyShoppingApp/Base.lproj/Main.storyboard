@@ -238,15 +238,24 @@
                                     <outlet property="delegate" destination="qvb-F9-ETm" id="X02-WI-0I1"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Selected Store Category" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unG-t1-FQo">
+                                <rect key="frame" x="20" y="273" width="280" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="TfZ-DN-7hA" firstAttribute="top" secondItem="Ik7-0w-usC" secondAttribute="top" id="MNT-s2-dTt"/>
+                            <constraint firstItem="unG-t1-FQo" firstAttribute="centerY" secondItem="Ik7-0w-usC" secondAttribute="centerY" id="RmL-8D-uUg"/>
                             <constraint firstItem="LLN-BI-USW" firstAttribute="top" secondItem="TfZ-DN-7hA" secondAttribute="bottom" id="awt-uO-UxX"/>
                             <constraint firstAttribute="trailing" secondItem="TfZ-DN-7hA" secondAttribute="trailing" id="but-kn-hVF"/>
                             <constraint firstItem="TfZ-DN-7hA" firstAttribute="leading" secondItem="Ik7-0w-usC" secondAttribute="leading" id="f3s-JP-SRq"/>
                             <constraint firstAttribute="trailing" secondItem="LLN-BI-USW" secondAttribute="trailing" id="gK9-U9-5a6"/>
                             <constraint firstItem="LLN-BI-USW" firstAttribute="leading" secondItem="Ik7-0w-usC" secondAttribute="leading" id="x2K-gt-hYU"/>
+                            <constraint firstItem="unG-t1-FQo" firstAttribute="centerX" secondItem="Ik7-0w-usC" secondAttribute="centerX" id="x2S-s7-8Un"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Categories" id="jGR-MG-hJM">
@@ -256,6 +265,7 @@
                     <connections>
                         <outlet property="categoriesCollectionView" destination="LLN-BI-USW" id="pVv-OS-C8a"/>
                         <outlet property="categoriesCollectionViewFlowLayout" destination="udn-ue-t66" id="HIa-PZ-qAJ"/>
+                        <outlet property="selectedStoreCategoryLabel" destination="unG-t1-FQo" id="Vgv-sF-96D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CwI-pC-SpR" userLabel="First Responder" sceneMemberID="firstResponder"/>
