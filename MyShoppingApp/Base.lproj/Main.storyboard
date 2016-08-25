@@ -30,7 +30,11 @@
                                                 <action selector="cancelButtonTapped:" destination="cjJ-nN-Fbh" id="1aH-jC-PDd"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="vWZ-Y1-kLt"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="vWZ-Y1-kLt">
+                                            <connections>
+                                                <action selector="saveButtonTapped:" destination="cjJ-nN-Fbh" id="HgZ-2X-lMS"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -87,9 +91,21 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVW-mN-bNs">
+                                <rect key="frame" x="85" y="108" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="DGf-dN-TWi"/>
+                                    <constraint firstAttribute="width" constant="150" id="e3i-BC-V8A"/>
+                                </constraints>
+                                <state key="normal" title="Select Image"/>
+                                <connections>
+                                    <action selector="selectImageButtonTapped:" destination="cjJ-nN-Fbh" eventType="touchUpInside" id="u55-Ob-JCU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="NVW-mN-bNs" firstAttribute="centerX" secondItem="84m-m5-nlX" secondAttribute="centerX" id="9v4-sk-ddR"/>
                             <constraint firstItem="A2o-G3-fVo" firstAttribute="trailing" secondItem="84m-m5-nlX" secondAttribute="trailingMargin" id="BHc-u9-uQy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qbf-xT-u6c" secondAttribute="trailing" id="Ccb-zM-9kY"/>
                             <constraint firstItem="431-zx-d89" firstAttribute="top" secondItem="A2o-G3-fVo" secondAttribute="bottom" constant="8" id="NS3-gu-XZf"/>
@@ -102,8 +118,10 @@
                             <constraint firstItem="yZU-zL-7YL" firstAttribute="top" secondItem="84m-m5-nlX" secondAttribute="top" id="j7b-VM-eHU"/>
                             <constraint firstItem="A2o-G3-fVo" firstAttribute="top" secondItem="yZU-zL-7YL" secondAttribute="bottom" constant="20" id="n3V-2R-5yp"/>
                             <constraint firstItem="qbf-xT-u6c" firstAttribute="top" secondItem="431-zx-d89" secondAttribute="bottom" constant="8" id="ooX-Dq-9W7"/>
+                            <constraint firstItem="NVW-mN-bNs" firstAttribute="top" secondItem="A2o-G3-fVo" secondAttribute="bottom" constant="8" id="pxI-mx-Hul"/>
                             <constraint firstItem="431-zx-d89" firstAttribute="centerX" secondItem="84m-m5-nlX" secondAttribute="centerX" id="sV1-Cu-dYe"/>
                             <constraint firstItem="qbf-xT-u6c" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leadingMargin" id="sYq-br-sgB"/>
+                            <constraint firstItem="qbf-xT-u6c" firstAttribute="top" secondItem="NVW-mN-bNs" secondAttribute="bottom" constant="8" id="se2-he-xJ7"/>
                             <constraint firstItem="A2o-G3-fVo" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leadingMargin" id="yka-LD-uh6"/>
                         </constraints>
                     </view>
@@ -111,6 +129,7 @@
                     <connections>
                         <outlet property="imageView" destination="431-zx-d89" id="2lD-Vw-brO"/>
                         <outlet property="nameTextField" destination="A2o-G3-fVo" id="dLE-yA-gR6"/>
+                        <outlet property="selectImageButton" destination="NVW-mN-bNs" id="Oxz-aW-Wzc"/>
                         <outlet property="storeCategoriesTableView" destination="MpE-IC-1aW" id="ap6-QR-2iQ"/>
                     </connections>
                 </viewController>
