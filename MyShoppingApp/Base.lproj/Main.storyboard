@@ -166,6 +166,7 @@
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LLN-BI-USW">
                                 <rect key="frame" x="0.0" y="50" width="320" height="70"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="EHO-Jd-zmY"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="QAs-Y1-Fft"/>
@@ -253,7 +254,8 @@
                     </tabBarItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="collectionViewFlowLayout" destination="udn-ue-t66" id="skE-Xj-OZh"/>
+                        <outlet property="categoriesCollectionView" destination="LLN-BI-USW" id="pVv-OS-C8a"/>
+                        <outlet property="categoriesCollectionViewFlowLayout" destination="udn-ue-t66" id="HIa-PZ-qAJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CwI-pC-SpR" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -14,7 +14,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     // MARK: - Stored Properties
     //==================================================
     
-    @IBOutlet weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var categoriesCollectionView: UICollectionView!
+    @IBOutlet weak var categoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
     
     //==================================================
     // MARK: - General
@@ -23,7 +24,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionViewFlowLayout.scrollDirection = .Horizontal
+        categoriesCollectionView.allowsMultipleSelection = false
+        categoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
     }
     
     //==================================================
@@ -43,7 +45,55 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         cell.updateWithStoreCategory(storeCategory)
         
+        if cell.selected == true {
+            cell.layer.borderWidth = 2.0
+            cell.backgroundColor = UIColor.orangeColor()
+        } else {
+            cell.layer.borderWidth = 0.0
+            cell.backgroundColor = UIColor.whiteColor()
+        }
+        
         return cell
+    }
+    
+    //==================================================
+    // MARK: - UICollectionViewDelegate
+    //==================================================
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell else {
+            
+            print("Exiting in the else of didSelectItemAtIndexPath")
+            return
+        }
+        
+        if cell.selected == true {
+            cell.layer.borderWidth = 2.0
+            cell.backgroundColor = UIColor.blueColor()
+        } else {
+            cell.layer.borderWidth = 0.0
+            cell.backgroundColor = UIColor.whiteColor()
+        }
+        
+//        cell.layer.borderWidth = 2.0
+//        cell.layer.backgroundColor = UIColor.blueColor().CGColor
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell else { return }
+        
+        if cell.selected == true {
+            cell.layer.borderWidth = 2.0
+            cell.backgroundColor = UIColor.blueColor()
+        } else {
+            cell.layer.borderWidth = 0.0
+            cell.backgroundColor = UIColor.whiteColor()
+        }
+        
+        //        cell.layer.borderWidth = 2.0
+        //        cell.layer.backgroundColor = UIColor.blueColor().CGColor
     }
     
     //==================================================
