@@ -177,12 +177,32 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     //==================================================
     // MARK: - Navigation
     //==================================================
-    /*
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        // How are we getting there?
+        if segue.identifier == "storeCategoriesToNewStoreSegue" {
+            
+            // Where are we going?
+            if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
+                
+                // What do we need to pack?
+                guard let index = categoriesCollectionView.indexPathsForSelectedItems()?.first?.row
+                    , let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
+                    else {
+                        
+                        NSLog("Error: The index or the Store Categories could not be found.")
+                        return
+                }
+                
+                let selectedStoreCategory = storeCategories[index]
+                
+                // Are we done packing?
+                newStoreViewController.selectedStoreCategory = selectedStoreCategory
+            }
+        }
     }
-    */
+    
 
 }

@@ -19,6 +19,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var storeCategoriesTableView: UITableView!
+    var indexPathRowOfSelectedStoreCategory = -1
     var selectedStoreCategory: StoreCategory?
     
     //==================================================
@@ -29,6 +30,17 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
 
         nameTextField.becomeFirstResponder()
+        
+//        if let _ = selectedStoreCategory {
+//            
+//            if indexPathRowOfSelectedStoreCategory < 0 {
+//                
+//                NSLog("Error: Selected Store Category not found")
+//                return
+//            }
+//            
+//            storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPathRowOfSelectedStoreCategory, inSection: 0), animated: false, scrollPosition: .None)
+//        }
     }
     
     //==================================================
@@ -46,9 +58,13 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
             , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
             else { return UITableViewCell() }
         
-        if let _ = self.selectedStoreCategory {
+        if storeCategory == selectedStoreCategory {
             
-            cell.selected = true
+            storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPath.row, inSection: 0), animated: true, scrollPosition: .None)
+//            self.tableView(storeCategoriesTableView, didSelectRowAtIndexPath: indexPath)
+            
+            cell.accessoryType = .Checkmark
+            
         }
         
         cell.updateWithStoreCategory(storeCategory)
