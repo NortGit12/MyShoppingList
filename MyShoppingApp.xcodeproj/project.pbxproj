@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1564DB1D70FE860007B56B /* AllStoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */; };
 		1F1775EF1D6CC09700604DFA /* StoreCategoryModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */; };
 		1F1775F21D6CC12300604DFA /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775F11D6CC12300604DFA /* CloudKitManager.swift */; };
 		1F1775F41D6CC14500604DFA /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775F31D6CC14500604DFA /* PersistenceController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStoresViewController.swift; sourceTree = "<group>"; };
 		1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreCategoryModelController.swift; sourceTree = "<group>"; };
 		1F1775F11D6CC12300604DFA /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		1F1775F31D6CC14500604DFA /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				1FEE27AA1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift */,
 				1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */,
 				1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */,
+				1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				1F8561D71D6BB5B1009A6B7A /* SyncableObject+CoreDataProperties.swift in Sources */,
 				1F1775F41D6CC14500604DFA /* PersistenceController.swift in Sources */,
 				1F1775F21D6CC12300604DFA /* CloudKitManager.swift in Sources */,
+				1F1564DB1D70FE860007B56B /* AllStoresViewController.swift in Sources */,
 				1F8561DC1D6BB5B1009A6B7A /* StoreCategory.swift in Sources */,
 				1F3476301D6E527D00B74073 /* NewStoreViewController.swift in Sources */,
 				1F85619D1D6BA27C009A6B7A /* AppDelegate.swift in Sources */,

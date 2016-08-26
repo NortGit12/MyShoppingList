@@ -13,7 +13,9 @@ import CloudKit
 @objc
 protocol CloudKitManagedObject {
     
+    //==================================================
     // MARK: - Stored Properties
+    //==================================================
     
     // In the Core Data SyncableObject to support syncing, so it's childen get it
     var recordIDData: NSData? { get set }
@@ -21,13 +23,15 @@ protocol CloudKitManagedObject {
     
     // In Core Data entities
     /*
-     This is not stored in Core Data because it's always the String "Post" or "Comment" for all instances of them
+     The recordType is not stored in Core Data because it's always the String of the type for all instances of them
     */
     var recordType: String { get }
     
     var cloudKitRecord: CKRecord? { get }
     
+    //==================================================
     // MARK: - Initializer(s)
+    //==================================================
     
     init?(record: CKRecord, context: NSManagedObjectContext)
     
@@ -35,7 +39,9 @@ protocol CloudKitManagedObject {
 
 extension CloudKitManagedObject {
     
+    //==================================================
     // MARK: - Stored Properties
+    //==================================================
     
     var isSynced: Bool { return recordIDData != nil }
     
@@ -53,7 +59,9 @@ extension CloudKitManagedObject {
         return CKReference(recordID: cloudKitRecordID, action: .DeleteSelf)
     }
     
+    //==================================================
     // MARK: - Method(s)
+    //==================================================
     
     func nameForManagedObject() -> String {
         

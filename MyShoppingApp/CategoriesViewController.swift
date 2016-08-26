@@ -32,9 +32,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         storeCollectionView.allowsMultipleSelection = false
         storeCollectionViewFlowLayout.scrollDirection = .Vertical
-        
-        // Select "Grocery" as the default Store Category
-//        storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 4, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -47,6 +44,9 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 
                 self.storeCategoriesCollectionView.reloadData()
                 self.storeCollectionView.reloadData()
+                
+                // Select "Grocery" as the default Store Category
+                self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 4, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
             })
         }
     }

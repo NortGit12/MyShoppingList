@@ -116,6 +116,8 @@ class Store: SyncableObject, CloudKitManagedObject {
         
         self.init(entity: storeEntity, insertIntoManagedObjectContext: context)
         
+        self.recordName = record.recordID.recordName
+        self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         self.name = name
         self.image = image
         

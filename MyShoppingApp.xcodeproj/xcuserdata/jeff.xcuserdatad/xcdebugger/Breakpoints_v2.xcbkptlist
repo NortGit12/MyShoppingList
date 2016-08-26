@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CloudKitManagedObject.swift"
-            timestampString = "493941414.787855"
+            filePath = "MyShoppingApp/StoreModelController.swift"
+            timestampString = "493945751.063687"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "updateRecordIDData(_:)"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "deleteStore(_:completion:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,43 +41,107 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MyShoppingApp/CategoriesViewController.swift"
-            timestampString = "493943352.868482"
+            filePath = "MyShoppingApp/CloudKitManager.swift"
+            timestampString = "493945754.303169"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "deleteRecordWithID(_:completion:)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "MyShoppingApp.CategoriesViewController.(viewWillAppear (Swift.Bool) -&gt; ()).(closure #1)"
+                  symbolName = "MyShoppingApp.CloudKitManager.deleteRecordWithID (__ObjC.CKRecordID, completion : Swift.Optional&lt;(recordID : Swift.Optional&lt;__ObjC.CKRecordID&gt;, error : Swift.Optional&lt;__ObjC.NSError&gt;) -&gt; ()&gt;) -&gt; ()"
                   moduleName = "MyShoppingApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/CategoriesViewController.swift"
-                  timestampString = "493943352.945639"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/CloudKitManager.swift"
+                  timestampString = "493946160.772574"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
+                  startingLineNumber = "170"
+                  endingLineNumber = "170"
+                  offsetFromSymbolStart = "27">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.CloudKitManager.(deleteRecordWithID (__ObjC.CKRecordID, completion : Swift.Optional&lt;(recordID : Swift.Optional&lt;__ObjC.CKRecordID&gt;, error : Swift.Optional&lt;__ObjC.NSError&gt;) -&gt; ()&gt;) -&gt; ()).(closure #1)"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/CloudKitManager.swift"
+                  timestampString = "493946160.772693"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "27">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyShoppingApp/AllStoresViewController.swift"
+            timestampString = "493945842.626791"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "tableView(_:commitEditingStyle:forRowAtIndexPath:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyShoppingApp/AllStoresViewController.swift"
+            timestampString = "493945845.183488"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "tableView(_:commitEditingStyle:forRowAtIndexPath:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.AllStoresViewController.(tableView (__ObjC.UITableView, commitEditingStyle : __C.UITableViewCellEditingStyle, forRowAtIndexPath : __ObjC.NSIndexPath) -&gt; ()).(closure #1)"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/AllStoresViewController.swift"
+                  timestampString = "493946160.77395"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
                   offsetFromSymbolStart = "48">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "MyShoppingApp.CategoriesViewController.(viewWillAppear (Swift.Bool) -&gt; ()).(closure #1).(closure #1)"
+                  symbolName = "MyShoppingApp.AllStoresViewController.(tableView (__ObjC.UITableView, commitEditingStyle : __C.UITableViewCellEditingStyle, forRowAtIndexPath : __ObjC.NSIndexPath) -&gt; ()).(closure #1).(closure #1)"
                   moduleName = "MyShoppingApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/CategoriesViewController.swift"
-                  timestampString = "493943352.945796"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/AllStoresViewController.swift"
+                  timestampString = "493946160.774066"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
                   offsetFromSymbolStart = "19">
                </Location>
             </Locations>
@@ -89,13 +153,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MyShoppingApp/CategoriesViewController.swift"
-            timestampString = "493943352.868482"
+            filePath = "MyShoppingApp/AllStoresViewController.swift"
+            timestampString = "493945847.094187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "requestFullSync(_:)"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "tableView(_:commitEditingStyle:forRowAtIndexPath:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.AllStoresViewController.tableView (__ObjC.UITableView, commitEditingStyle : __C.UITableViewCellEditingStyle, forRowAtIndexPath : __ObjC.NSIndexPath) -&gt; ()"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/AllStoresViewController.swift"
+                  timestampString = "493946160.774774"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "325">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.AllStoresViewController.(tableView (__ObjC.UITableView, commitEditingStyle : __C.UITableViewCellEditingStyle, forRowAtIndexPath : __ObjC.NSIndexPath) -&gt; ()).(closure #1)"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.3.sdk/usr/include/dispatch/queue.h"
+                  timestampString = "493946160.774872"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "325"
+                  endingLineNumber = "325"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyShoppingApp/StoreModelController.swift"
+            timestampString = "493946002.775322"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "deleteStore(_:completion:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -105,14 +217,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MyShoppingApp/CategoriesViewController.swift"
-            timestampString = "493943352.698273"
+            filePath = "MyShoppingApp/StoreModelController.swift"
+            timestampString = "493946042.23446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "deleteStore(_:completion:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.StoreModelController.deleteStore (MyShoppingApp.Store, completion : Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/StoreModelController.swift"
+                  timestampString = "493946160.775934"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "34">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.StoreModelController.deleteStore (MyShoppingApp.Store, completion : Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/StoreModelController.swift"
+                  timestampString = "493946160.776037"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

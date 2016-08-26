@@ -88,7 +88,49 @@ class StoreModelController {
         let predicate = NSPredicate(value: true)
         request.predicate = predicate
         
-        return (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Store] ?? nil
+        var resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Store]
+        resultsArray?.sortInPlace({ $0.0.name < $0.1.name })
+        
+        return resultsArray ?? nil
+    }
+    
+    func deleteStore(store: Store, completion: (() -> Void)? = nil) {
+        
+//        PersistenceController.sharedController.moc.deleteObject(store)
+//        
+//        PersistenceController.sharedController.saveContext()
+        
+//        if let completion = completion {
+//            
+//            completion()
+//        }
+        
+        if let storeCloudKitRecord = store.cloudKitRecord {
+            
+            cloudKitManager.deleteRecordWithID(storeCloudKitRecord.recordID, completion: { (recordID, error) in
+                
+                if error != nil {
+                    
+                    NSLog("Error: New Store could not be saved to CloudKit: \(error)")
+                }
+                
+                if let recordID = recordID {
+                    
+                    print("Store with the ID of \"\(recordID)\" successfully deleted from CloudKit")
+                }
+                
+                // Moved this here from lines 99 - 106 above to see if this solves the delete problem, possibly not done deleting before tableView.reloadData() gets called
+                
+                PersistenceController.sharedController.moc.deleteObject(store)
+                
+                PersistenceController.sharedController.saveContext()
+                
+                if let completion = completion {
+                    
+                    completion()
+                }
+            })
+        }
     }
 }
 
