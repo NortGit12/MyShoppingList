@@ -41,7 +41,14 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         super.viewWillAppear(animated)
         
-        requestFullSync()
+        requestFullSync { 
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.storeCategoriesCollectionView.reloadData()
+                self.storeCollectionView.reloadData()
+            })
+        }
     }
     
     //==================================================
@@ -200,9 +207,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 completion()
             }
         }
-        
-        storeCategoriesCollectionView.reloadData()
-        storeCollectionView.reloadData()
     }
     
     //==================================================

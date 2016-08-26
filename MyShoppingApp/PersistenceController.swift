@@ -205,11 +205,19 @@ class PersistenceController {
             
             pushChangesToCloudKit({ (_) in
                 
+                print("Pushing changes to CloudKit...")
+                
                 self.fetchNewRecords(StoreCategory.type) {
                     
+                    print("Fetching new StoreCategories from CloudKit...")
+                    
                     self.fetchNewRecords(Store.type) {
+                        
+                        print("Fetching new Stores from CloudKit...")
                     
                         self.fetchNewRecords(Item.type) {
+                            
+                            print("Fetching new Items from CloudKit...")
                     
                             self.isSyncing = false
                             

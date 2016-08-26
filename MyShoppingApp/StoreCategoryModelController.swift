@@ -88,7 +88,12 @@ class StoreCategoryModelController {
         let predicate = NSPredicate(value: true)
         request.predicate = predicate
         
-        return (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory] ?? nil
+        var resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory]
+        resultsArray?.sortInPlace({ $0.0.name < $0.1.name })
+        
+        return resultsArray ?? nil
+        
+//        return (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory] ?? nil
     }
     
     /*
