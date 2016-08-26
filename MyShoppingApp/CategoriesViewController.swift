@@ -14,8 +14,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     // MARK: - Stored Properties
     //==================================================
     
-    @IBOutlet weak var categoriesCollectionView: UICollectionView!
-    @IBOutlet weak var categoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
+    @IBOutlet weak var storeCategoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
     var selectedStoreCategory: StoreCategory?
     @IBOutlet weak var storeCollectionView: UICollectionView!
     @IBOutlet weak var storeCollectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -27,14 +27,21 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        categoriesCollectionView.allowsMultipleSelection = false
-        categoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
+        storeCategoriesCollectionView.allowsMultipleSelection = false
+        storeCategoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
         
         storeCollectionView.allowsMultipleSelection = false
         storeCollectionViewFlowLayout.scrollDirection = .Vertical
         
         // Select "Grocery" as the default Store Category
-        categoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 4, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+//        storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 4, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        requestFullSync()
     }
     
     //==================================================
@@ -45,7 +52,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         var numberOfItemsInSection = 0
         
-        if collectionView == categoriesCollectionView {
+        if collectionView == storeCategoriesCollectionView {
             
             numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoreCategories()?.count ?? 0
             
@@ -64,7 +71,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         var returningCell = UICollectionViewCell()
         
-        if collectionView == categoriesCollectionView {
+        if collectionView == storeCategoriesCollectionView {
             
             guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCategoryCollectionViewCell", forIndexPath: indexPath) as? StoreCategoryCollectionViewCell
                 , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
@@ -83,22 +90,25 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             returningCell = cell
             
         } else if collectionView == storeCollectionView {
-        
-            guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
-                , store = StoreModelController.sharedController.getStores()?[indexPath.row]
-                else { return UICollectionViewCell() }
             
-            cell.updateWithStore(store)
-            
-            if cell.selected == true {
-                cell.layer.borderWidth = 1.0
-                cell.backgroundColor = UIColor.orangeColor()
-            } else {
-                cell.layer.borderWidth = 0.0
-                cell.backgroundColor = UIColor.whiteColor()
+            if let selectedStoreCategory = self.selectedStoreCategory {
+                
+                guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
+                    , store = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
+                    else { return UICollectionViewCell() }
+                
+                cell.updateWithStore(store)
+                
+                if cell.selected == true {
+                    cell.layer.borderWidth = 1.0
+                    cell.backgroundColor = UIColor.orangeColor()
+                } else {
+                    cell.layer.borderWidth = 0.0
+                    cell.backgroundColor = UIColor.whiteColor()
+                }
+                
+                returningCell = cell
             }
-            
-            returningCell = cell
         }
         
         return returningCell
@@ -110,7 +120,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if collectionView == categoriesCollectionView {
+        if collectionView == storeCategoriesCollectionView {
             
             guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell
                 else { return }
@@ -122,6 +132,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 cell.layer.borderWidth = 0.0
                 cell.backgroundColor = UIColor.greenColor()
             }
+            
+            guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
+                else { return }
+            
+            self.selectedStoreCategory = storeCategories[indexPath.row]
+            self.storeCollectionView.reloadData()
             
         } else if collectionView == storeCollectionView {
             
@@ -141,7 +157,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if collectionView == categoriesCollectionView {
+        if collectionView == storeCategoriesCollectionView {
             
             guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell else { return }
             
@@ -169,6 +185,27 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     //==================================================
+    // MARK: - Methods
+    //==================================================
+    
+    func requestFullSync(completion: (() -> Void)? = nil) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        PersistenceController.sharedController.performFullSync {
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+            if let completion = completion {
+                completion()
+            }
+        }
+        
+        storeCategoriesCollectionView.reloadData()
+        storeCollectionView.reloadData()
+    }
+    
+    //==================================================
     // MARK: - Actions
     //==================================================
     
@@ -188,7 +225,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
                 
                 // What do we need to pack?
-                guard let index = categoriesCollectionView.indexPathsForSelectedItems()?.first?.row
+                guard let index = storeCategoriesCollectionView.indexPathsForSelectedItems()?.first?.row
                     , let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
                     else {
                         

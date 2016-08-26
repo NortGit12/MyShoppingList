@@ -10,13 +10,125 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyShoppingApp/NewStoreViewController.swift"
-            timestampString = "493928697.364769"
+            timestampString = "493934455.44534"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "saveButtonTapped(_:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyShoppingApp/NewStoreViewController.swift"
+            timestampString = "493934465.51216"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "saveButtonTapped(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyShoppingApp/StoreModelController.swift"
+            timestampString = "493935199.419969"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "createStore(_:image:categories:completion:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.StoreModelController.createStore (Swift.String, image : Swift.Optional&lt;__ObjC.UIImage&gt;, categories : Swift.Array&lt;MyShoppingApp.StoreCategory&gt;, completion : Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/StoreModelController.swift"
+                  timestampString = "493940817.990761"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "913">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.StoreModelController.createStore (Swift.String, image : Swift.Optional&lt;__ObjC.UIImage&gt;, categories : Swift.Array&lt;MyShoppingApp.StoreCategory&gt;, completion : Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/StoreModelController.swift"
+                  timestampString = "493940817.990946"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "961">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoreCategory.swift"
+            timestampString = "493937560.233894"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "StoreCategory"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.StoreCategory.cloudKitRecord.getter : Swift.Optional&lt;__ObjC.CKRecord&gt;"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/StoreCategory.swift"
+                  timestampString = "493940817.991992"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "948">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyShoppingApp.StoreCategory.cloudKitRecord.getter : Swift.Optional&lt;__ObjC.CKRecord&gt;"
+                  moduleName = "MyShoppingApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/StoreCategory.swift"
+                  timestampString = "493940817.992104"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "1007">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

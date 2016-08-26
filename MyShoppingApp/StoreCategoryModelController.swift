@@ -36,7 +36,7 @@ class StoreCategoryModelController {
     func createStoreCategory(name: String, image: UIImage, completion: (() -> Void)? = nil) {
         
         guard let imageData = UIImagePNGRepresentation(image)
-            , storeCategory = StoreCategory(name: name, image: imageData)
+            , storeCategory = StoreCategory(name: name, image: imageData, stores: nil)
             else { return }
         
         PersistenceController.sharedController.saveContext()

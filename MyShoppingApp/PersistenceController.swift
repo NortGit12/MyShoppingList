@@ -208,9 +208,9 @@ class PersistenceController {
                 self.fetchNewRecords(StoreCategory.type) {
                     
                     self.fetchNewRecords(Store.type) {
-                        
+                    
                         self.fetchNewRecords(Item.type) {
-                            
+                    
                             self.isSyncing = false
                             
                             if let completion = completion {

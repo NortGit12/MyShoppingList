@@ -305,8 +305,8 @@
                     </tabBarItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="categoriesCollectionView" destination="LLN-BI-USW" id="pVv-OS-C8a"/>
-                        <outlet property="categoriesCollectionViewFlowLayout" destination="udn-ue-t66" id="HIa-PZ-qAJ"/>
+                        <outlet property="storeCategoriesCollectionView" destination="LLN-BI-USW" id="9Yh-JD-00H"/>
+                        <outlet property="storeCategoriesCollectionViewFlowLayout" destination="udn-ue-t66" id="aSL-We-4h4"/>
                         <outlet property="storeCollectionView" destination="8IA-07-Rva" id="tgr-Xs-TEo"/>
                         <outlet property="storeCollectionViewFlowLayout" destination="nda-6Q-ME2" id="i5y-DI-eho"/>
                     </connections>

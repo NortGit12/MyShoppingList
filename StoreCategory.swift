@@ -33,20 +33,23 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         record[StoreCategory.imageKey] = self.image
         
         var storesReferencesArray = [CKReference]()
-        if let stores = self.stores {
+        if self.stores?.count > 0 {
             
-            for store in stores {
+            if let stores = self.stores {
                 
-                guard let recordIDData = store.recordIDData
-                    , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
-                    else { continue }
+                for store in stores {
+                    
+                    guard let recordIDData = store.recordIDData
+                        , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
+                        else { continue }
+                    
+                    let storeReference = CKReference(recordID: recordID, action: .DeleteSelf)
+                    storesReferencesArray.append(storeReference)
+                }
                 
-                let storeReference = CKReference(recordID: recordID, action: .DeleteSelf)
-                storesReferencesArray.append(storeReference)
+                record[StoreCategory.storesKey] = [storesReferencesArray]
             }
         }
-        
-        record[StoreCategory.storesKey] = [storesReferencesArray]
         
         return record
     }
@@ -55,7 +58,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
     // MARK: - Initializer(s)
     //==================================================
     
-    convenience init?(name: String, image: NSData, stores: [Store] = [Store](), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {      // stores: [Store] = [Store](),
+    convenience init?(name: String, image: NSData, stores: [Store]?, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {      // stores: [Store] = [Store](),
         
         guard let storeCategoryEntity = NSEntityDescription.entityForName(StoreCategory.type, inManagedObjectContext: context) else {
         

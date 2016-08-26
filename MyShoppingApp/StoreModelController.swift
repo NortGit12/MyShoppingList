@@ -36,7 +36,7 @@ class StoreModelController {
         }
         
         guard let imageData = UIImagePNGRepresentation(storeImage)
-            , store = Store(name: name, image: imageData, categories: categories)
+            , store = Store(name: name, image: imageData, categories: categories, items: nil)
             else { return }
         
         PersistenceController.sharedController.saveContext()

@@ -30,17 +30,6 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
 
         nameTextField.becomeFirstResponder()
-        
-//        if let _ = selectedStoreCategory {
-//            
-//            if indexPathRowOfSelectedStoreCategory < 0 {
-//                
-//                NSLog("Error: Selected Store Category not found")
-//                return
-//            }
-//            
-//            storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPathRowOfSelectedStoreCategory, inSection: 0), animated: false, scrollPosition: .None)
-//        }
     }
     
     //==================================================
@@ -61,8 +50,6 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         if storeCategory == selectedStoreCategory {
             
             storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPath.row, inSection: 0), animated: true, scrollPosition: .None)
-//            self.tableView(storeCategoriesTableView, didSelectRowAtIndexPath: indexPath)
-            
             cell.accessoryType = .Checkmark
             
         }
@@ -98,7 +85,11 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let name = nameTextField.text where name.characters.count > 0
             , let indexPaths = storeCategoriesTableView.indexPathsForSelectedRows
             , image = imageView.image
-            else { return }
+            else {
+                
+                NSLog("Error: Could not collect the required values for name, image, or index paths for store categories.")
+                return
+        }
         
         var storeCategories = [StoreCategory]()
         for indexPath in indexPaths {

@@ -47,20 +47,23 @@ class Store: SyncableObject, CloudKitManagedObject {
         record[Store.categoriesKey] = categoriesReferencesArray
         
         var itemsReferencesArray = [CKReference]()
-        if let items = self.items {
+        if self.items?.count > 0 {
             
-            for item in items {
+            if let items = self.items {
                 
-                guard let recordIDData = item.recordIDData
-                    , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
-                    else { continue }
+                for item in items {
+                    
+                    guard let recordIDData = item.recordIDData
+                        , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
+                        else { continue }
+                    
+                    let itemReference = CKReference(recordID: recordID, action: .DeleteSelf)
+                    itemsReferencesArray.append(itemReference)
+                }
                 
-                let itemReference = CKReference(recordID: recordID, action: .DeleteSelf)
-                itemsReferencesArray.append(itemReference)
+                record[Store.itemsKey] = itemsReferencesArray
             }
         }
-        
-        record[Store.itemsKey] = itemsReferencesArray
         
         return record
     }
@@ -69,7 +72,7 @@ class Store: SyncableObject, CloudKitManagedObject {
     // MARK: - Initializers
     //==================================================
 
-    convenience init?(name: String, image: NSData, categories: [StoreCategory], items: [Item] = [Item](), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+    convenience init?(name: String, image: NSData, categories: [StoreCategory], items: [Item]?, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
         guard let storeEntity = NSEntityDescription.entityForName(Store.type, inManagedObjectContext: context) else { return nil }
         
@@ -88,12 +91,15 @@ class Store: SyncableObject, CloudKitManagedObject {
         self.categories = categoriesMutableOrderedSet.copy() as! NSOrderedSet
         
         let itemsMutableOrderedSet = NSMutableOrderedSet()
-        for item in items {
+        if let items = items {
             
-            itemsMutableOrderedSet.addObject(item)
+            for item in items {
+                
+                itemsMutableOrderedSet.addObject(item)
+            }
+            
+            self.items = itemsMutableOrderedSet.copy() as? NSOrderedSet
         }
-        
-        self.items = itemsMutableOrderedSet.copy() as? NSOrderedSet
     }
     
     convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
