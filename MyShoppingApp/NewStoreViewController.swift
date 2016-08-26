@@ -19,6 +19,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var storeCategoriesTableView: UITableView!
+    var selectedStoreCategory: StoreCategory?
     
     //==================================================
     // MARK: - General
@@ -44,6 +45,11 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let cell = tableView.dequeueReusableCellWithIdentifier("newStoreCategoryCell", forIndexPath: indexPath) as? NewStoreCategoryTableViewCell
             , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
             else { return UITableViewCell() }
+        
+        if let _ = self.selectedStoreCategory {
+            
+            cell.selected = true
+        }
         
         cell.updateWithStoreCategory(storeCategory)
         
@@ -71,7 +77,25 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func saveButtonTapped(sender: UIButton) {
         
+        // What do we need to pack?
         
+        guard let name = nameTextField.text where name.characters.count > 0
+            , let indexPaths = storeCategoriesTableView.indexPathsForSelectedRows
+            , image = imageView.image
+            else { return }
+        
+        var storeCategories = [StoreCategory]()
+        for indexPath in indexPaths {
+            
+            if let storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row] {
+                
+                storeCategories.append(storeCategory)
+            }
+        }
+        
+        StoreModelController.sharedController.createStore(name, image: image, categories: storeCategories)
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func selectImageButtonTapped(sender: UIButton) {

@@ -26,9 +26,16 @@ class StoreModelController {
     // MARK: - Methods
     //==================================================
     
-    func createStore(name: String, image: UIImage, categories: [StoreCategory], completion: (() -> Void)? = nil) {
+    func createStore(name: String, image: UIImage?, categories: [StoreCategory], completion: (() -> Void)? = nil) {
         
-        guard let imageData = UIImagePNGRepresentation(image)
+        var storeImage: UIImage
+        if let image = image {
+            storeImage = image
+        } else {
+            storeImage = UIImage(named: "default-image_store")!
+        }
+        
+        guard let imageData = UIImagePNGRepresentation(storeImage)
             , store = Store(name: name, image: imageData, categories: categories)
             else { return }
         

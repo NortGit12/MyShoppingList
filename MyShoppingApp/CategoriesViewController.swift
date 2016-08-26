@@ -32,6 +32,9 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         storeCollectionView.allowsMultipleSelection = false
         storeCollectionViewFlowLayout.scrollDirection = .Vertical
+        
+        // Select "Grocery" as the default Store Category
+        categoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 4, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
     }
     
     //==================================================
@@ -70,7 +73,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             cell.updateWithStoreCategory(storeCategory)
             
             if cell.selected == true {
-                cell.layer.borderWidth = 2.0
+                cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.orangeColor()
             } else {
                 cell.layer.borderWidth = 0.0
@@ -88,7 +91,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             cell.updateWithStore(store)
             
             if cell.selected == true {
-                cell.layer.borderWidth = 2.0
+                cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.orangeColor()
             } else {
                 cell.layer.borderWidth = 0.0
@@ -113,7 +116,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 else { return }
             
             if cell.selected == true {
-                cell.layer.borderWidth = 2.0
+                cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.blueColor()
             } else {
                 cell.layer.borderWidth = 0.0
@@ -126,7 +129,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 else { return }
             
             if cell.selected == true {
-                cell.layer.borderWidth = 2.0
+                cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.blueColor()
             } else {
                 cell.layer.borderWidth = 0.0
@@ -143,7 +146,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell else { return }
             
             if cell.selected == true {
-                cell.layer.borderWidth = 2.0
+                cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.purpleColor()
             } else {
                 cell.layer.borderWidth = 0.0
@@ -155,7 +158,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell else { return }
             
             if cell.selected == true {
-                cell.layer.borderWidth = 2.0
+                cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.purpleColor()
             } else {
                 cell.layer.borderWidth = 0.0
@@ -164,6 +167,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
         }
     }
+    
+    //==================================================
+    // MARK: - Actions
+    //==================================================
+    
+//    "storeCategoriesToNewStoreSegue"
     
     //==================================================
     // MARK: - Navigation

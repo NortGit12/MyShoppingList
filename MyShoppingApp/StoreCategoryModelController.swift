@@ -18,6 +18,7 @@ class StoreCategoryModelController {
     static let sharedController = StoreCategoryModelController()
     let cloudKitManager = CloudKitManager()
     var storeCategories = [StoreCategory]()
+    static let defaultStoreCategoryName = "Grocery"
     
     //==================================================
     // MARK: - Initializer(s)

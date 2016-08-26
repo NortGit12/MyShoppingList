@@ -158,7 +158,7 @@
                                     <navigationItem title="My Shopping App" id="nYB-Dm-Jdn">
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="oO0-rA-l3t">
                                             <connections>
-                                                <segue destination="cjJ-nN-Fbh" kind="show" id="U29-3f-cxf"/>
+                                                <segue destination="cjJ-nN-Fbh" kind="show" identifier="storeCategoriesToNewStoreSegue" id="U29-3f-cxf"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
