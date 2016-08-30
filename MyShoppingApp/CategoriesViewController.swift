@@ -175,9 +175,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 else { return }
             
             if cell.selected == true {
+                
                 cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.blueColor()
+                
             } else {
+                
                 cell.layer.borderWidth = 0.0
                 cell.backgroundColor = UIColor.greenColor()
             }
@@ -220,42 +223,27 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
+        var cellWidth: CGFloat = 0
+        var cellHeight: CGFloat = 0
+        
         if collectionView == storeCategoriesCollectionView {
             
-//            let picDimension = self.view.frame.size.width / 4.0
-//            return picDimension
-            return CGSizeMake(70, 74)
+            cellWidth = 70
+            cellHeight = 74
             
         } else if collectionView == storeCollectionView {
 
-//            let picDimension = self.view.frame.size.width / 2.0
-//            return picDimension
-            return CGSizeMake(145, 145)
+            cellWidth = self.view.frame.size.width / 2.0 - 20
+            cellHeight = cellWidth
 
         } else {
             
-//            let picDimension = self.view.frame.size.width / 1.0
-//            return picDimension
-            return CGSizeMake(50, 50)
+            cellWidth = 50
+            cellHeight = 54
         }
+        
+        return CGSizeMake(cellWidth, cellHeight)
     }
-    
-    //TODO: Potentially remove?
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-//        
-//        if collectionView == storeCategoriesCollectionView {
-//            
-//            return storeCategorySectionInsets
-//            
-////        } else if collectionView == storeCollectionView {
-////            
-////            return storeSectionInsets
-//            
-//        } else {
-//            
-//            return UIEdgeInsets()
-//        }
-//    }
     
     //==================================================
     // MARK: - Methods
