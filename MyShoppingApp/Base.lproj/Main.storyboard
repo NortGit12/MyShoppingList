@@ -248,7 +248,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="storeCollectionViewCell" id="Bm5-CQ-YEp">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="storeCollectionViewCell" id="Bm5-CQ-YEp" customClass="StoreCollectionViewCell" customModule="MyShoppingApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -280,6 +280,10 @@
                                             <constraint firstItem="rEZ-h5-dQ4" firstAttribute="trailing" secondItem="fDJ-3P-NeM" secondAttribute="trailing" id="vfl-ij-ssG"/>
                                             <constraint firstItem="rEZ-h5-dQ4" firstAttribute="leading" secondItem="fDJ-3P-NeM" secondAttribute="leading" id="xdO-nb-8a3"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="rEZ-h5-dQ4" id="m5g-7v-NRg"/>
+                                            <outlet property="nameLabel" destination="fDJ-3P-NeM" id="NP4-SA-WUU"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>

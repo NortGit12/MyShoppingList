@@ -83,12 +83,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
             numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoreCategories()?.count ?? 0
             
-//        } else if collectionView == storeCollectionView {
-//            
-//            if let selectedStoreCategory = self.selectedStoreCategory {
-//                
-//                numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?.count ?? 0
-//            }
+        } else if collectionView == storeCollectionView {
+            
+            if let selectedStoreCategory = self.selectedStoreCategory {
+                
+                numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?.count ?? 0
+            }
         }
         
         return numberOfItemsInSection
@@ -119,26 +119,26 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
             returningCell = cell
             
-//        } else if collectionView == storeCollectionView {
-//            
-//            if let selectedStoreCategory = self.selectedStoreCategory {
-//                
-//                guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
-//                    , store = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
-//                    else { return UICollectionViewCell() }
-//                
-//                cell.updateWithStore(store)
-//                
-//                if cell.selected == true {
-//                    cell.layer.borderWidth = 1.0
-//                    cell.backgroundColor = UIColor.brownColor()
-//                } else {
-//                    cell.layer.borderWidth = 0.0
-//                    cell.backgroundColor = UIColor.purpleColor()
-//                }
-//                
-//                returningCell = cell
-//            }
+        } else if collectionView == storeCollectionView {
+            
+            if let selectedStoreCategory = self.selectedStoreCategory {
+                
+                guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
+                    , store = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
+                    else { return UICollectionViewCell() }
+                
+                cell.updateWithStore(store)
+                
+                if cell.selected == true {
+                    cell.layer.borderWidth = 1.0
+                    cell.backgroundColor = UIColor.brownColor()
+                } else {
+                    cell.layer.borderWidth = 0.0
+                    cell.backgroundColor = UIColor.purpleColor()
+                }
+                
+                returningCell = cell
+            }
         }
         
         return returningCell
@@ -169,18 +169,18 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             self.selectedStoreCategory = storeCategories[indexPath.row]
             self.storeCollectionView.reloadData()
             
-//        } else if collectionView == storeCollectionView {
-//            
-//            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell
-//                else { return }
-//            
-//            if cell.selected == true {
-//                cell.layer.borderWidth = 1.0
-//                cell.backgroundColor = UIColor.blueColor()
-//            } else {
-//                cell.layer.borderWidth = 0.0
-//                cell.backgroundColor = UIColor.greenColor()
-//            }
+        } else if collectionView == storeCollectionView {
+            
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell
+                else { return }
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 1.0
+                cell.backgroundColor = UIColor.blueColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.greenColor()
+            }
             
         }
     }
@@ -199,17 +199,17 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 cell.backgroundColor = UIColor.darkGrayColor()
             }
             
-//        } else if collectionView == storeCollectionView {
-//            
-//            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell else { return }
-//            
-//            if cell.selected == true {
-//                cell.layer.borderWidth = 1.0
-//                cell.backgroundColor = UIColor.purpleColor()
-//            } else {
-//                cell.layer.borderWidth = 0.0
-//                cell.backgroundColor = UIColor.darkGrayColor()
-//            }
+        } else if collectionView == storeCollectionView {
+            
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell else { return }
+            
+            if cell.selected == true {
+                cell.layer.borderWidth = 1.0
+                cell.backgroundColor = UIColor.purpleColor()
+            } else {
+                cell.layer.borderWidth = 0.0
+                cell.backgroundColor = UIColor.darkGrayColor()
+            }
             
         }
     }
@@ -223,37 +223,39 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         if collectionView == storeCategoriesCollectionView {
             
 //            let picDimension = self.view.frame.size.width / 4.0
+//            return picDimension
             return CGSizeMake(70, 74)
             
-//        } else if collectionView == storeCollectionView {
-//            
-////            let picDimension = self.view.frame.size.width / 2.0
-//            return CGSizeMake(145, 145)
+        } else if collectionView == storeCollectionView {
+
+//            let picDimension = self.view.frame.size.width / 2.0
+//            return picDimension
+            return CGSizeMake(145, 145)
 
         } else {
             
 //            let picDimension = self.view.frame.size.width / 1.0
+//            return picDimension
             return CGSizeMake(50, 50)
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        
-        if collectionView == storeCategoriesCollectionView {
-            
-            return storeCategorySectionInsets
-            
-//        } else if collectionView == storeCollectionView {
+    //TODO: Potentially remove?
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+//        
+//        if collectionView == storeCategoriesCollectionView {
 //            
-//            return storeSectionInsets
-            
-        } else {
-            
-            return UIEdgeInsets()
-        }
-    }
-    
-    
+//            return storeCategorySectionInsets
+//            
+////        } else if collectionView == storeCollectionView {
+////            
+////            return storeSectionInsets
+//            
+//        } else {
+//            
+//            return UIEdgeInsets()
+//        }
+//    }
     
     //==================================================
     // MARK: - Methods

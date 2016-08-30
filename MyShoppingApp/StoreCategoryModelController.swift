@@ -113,7 +113,9 @@ class StoreCategoryModelController {
             , storesArray = Array(storesSet) as? [Store]
             else { return nil }
         
-        return storesArray
+        let sortedStoresArray = storesArray.sort({ $0.0.name < $0.1.name })
+        
+        return sortedStoresArray
     }
     
     func createMockData() {

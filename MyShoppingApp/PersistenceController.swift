@@ -102,20 +102,20 @@ class PersistenceController {
                         return
                     }
                     
-//                case Store.type:
-//                    
-//                    // Existing CoreData Store
-//                    guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
-//                        
-//                        // New CoreData Store
-//                        guard let _ = Store(record: record) else {
-//                            
-//                            NSLog("Error: Could not create a new Store from the CloudKit record.")
-//                            return
-//                        }
-//                        
-//                        return
-//                    }
+                case Store.type:
+                    
+                    // Existing CoreData Store
+                    guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
+                        
+                        // New CoreData Store
+                        guard let _ = Store(record: record) else {
+                            
+                            NSLog("Error: Could not create a new Store from the CloudKit record.")
+                            return
+                        }
+                        
+                        return
+                    }
                 
 //                case Item.type:
 //                    
@@ -212,9 +212,9 @@ class PersistenceController {
                     
                     print("Fetching new StoreCategories from CloudKit...")
                     
-//                    self.fetchNewRecords(Store.type) {
-//                        
-//                        print("Fetching new Stores from CloudKit...")
+                    self.fetchNewRecords(Store.type) {
+                        
+                        print("Fetching new Stores from CloudKit...")
                     
 //                        self.fetchNewRecords(Item.type) {
 //                            
@@ -226,7 +226,7 @@ class PersistenceController {
                                 completion()
                             }
 //                        }
-//                    }
+                    }
                 }
             })
         }
