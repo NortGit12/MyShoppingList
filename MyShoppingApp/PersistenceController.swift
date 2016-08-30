@@ -102,35 +102,35 @@ class PersistenceController {
                         return
                     }
                     
-                case Store.type:
-                    
-                    // Existing CoreData Store
-                    guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
-                        
-                        // New CoreData Store
-                        guard let _ = Store(record: record) else {
-                            
-                            NSLog("Error: Could not create a new Store from the CloudKit record.")
-                            return
-                        }
-                        
-                        return
-                    }
+//                case Store.type:
+//                    
+//                    // Existing CoreData Store
+//                    guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
+//                        
+//                        // New CoreData Store
+//                        guard let _ = Store(record: record) else {
+//                            
+//                            NSLog("Error: Could not create a new Store from the CloudKit record.")
+//                            return
+//                        }
+//                        
+//                        return
+//                    }
                 
-                case Item.type:
-                    
-                    // Existing CoreData Item
-                    guard let _ = ItemModelController.sharedController.getItemByIdName(record.recordID.recordName) else {
-                        
-                        // New CoreData Item
-                        guard let _ = Item(record: record) else {
-                            
-                            NSLog("Error: Could not create a new Item from the CloudKit record.")
-                            return
-                        }
-                        
-                        return
-                    }
+//                case Item.type:
+//                    
+//                    // Existing CoreData Item
+//                    guard let _ = ItemModelController.sharedController.getItemByIdName(record.recordID.recordName) else {
+//                        
+//                        // New CoreData Item
+//                        guard let _ = Item(record: record) else {
+//                            
+//                            NSLog("Error: Could not create a new Item from the CloudKit record.")
+//                            return
+//                        }
+//                        
+//                        return
+//                    }
                     
                 default: return
                 }
@@ -169,7 +169,8 @@ class PersistenceController {
             
             let moc = PersistenceController.sharedController.moc
             moc.performBlock({
-                
+//            moc.performBlockAndWait({
+            
                 if let matchingRecord = unsyncedManagedObjectsArray.filter({ $0.recordName == record.recordID.recordName }).first {
                     
                     matchingRecord.updateRecordIDData(record)
@@ -211,21 +212,21 @@ class PersistenceController {
                     
                     print("Fetching new StoreCategories from CloudKit...")
                     
-                    self.fetchNewRecords(Store.type) {
-                        
-                        print("Fetching new Stores from CloudKit...")
+//                    self.fetchNewRecords(Store.type) {
+//                        
+//                        print("Fetching new Stores from CloudKit...")
                     
-                        self.fetchNewRecords(Item.type) {
-                            
-                            print("Fetching new Items from CloudKit...")
+//                        self.fetchNewRecords(Item.type) {
+//                            
+//                            print("Fetching new Items from CloudKit...")
                     
                             self.isSyncing = false
                             
                             if let completion = completion {
                                 completion()
                             }
-                        }
-                    }
+//                        }
+//                    }
                 }
             })
         }

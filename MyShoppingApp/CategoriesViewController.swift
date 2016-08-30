@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class CategoriesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     //==================================================
     // MARK: - Stored Properties
@@ -16,9 +16,13 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
     @IBOutlet weak var storeCategoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
+    private let storeCategorySectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     var selectedStoreCategory: StoreCategory?
+    let defaultStoreCategoryIndex = 4
+    
     @IBOutlet weak var storeCollectionView: UICollectionView!
     @IBOutlet weak var storeCollectionViewFlowLayout: UICollectionViewFlowLayout!
+    private let storeSectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     
     //==================================================
     // MARK: - General
@@ -27,18 +31,15 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        storeCategoriesCollectionView.allowsMultipleSelection = false
-        storeCategoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
+        self.storeCategoriesCollectionView.allowsMultipleSelection = false
+        self.storeCategoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
+        self.storeCategoriesCollectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+        self.storeCategoriesCollectionViewFlowLayout.itemSize = CGSize(width: 70, height: 74)
         
-        storeCollectionView.allowsMultipleSelection = false
-        storeCollectionViewFlowLayout.scrollDirection = .Vertical
-    }
-    
-    override func viewWillAppear(animated: Bool) {
+        self.storeCollectionView.allowsMultipleSelection = false
+        self.storeCollectionViewFlowLayout.scrollDirection = .Vertical
         
-        super.viewWillAppear(animated)
-        
-        requestFullSync { 
+        requestFullSync {
             
             dispatch_async(dispatch_get_main_queue(), {
                 
@@ -46,9 +47,28 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 self.storeCollectionView.reloadData()
                 
                 // Select "Grocery" as the default Store Category
-                self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 4, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+                self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: self.defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+                
+                guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories() else { return }
+                self.selectedStoreCategory = storeCategories[self.defaultStoreCategoryIndex]
             })
         }
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+//        requestFullSync { 
+//            
+//            dispatch_async(dispatch_get_main_queue(), {
+//                
+//                self.storeCategoriesCollectionView.reloadData()
+//                self.storeCollectionView.reloadData()
+//                
+//            })
+//        }
     }
     
     //==================================================
@@ -63,12 +83,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
             numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoreCategories()?.count ?? 0
             
-        } else if collectionView == storeCollectionView {
-            
-            if let selectedStoreCategory = self.selectedStoreCategory {
-                
-                numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?.count ?? 0
-            }
+//        } else if collectionView == storeCollectionView {
+//            
+//            if let selectedStoreCategory = self.selectedStoreCategory {
+//                
+//                numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?.count ?? 0
+//            }
         }
         
         return numberOfItemsInSection
@@ -89,6 +109,9 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             if cell.selected == true {
                 cell.layer.borderWidth = 1.0
                 cell.backgroundColor = UIColor.orangeColor()
+                
+                self.selectedStoreCategory = storeCategory
+                
             } else {
                 cell.layer.borderWidth = 0.0
                 cell.backgroundColor = UIColor.whiteColor()
@@ -96,26 +119,26 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
             returningCell = cell
             
-        } else if collectionView == storeCollectionView {
-            
-            if let selectedStoreCategory = self.selectedStoreCategory {
-                
-                guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
-                    , store = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
-                    else { return UICollectionViewCell() }
-                
-                cell.updateWithStore(store)
-                
-                if cell.selected == true {
-                    cell.layer.borderWidth = 1.0
-                    cell.backgroundColor = UIColor.orangeColor()
-                } else {
-                    cell.layer.borderWidth = 0.0
-                    cell.backgroundColor = UIColor.whiteColor()
-                }
-                
-                returningCell = cell
-            }
+//        } else if collectionView == storeCollectionView {
+//            
+//            if let selectedStoreCategory = self.selectedStoreCategory {
+//                
+//                guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
+//                    , store = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
+//                    else { return UICollectionViewCell() }
+//                
+//                cell.updateWithStore(store)
+//                
+//                if cell.selected == true {
+//                    cell.layer.borderWidth = 1.0
+//                    cell.backgroundColor = UIColor.brownColor()
+//                } else {
+//                    cell.layer.borderWidth = 0.0
+//                    cell.backgroundColor = UIColor.purpleColor()
+//                }
+//                
+//                returningCell = cell
+//            }
         }
         
         return returningCell
@@ -146,18 +169,18 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             self.selectedStoreCategory = storeCategories[indexPath.row]
             self.storeCollectionView.reloadData()
             
-        } else if collectionView == storeCollectionView {
-            
-            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell
-                else { return }
-            
-            if cell.selected == true {
-                cell.layer.borderWidth = 1.0
-                cell.backgroundColor = UIColor.blueColor()
-            } else {
-                cell.layer.borderWidth = 0.0
-                cell.backgroundColor = UIColor.greenColor()
-            }
+//        } else if collectionView == storeCollectionView {
+//            
+//            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell
+//                else { return }
+//            
+//            if cell.selected == true {
+//                cell.layer.borderWidth = 1.0
+//                cell.backgroundColor = UIColor.blueColor()
+//            } else {
+//                cell.layer.borderWidth = 0.0
+//                cell.backgroundColor = UIColor.greenColor()
+//            }
             
         }
     }
@@ -176,20 +199,61 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 cell.backgroundColor = UIColor.darkGrayColor()
             }
             
-        } else if collectionView == storeCollectionView {
-            
-            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell else { return }
-            
-            if cell.selected == true {
-                cell.layer.borderWidth = 1.0
-                cell.backgroundColor = UIColor.purpleColor()
-            } else {
-                cell.layer.borderWidth = 0.0
-                cell.backgroundColor = UIColor.darkGrayColor()
-            }
+//        } else if collectionView == storeCollectionView {
+//            
+//            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCollectionViewCell else { return }
+//            
+//            if cell.selected == true {
+//                cell.layer.borderWidth = 1.0
+//                cell.backgroundColor = UIColor.purpleColor()
+//            } else {
+//                cell.layer.borderWidth = 0.0
+//                cell.backgroundColor = UIColor.darkGrayColor()
+//            }
             
         }
     }
+    
+    //==================================================
+    // MARK: - UICollectionViewDelegateFlowLayout
+    //==================================================
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        if collectionView == storeCategoriesCollectionView {
+            
+//            let picDimension = self.view.frame.size.width / 4.0
+            return CGSizeMake(70, 74)
+            
+//        } else if collectionView == storeCollectionView {
+//            
+////            let picDimension = self.view.frame.size.width / 2.0
+//            return CGSizeMake(145, 145)
+
+        } else {
+            
+//            let picDimension = self.view.frame.size.width / 1.0
+            return CGSizeMake(50, 50)
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        
+        if collectionView == storeCategoriesCollectionView {
+            
+            return storeCategorySectionInsets
+            
+//        } else if collectionView == storeCollectionView {
+//            
+//            return storeSectionInsets
+            
+        } else {
+            
+            return UIEdgeInsets()
+        }
+    }
+    
+    
     
     //==================================================
     // MARK: - Methods

@@ -96,15 +96,6 @@ class StoreModelController {
     
     func deleteStore(store: Store, completion: (() -> Void)? = nil) {
         
-//        PersistenceController.sharedController.moc.deleteObject(store)
-//        
-//        PersistenceController.sharedController.saveContext()
-        
-//        if let completion = completion {
-//            
-//            completion()
-//        }
-        
         if let storeCloudKitRecord = store.cloudKitRecord {
             
             cloudKitManager.deleteRecordWithID(storeCloudKitRecord.recordID, completion: { (recordID, error) in

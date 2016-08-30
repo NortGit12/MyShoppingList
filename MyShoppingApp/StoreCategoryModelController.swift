@@ -110,7 +110,7 @@ class StoreCategoryModelController {
     func getStoresForStoreCategory(storeCategory: StoreCategory) -> [Store]? {
         
         guard let storesSet = storeCategory.stores
-            , storesArray = storesSet.array as? [Store]
+            , storesArray = Array(storesSet) as? [Store]
             else { return nil }
         
         return storesArray
@@ -121,7 +121,7 @@ class StoreCategoryModelController {
         createStoreCategory("Cars", image: UIImage(named: "cars")!)
         createStoreCategory("Clothing", image: UIImage(named: "clothing")!)
         createStoreCategory("Department", image: UIImage(named: "department-store")!)
-        createStoreCategory("Electronics", image: UIImage(named: "tv")!)
+        createStoreCategory("Electronics", image: UIImage(named: "electronics")!)
         createStoreCategory("Grocery", image: UIImage(named: "groceries")!)
         createStoreCategory("Health & Beauty", image: UIImage(named: "yoga")!)
         createStoreCategory("Home Improvement", image: UIImage(named: "home-improvement")!)
