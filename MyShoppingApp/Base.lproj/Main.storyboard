@@ -137,10 +137,10 @@
             </objects>
             <point key="canvasLocation" x="2840" y="441"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Items List-->
         <scene sceneID="E1L-RX-Pa6">
             <objects>
-                <tableViewController id="ENK-OY-jfz" sceneMemberID="viewController">
+                <tableViewController id="ENK-OY-jfz" customClass="ItemsTableViewController" customModule="MyShoppingApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="RcR-aV-T7f">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -156,7 +156,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-TE-fy4">
                                             <rect key="frame" x="8" y="8" width="304" height="27"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0le-0I-bQ6">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox_unchecked" translatesAutoresizingMaskIntoConstraints="NO" id="0le-0I-bQ6">
                                                     <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="27" id="WGZ-Cz-Ik8"/>
@@ -168,7 +168,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aHv-lW-KUe">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangle_right-pointing" translatesAutoresizingMaskIntoConstraints="NO" id="aHv-lW-KUe">
                                                     <rect key="frame" x="277" y="0.0" width="27" height="27"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="27" id="1wP-Uo-6Ef"/>
@@ -191,6 +191,7 @@
                             <outlet property="delegate" destination="ENK-OY-jfz" id="Imd-M7-7eD"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Items List" id="dIj-Z9-7UW"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eHm-dT-Cki" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -372,8 +373,8 @@
                     <connections>
                         <outlet property="storeCategoriesCollectionView" destination="LLN-BI-USW" id="9Yh-JD-00H"/>
                         <outlet property="storeCategoriesCollectionViewFlowLayout" destination="udn-ue-t66" id="aSL-We-4h4"/>
-                        <outlet property="storeCollectionView" destination="8IA-07-Rva" id="tgr-Xs-TEo"/>
-                        <outlet property="storeCollectionViewFlowLayout" destination="nda-6Q-ME2" id="i5y-DI-eho"/>
+                        <outlet property="storesCollectionView" destination="8IA-07-Rva" id="Kqh-Ba-k0E"/>
+                        <outlet property="storesCollectionViewFlowLayout" destination="nda-6Q-ME2" id="U6O-Gz-u9g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CwI-pC-SpR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -521,8 +522,12 @@
             <point key="canvasLocation" x="1867" y="1092"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="checkbox_unchecked" width="200" height="200"/>
+        <image name="triangle_right-pointing" width="200" height="200"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="b2J-ME-g0o"/>
+        <segue reference="Czn-zW-54I"/>
         <segue reference="U29-3f-cxf"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -73,4 +73,28 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
             })
         }
     }
+    
+    //==================================================
+    // MARK: - Navigation
+    //==================================================
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        // How are we getting there?
+        if segue.identifier == "storeInAllStoresToItemListSegue" {
+            
+            // Where are we going?
+            if let itemsTableViewController = segue.destinationViewController as? ItemsTableViewController {
+                
+                // What do we need to pack?
+                guard let index = tableView.indexPathForSelectedRow?.row
+                    , stores = StoreModelController.sharedController.getStores()
+                    else { return }
+                
+                // Are we done packing?
+                itemsTableViewController.store = stores[index]
+            }
+        }
+    }
 }
