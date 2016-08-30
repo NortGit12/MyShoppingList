@@ -56,15 +56,6 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        /*
-        if editingStyle == .Delete {
-            
-            let thread = loggedInUsersThreads[indexPath.row]
-            
-            ThreadController.sharedController.deleteThread(thread)
-        }
-        */
-        
         if editingStyle == .Delete {
             
             guard let store = StoreModelController.sharedController.getStores()?[indexPath.row] else {

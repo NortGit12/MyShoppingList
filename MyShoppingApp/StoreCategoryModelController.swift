@@ -92,20 +92,7 @@ class StoreCategoryModelController {
         resultsArray?.sortInPlace({ $0.0.name < $0.1.name })
         
         return resultsArray ?? nil
-        
-//        return (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory] ?? nil
     }
-    
-    /*
-     func getThreadsForParticipant(participant: User) -> [Thread]? {
-     
-     guard let threadsSet = participant.threads
-     , threadsArray = threadsSet.array as? [Thread]
-     else { return nil }
-     
-     return threadsArray
-     }
-     */
     
     func getStoresForStoreCategory(storeCategory: StoreCategory) -> [Store]? {
         

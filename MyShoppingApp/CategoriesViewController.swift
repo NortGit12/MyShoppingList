@@ -60,15 +60,15 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         super.viewWillAppear(animated)
         
-//        requestFullSync { 
-//            
-//            dispatch_async(dispatch_get_main_queue(), {
-//                
-//                self.storeCategoriesCollectionView.reloadData()
-//                self.storeCollectionView.reloadData()
-//                
-//            })
-//        }
+        requestFullSync { 
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.storeCategoriesCollectionView.reloadData()
+                self.storeCollectionView.reloadData()
+                
+            })
+        }
     }
     
     //==================================================

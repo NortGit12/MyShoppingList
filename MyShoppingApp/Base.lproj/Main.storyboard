@@ -339,7 +339,13 @@
                                     <constraint firstAttribute="height" constant="50" id="fLx-qo-AAO"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="My Shopping App" id="Rby-D2-Y6W"/>
+                                    <navigationItem title="My Shopping App" id="Rby-D2-Y6W">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1x3-OD-RLK">
+                                            <connections>
+                                                <segue destination="cjJ-nN-Fbh" kind="show" identifier="allStoresToNewStoreSegue" id="ugk-QQ-oGs"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fWC-kh-xLN">
@@ -413,4 +419,7 @@
             <point key="canvasLocation" x="1195" y="766"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ugk-QQ-oGs"/>
+    </inferredMetricsTieBreakers>
 </document>
