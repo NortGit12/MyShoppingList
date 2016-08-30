@@ -30,7 +30,7 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
         
         super.viewWillAppear(animated)
         
-        
+        tableView.reloadData()
     }
     
     //==================================================
