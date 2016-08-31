@@ -82,7 +82,7 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         // How are we getting there?
-        if segue.identifier == "storeInAllStoresToItemListSegue" {
+        if segue.identifier == "storeInAllStoresToItemsListSegue" {
             
             // Where are we going?
             if let itemsTableViewController = segue.destinationViewController as? ItemsTableViewController {

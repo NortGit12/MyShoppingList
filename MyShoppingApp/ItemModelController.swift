@@ -108,13 +108,62 @@ class ItemModelController {
             completion()
         }
         
-        if let itemCloudKitRecord = item.cloudKitRecord {
-            
-            
-        }
+//        if let itemCloudKitRecord = item.cloudKitRecord {
+        
+//            cloudKitManager.modifyRecords([itemCloudKitRecord], perRecordCompletion: { (record, error) in
+//                
+//                // Per Record Block
+//                
+//                if error != nil {
+//                    print("Error: CloudKit record could not be modified: \(error)")
+//                }
+//                
+//                guard let record = record else { return }
+//                
+//                /*
+//                 This supports multi-threading.  Anything we do with MangedObjectContexts must need to be done on the same thread that it is in.  The code inside this cloudKitManager.saveRecords(...) method will be on a background thread and the MangedObjectContext (moc) is on the main thread, so we need a way to get this.  ALL pieces of things that deal with Core Data need to be in here, working on the main thread where the moc is.  In here the $0.recordName accesses Core Data and so does the .update(...) method.
+//                 */
+//                
+//                let moc = PersistenceController.sharedController.moc
+//                moc.performBlock({ 
+//                    
+//                    if let matchingRecord = 
+//                })
+//                
+//                // Completion Block
+//                }, completion: { (records, error) in
+//                    <#code#>
+//            })
+//        }
     }
     
-    // TODO: Add deleteItem(_:)
+    func deleteItem(item: Item, store: Store, completion: (() -> Void)? = nil) {
+        
+        if let itemCloudKitRecord = item.cloudKitRecord {
+            
+            cloudKitManager.deleteRecordWithID(itemCloudKitRecord.recordID, completion: { (recordID, error) in
+                
+                if error != nil {
+                    
+                    NSLog("Error: Item could not be deleted in CloudKit: \(error)")
+                }
+                
+                if let recordID = recordID {
+                    
+                    print("Item with the ID of \"\(recordID)\" successfully deleted from CloudKit")
+                }
+                
+                PersistenceController.sharedController.moc.deleteObject(item)
+                
+                PersistenceController.sharedController.saveContext()
+                
+                if let completion = completion {
+                    
+                    completion()
+                }
+            })
+        }
+    }
 }
 
 

@@ -146,7 +146,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="itemListCell" id="Yjw-0y-siQ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="itemsListCell" id="Yjw-0y-siQ" customClass="ItemsListTableViewCell" customModule="MyShoppingApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yjw-0y-siQ" id="0dM-Cg-gZP">
@@ -162,10 +162,19 @@
                                                         <constraint firstAttribute="width" constant="27" id="WGZ-Cz-Ik8"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4KF-OU-46U">
-                                                    <rect key="frame" x="32" y="0.0" width="240" height="27"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Item" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4KF-OU-46U">
+                                                    <rect key="frame" x="32" y="0.0" width="195" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Quantity" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IhI-SR-meK">
+                                                    <rect key="frame" x="232" y="0.0" width="40" height="27"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="40" id="Hg8-JF-3BQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangle_right-pointing" translatesAutoresizingMaskIntoConstraints="NO" id="aHv-lW-KUe">
@@ -185,6 +194,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="checkBoxImage" destination="0le-0I-bQ6" id="OHm-R0-gD9"/>
+                                    <outlet property="nameLabel" destination="4KF-OU-46U" id="krN-uq-7gf"/>
+                                    <outlet property="quantityLabel" destination="IhI-SR-meK" id="Woo-gX-Fnc"/>
                                     <segue destination="mNH-DO-p2a" kind="show" identifier="itemsListCellToItemDetailSegue" id="Jsa-3N-Xt7"/>
                                 </connections>
                             </tableViewCell>
@@ -503,7 +515,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="ENK-OY-jfz" kind="show" identifier="storeInAllStoresToItemListSegue" id="b2J-ME-g0o"/>
+                                            <segue destination="ENK-OY-jfz" kind="show" identifier="storeInAllStoresToItemsListSegue" id="b2J-ME-g0o"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -618,8 +630,8 @@
         <image name="triangle_right-pointing" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Czn-zW-54I"/>
         <segue reference="U29-3f-cxf"/>
+        <segue reference="b2J-ME-g0o"/>
         <segue reference="0QE-E2-6Sd"/>
     </inferredMetricsTieBreakers>
 </document>

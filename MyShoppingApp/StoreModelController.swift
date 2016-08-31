@@ -102,7 +102,7 @@ class StoreModelController {
                 
                 if error != nil {
                     
-                    NSLog("Error: New Store could not be saved to CloudKit: \(error)")
+                    NSLog("Error: Store could not be deleted in CloudKit: \(error)")
                 }
                 
                 if let recordID = recordID {

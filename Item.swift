@@ -51,6 +51,7 @@ class Item: SyncableObject, CloudKitManagedObject {
         
         self.init(entity: itemEntity, insertIntoManagedObjectContext: context)
         
+        self.recordName = nameForManagedObject()
         self.name = name
         self.quantity = quantity
         
@@ -78,6 +79,8 @@ class Item: SyncableObject, CloudKitManagedObject {
         
         self.init(entity: itemEntity, insertIntoManagedObjectContext: context)
         
+        self.recordName = record.recordID.recordName
+        self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         self.name = name
         self.quantity = quantity
         self.notes = notes
