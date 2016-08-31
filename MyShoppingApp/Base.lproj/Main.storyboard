@@ -284,7 +284,7 @@
             </objects>
             <point key="canvasLocation" x="3272" y="1092"/>
         </scene>
-        <!--Categories View Controller-->
+        <!--My Shopping App-->
         <scene sceneID="mOe-fF-Slr">
             <objects>
                 <viewController id="qvb-F9-ETm" customClass="CategoriesViewController" customModule="MyShoppingApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -296,24 +296,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TfZ-DN-7hA">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="lcO-Dj-BhS"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="My Shopping App" id="nYB-Dm-Jdn">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="oO0-rA-l3t">
-                                            <connections>
-                                                <segue destination="cjJ-nN-Fbh" kind="show" identifier="storeCategoriesToNewStoreSegue" id="U29-3f-cxf"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8IA-07-Rva">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8IA-07-Rva">
                                 <rect key="frame" x="10" y="142" width="300" height="366"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="366" id="uck-I6-2gH"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nda-6Q-ME2">
                                     <size key="itemSize" width="145" height="145"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -322,7 +310,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="storeCollectionViewCell" id="Bm5-CQ-YEp" customClass="StoreCollectionViewCell" customModule="MyShoppingApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
+                                        <rect key="frame" x="0.0" y="64" width="145" height="145"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
@@ -442,19 +430,27 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="bgc-1H-HpX" firstAttribute="top" secondItem="8IA-07-Rva" secondAttribute="bottom" constant="11" id="BbO-uA-nAJ"/>
+                            <constraint firstItem="bgc-1H-HpX" firstAttribute="top" secondItem="8IA-07-Rva" secondAttribute="bottom" constant="11" id="5t6-Ip-2ms"/>
                             <constraint firstItem="8IA-07-Rva" firstAttribute="centerX" secondItem="LLN-BI-USW" secondAttribute="centerX" id="KH4-D2-lpl"/>
-                            <constraint firstItem="TfZ-DN-7hA" firstAttribute="top" secondItem="Ik7-0w-usC" secondAttribute="top" id="MNT-s2-dTt"/>
-                            <constraint firstItem="LLN-BI-USW" firstAttribute="top" secondItem="TfZ-DN-7hA" secondAttribute="bottom" constant="14" id="awt-uO-UxX"/>
-                            <constraint firstItem="8IA-07-Rva" firstAttribute="leading" secondItem="Ik7-0w-usC" secondAttribute="leadingMargin" constant="-10" id="b1f-pQ-sPn"/>
-                            <constraint firstAttribute="trailing" secondItem="TfZ-DN-7hA" secondAttribute="trailing" id="but-kn-hVF"/>
-                            <constraint firstItem="8IA-07-Rva" firstAttribute="top" secondItem="LLN-BI-USW" secondAttribute="bottom" constant="8" id="by3-8C-Q9V"/>
-                            <constraint firstItem="TfZ-DN-7hA" firstAttribute="leading" secondItem="Ik7-0w-usC" secondAttribute="leading" id="f3s-JP-SRq"/>
+                            <constraint firstItem="8IA-07-Rva" firstAttribute="top" secondItem="LLN-BI-USW" secondAttribute="bottom" constant="8" symbolic="YES" id="RWr-40-EGM"/>
                             <constraint firstAttribute="trailing" secondItem="LLN-BI-USW" secondAttribute="trailing" id="gK9-U9-5a6"/>
+                            <constraint firstItem="8IA-07-Rva" firstAttribute="centerX" secondItem="LLN-BI-USW" secondAttribute="centerX" id="lSY-bj-Dw4"/>
+                            <constraint firstItem="8IA-07-Rva" firstAttribute="leading" secondItem="Ik7-0w-usC" secondAttribute="leadingMargin" constant="-6" id="noi-sr-whl"/>
                             <constraint firstItem="LLN-BI-USW" firstAttribute="leading" secondItem="Ik7-0w-usC" secondAttribute="leading" id="x2K-gt-hYU"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="KH4-D2-lpl"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="tPx-AK-bdy"/>
+                    <navigationItem key="navigationItem" title="My Shopping App" id="nYB-Dm-Jdn">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="oO0-rA-l3t">
+                            <connections>
+                                <segue destination="cjJ-nN-Fbh" kind="show" identifier="storeCategoriesToNewStoreSegue" id="U29-3f-cxf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="storeCategoriesCollectionView" destination="LLN-BI-USW" id="9Yh-JD-00H"/>
@@ -479,12 +475,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="42" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fWC-kh-xLN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="42" sectionHeaderHeight="1" sectionFooterHeight="21" translatesAutoresizingMaskIntoConstraints="NO" id="fWC-kh-xLN">
                                 <rect key="frame" x="6" y="72" width="308" height="439"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="allStoresCell" textLabel="adK-E6-Ghj" style="IBUITableViewCellStyleDefault" id="tRa-rm-4GU">
-                                        <rect key="frame" x="0.0" y="92" width="308" height="42"/>
+                                        <rect key="frame" x="0.0" y="65" width="308" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tRa-rm-4GU" id="K48-aM-iFe">
                                             <rect key="frame" x="0.0" y="0.0" width="308" height="41"/>
@@ -513,10 +509,24 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fWC-kh-xLN" firstAttribute="top" secondItem="KPV-gZ-uM5" secondAttribute="bottom" constant="8" symbolic="YES" id="3nu-0Q-XT6"/>
+                            <constraint firstItem="4yg-c7-SDJ" firstAttribute="top" secondItem="fWC-kh-xLN" secondAttribute="bottom" constant="8" id="8WI-eQ-XgA"/>
+                            <constraint firstItem="fWC-kh-xLN" firstAttribute="leading" secondItem="sZG-cd-XKx" secondAttribute="leading" constant="6" id="INO-mb-0VM"/>
+                            <constraint firstItem="fWC-kh-xLN" firstAttribute="top" secondItem="KPV-gZ-uM5" secondAttribute="bottom" constant="8" id="NQn-14-esf"/>
                             <constraint firstItem="fWC-kh-xLN" firstAttribute="centerX" secondItem="sZG-cd-XKx" secondAttribute="centerX" id="S81-pY-iBA"/>
                             <constraint firstItem="fWC-kh-xLN" firstAttribute="leading" secondItem="sZG-cd-XKx" secondAttribute="leadingMargin" constant="-10" id="ZZw-kK-lUp"/>
                             <constraint firstItem="4yg-c7-SDJ" firstAttribute="top" secondItem="fWC-kh-xLN" secondAttribute="bottom" constant="8" symbolic="YES" id="sNW-wd-REE"/>
+                            <constraint firstAttribute="trailing" secondItem="fWC-kh-xLN" secondAttribute="trailing" constant="6" id="x7h-uK-7y8"/>
+                            <constraint firstItem="fWC-kh-xLN" firstAttribute="top" secondItem="KPV-gZ-uM5" secondAttribute="bottom" constant="8" id="xnT-gp-nk1"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="3nu-0Q-XT6"/>
+                                <exclude reference="S81-pY-iBA"/>
+                                <exclude reference="ZZw-kK-lUp"/>
+                                <exclude reference="xnT-gp-nk1"/>
+                                <exclude reference="sNW-wd-REE"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="My Shopping App" id="Rby-D2-Y6W">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1x3-OD-RLK">
@@ -601,7 +611,7 @@
         <image name="triangle_right-pointing" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ugk-QQ-oGs"/>
-        <segue reference="b2J-ME-g0o"/>
+        <segue reference="U29-3f-cxf"/>
+        <segue reference="Czn-zW-54I"/>
     </inferredMetricsTieBreakers>
 </document>
