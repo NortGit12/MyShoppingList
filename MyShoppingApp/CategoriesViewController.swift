@@ -31,6 +31,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.automaticallyAdjustsScrollViewInsets = false
+        
         self.storeCategoriesCollectionView.allowsMultipleSelection = false
         self.storeCategoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
         self.storeCategoriesCollectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)

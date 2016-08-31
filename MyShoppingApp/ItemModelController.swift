@@ -85,6 +85,36 @@ class ItemModelController {
         
         return (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Item] ?? nil
     }
+    
+    func updateItem(item: Item, store: Store, completion: (() -> Void)? = nil) {
+        
+        guard let notes = item.notes
+            else { return }
+        
+        let request = NSFetchRequest(entityName: Item.type)
+        let predicate = NSPredicate(format: "recordName = %@", argumentArray: [item.recordName])
+        request.predicate = predicate
+        
+        let resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Item]
+        let existingItem = resultsArray?.first
+        
+        existingItem?.name = item.name
+        existingItem?.quantity = item.quantity
+        existingItem?.notes = notes
+        
+        PersistenceController.sharedController.saveContext()
+        
+        if let completion = completion {
+            completion()
+        }
+        
+        if let itemCloudKitRecord = item.cloudKitRecord {
+            
+            
+        }
+    }
+    
+    // TODO: Add deleteItem(_:)
 }
 
 

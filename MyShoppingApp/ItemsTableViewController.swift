@@ -91,14 +91,29 @@ class ItemsTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        // How am I getting there?
+        if segue.identifier == "itemsListCellToItemDetailSegue" {
+            
+            // Where am I going?
+            if let itemDetailViewController = segue.destinationViewController as? ItemDetailViewController
+                , store = store
+                , index = tableView.indexPathForSelectedRow?.row
+                , storeItems = ItemModelController.sharedController.getItemsForStore(store) {
+                
+                // Am I done packing?
+                let item = storeItems[index]
+                
+                itemDetailViewController.store = store
+                itemDetailViewController.item = item
+            }
+        }
     }
-    */
+ 
 
 }
