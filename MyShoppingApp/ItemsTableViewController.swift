@@ -28,8 +28,16 @@ class ItemsTableViewController: UITableViewController {
             self.title = "\(store.name) List"
         }
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
+    }
 
+    //==================================================
     // MARK: - Table view data source
+    //==================================================
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -93,11 +101,12 @@ class ItemsTableViewController: UITableViewController {
         if segue.identifier == "itemsListAddToItemDetailSegue" {
             
             // Where am I going?
-            if let itemDetailViewController = segue.destinationViewController as? ItemDetailViewController
+            if let navigationController = segue.destinationViewController as? UINavigationController
+                , newItemViewController = navigationController.viewControllers.first as? NewItemViewController
                 , store = store {
                 
                 // Am I done packing?
-                itemDetailViewController.store = store
+                newItemViewController.store = store
             }
             
         } else if segue.identifier == "itemsListCellToItemDetailSegue" {

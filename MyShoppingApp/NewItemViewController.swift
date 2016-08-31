@@ -1,14 +1,14 @@
 //
-//  ItemDetailViewController.swift
+//  NewItemViewController.swift
 //  MyShoppingApp
 //
-//  Created by Jeff Norton on 8/30/16.
+//  Created by Jeff Norton on 8/31/16.
 //  Copyright © 2016 JCN. All rights reserved.
 //
 
 import UIKit
 
-class ItemDetailViewController: UIViewController {
+class NewItemViewController: UIViewController {
     
     //==================================================
     // MARK: - Stored Properties
@@ -19,7 +19,6 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var notesTextView: UITextView!
     
     var store: Store?
-    var item: Item?
     
     //==================================================
     // MARK: - General
@@ -28,23 +27,7 @@ class ItemDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let item = item {
-            
-            updateWithItem(item)
-        }
-        
-        nameTextField.becomeFirstResponder()
-    }
-    
-    //==================================================
-    // MARK: - Methods
-    //==================================================
-    
-    func updateWithItem(item: Item) {
-        
-        nameTextField.text = item.name
-        quantityTextField.text = item.quantity
-        notesTextView.text = item.notes
+        // Do any additional setup after loading the view.
     }
     
     //==================================================
@@ -53,7 +36,7 @@ class ItemDetailViewController: UIViewController {
     
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         
-        guard let store = store
+        guard let store = self.store
             , name = nameTextField.text where name.characters.count > 0
             , let quantity = quantityTextField.text where quantity.characters.count > 0
             else {
@@ -69,16 +52,8 @@ class ItemDetailViewController: UIViewController {
             notes = nil
         }
         
-        // Update an existing Item
-        if let item = item {
-            
-            print("This will eventually update the existing item in CoreData and CloudKit")
-            
-            //            ItemModelController.sharedController.updateItem(item, store: store)
-            
-            // Save a new Item
-        }
+        ItemModelController.sharedController.createItem(name, quantity: quantity, notes: notes, store: store)
         
-        self.navigationController?.popViewControllerAnimated(true)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

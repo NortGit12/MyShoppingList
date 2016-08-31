@@ -22,6 +22,7 @@
 		1F6416E51D763D4E00EA371B /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */; };
 		1F6416E71D76443D00EA371B /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */; };
 		1F6A90A81D777978004A2AF8 /* ItemsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */; };
+		1F6A90AA1D778319004A2AF8 /* NewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A90A91D778319004A2AF8 /* NewItemViewController.swift */; };
 		1F85619D1D6BA27C009A6B7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */; };
 		1F8561A21D6BA27C009A6B7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F8561A01D6BA27C009A6B7A /* Main.storyboard */; };
 		1F8561A51D6BA27C009A6B7A /* MyShoppingApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F8561A31D6BA27C009A6B7A /* MyShoppingApp.xcdatamodeld */; };
@@ -57,6 +58,7 @@
 		1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
 		1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsListTableViewCell.swift; sourceTree = "<group>"; };
+		1F6A90A91D778319004A2AF8 /* NewItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewItemViewController.swift; sourceTree = "<group>"; };
 		1F8561991D6BA27C009A6B7A /* MyShoppingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyShoppingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F85619C1D6BA27C009A6B7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F8561A11D6BA27C009A6B7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		1F8561DF1D6BB633009A6B7A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1F6A90A91D778319004A2AF8 /* NewItemViewController.swift */,
 				1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */,
 				1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */,
 				1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */,
@@ -264,6 +267,7 @@
 				1F34762C1D6E425500B74073 /* StoreModelController.swift in Sources */,
 				1F1775F61D6CE38000604DFA /* CategoriesViewController.swift in Sources */,
 				1F8561DE1D6BB5C1009A6B7A /* CloudKitManagedObject.swift in Sources */,
+				1F6A90AA1D778319004A2AF8 /* NewItemViewController.swift in Sources */,
 				1F8561D51D6BB5B1009A6B7A /* Store+CoreDataProperties.swift in Sources */,
 				1F8561CC1D6BB4FF009A6B7A /* Stack.swift in Sources */,
 				1F8561D91D6BB5B1009A6B7A /* Item+CoreDataProperties.swift in Sources */,
