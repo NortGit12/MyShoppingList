@@ -30,7 +30,7 @@ class ItemModelController {
     
     func createItem(name: String, quantity: String, notes: String?, store: Store, completion: (() -> Void)? = nil) {
         
-        guard let item = Item(name: name, quantity: quantity, notes: (notes ?? nil)!, store: store) else { return }
+        guard let item = Item(name: name, quantity: quantity, notes: notes, store: store) else { return }
         
         PersistenceController.sharedController.saveContext()
         

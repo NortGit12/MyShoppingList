@@ -630,8 +630,8 @@
         <image name="triangle_right-pointing" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="U29-3f-cxf"/>
-        <segue reference="b2J-ME-g0o"/>
         <segue reference="0QE-E2-6Sd"/>
+        <segue reference="b2J-ME-g0o"/>
+        <segue reference="U29-3f-cxf"/>
     </inferredMetricsTieBreakers>
 </document>

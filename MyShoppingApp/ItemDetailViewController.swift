@@ -53,7 +53,7 @@ class ItemDetailViewController: UIViewController {
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
         
-        dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
@@ -87,7 +87,7 @@ class ItemDetailViewController: UIViewController {
             ItemModelController.sharedController.createItem(name, quantity: quantity, notes: notes, store: store)
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func clearButtonTapped(sender: UIButton) {

@@ -28,6 +28,12 @@ class ItemsTableViewController: UITableViewController {
             self.title = "\(store.name) List"
         }
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
