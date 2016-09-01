@@ -83,8 +83,6 @@ class ItemsTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 })
             })
-            
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
     

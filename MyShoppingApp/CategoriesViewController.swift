@@ -263,12 +263,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     //==================================================
-    // MARK: - Actions
-    //==================================================
-    
-//    "storeCategoriesToNewStoreSegue"
-    
-    //==================================================
     // MARK: - Navigation
     //==================================================
     
@@ -294,6 +288,33 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 
                 // Are we done packing?
                 newStoreViewController.selectedStoreCategory = selectedStoreCategory
+            }
+            
+        } else if segue.identifier == "storeCategoriesToExistingStoreSegue" {
+            
+            // Where are we going?
+            if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
+                
+                // What do we need to pack?
+                guard let index = storeCategoriesCollectionView.indexPathsForSelectedItems()?.first?.row
+                    , let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
+                    , storeIndex = storesCollectionView.indexPathsForSelectedItems()?.first?.row
+                    else {
+                        
+                        NSLog("Error: The index or the Store Categories could not be found.")
+                        return
+                }
+                
+                let selectedStoreCategory = storeCategories[index]
+                
+                guard let stores = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)
+                    else { return }
+                
+                let store = stores[storeIndex]
+                
+                // Are we done packing?
+                newStoreViewController.selectedStoreCategory = selectedStoreCategory
+                newStoreViewController.store = store
             }
             
         } else if segue.identifier == "storeInStoreCategoryToItemListSegue" {

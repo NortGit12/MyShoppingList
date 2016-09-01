@@ -19,6 +19,8 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var storeCategoriesTableView: UITableView!
+    
+    var store: Store?
     var indexPathRowOfSelectedStoreCategory = -1
     var selectedStoreCategory: StoreCategory?
     
@@ -28,6 +30,15 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let store = store {
+            
+            updateWithStore(store)
+            
+        } else {
+            
+            imageView.image = UIImage(named: "default-image_store")
+        }
 
         nameTextField.becomeFirstResponder()
     }
@@ -47,7 +58,15 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
             , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
             else { return UITableViewCell() }
         
-        if storeCategory == selectedStoreCategory {
+        if self.store != nil {
+        
+            if store!.categories.containsObject(storeCategory) {
+                
+                storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPath.row, inSection: 0), animated: true, scrollPosition: .None)
+                cell.accessoryType = .Checkmark
+            }
+            
+        } else if storeCategory == selectedStoreCategory {
             
             storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPath.row, inSection: 0), animated: true, scrollPosition: .None)
             cell.accessoryType = .Checkmark
@@ -174,6 +193,14 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         imageView.image = image
         
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func updateWithStore(store: Store) {
+        
+        nameTextField.text = store.name
+        imageView.image = UIImage(data: store.image)
+        
+        storeCategoriesTableView.reloadData()
     }
 }
 

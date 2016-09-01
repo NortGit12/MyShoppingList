@@ -44,12 +44,11 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("allStoresCell", forIndexPath: indexPath)
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("allStoresListCell", forIndexPath: indexPath) as? AllStoresTableViewCell
+            , store = StoreModelController.sharedController.getStores()?[indexPath.row]
+            else { return UITableViewCell() }
         
-        guard let store = StoreModelController.sharedController.getStores()?[indexPath.row] else { return UITableViewCell() }
-        
-        cell.textLabel?.text = store.name
-        cell.imageView?.image = UIImage(data: store.image)
+        cell.updateWithStore(store)
         
         return cell
     }
@@ -98,6 +97,28 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
                 // Are we done packing?
                 itemsTableViewController.store = stores[index]
                 self.navigationController?.navigationBar.topItem?.backBarButtonItem = backBarButtonItem
+            }
+            
+        } else if segue.identifier == "allStoresToExistingStoreSegue" {
+            
+            // Where are we going?
+            if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
+                
+                // What do we need to pack?
+                guard let index = tableView.indexPathForSelectedRow?.row
+                    else {
+                        
+                        NSLog("Error: The store index could not be found.")
+                        return
+                }
+                
+                guard let stores = StoreModelController.sharedController.getStores()
+                    else { return }
+                
+                let store = stores[index]
+                
+                // Are we done packing?
+                newStoreViewController.store = store
             }
         }
     }

@@ -77,8 +77,6 @@ class ItemDetailViewController: UIViewController {
         // Update an existing Item
         if let item = item {
             
-            print("Items will update soon")
-            
             item.name = name
             item.quantity = quantity
             item.notes = notes

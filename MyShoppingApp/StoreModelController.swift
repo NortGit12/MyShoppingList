@@ -105,12 +105,10 @@ class StoreModelController {
                     NSLog("Error: Store could not be deleted in CloudKit: \(error)")
                 }
                 
-                if let recordID = recordID {
+                if let _ = recordID {
                     
-                    print("Store with the ID of \"\(recordID)\" successfully deleted from CloudKit")
+                    print("Store \"\(store.name)\" successfully deleted from CloudKit")
                 }
-                
-                // Moved this here from lines 99 - 106 above to see if this solves the delete problem, possibly not done deleting before tableView.reloadData() gets called
                 
                 PersistenceController.sharedController.moc.deleteObject(store)
                 

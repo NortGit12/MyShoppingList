@@ -1,20 +1,20 @@
 //
-//  StoreCollectionViewCell.swift
+//  AllStoresTableViewCell.swift
 //  MyShoppingApp
 //
-//  Created by Jeff Norton on 8/25/16.
+//  Created by Jeff Norton on 9/1/16.
 //  Copyright © 2016 JCN. All rights reserved.
 //
 
 import UIKit
 
-class StoreCollectionViewCell: UICollectionViewCell {
+class AllStoresTableViewCell: UITableViewCell {
     
     //==================================================
     // MARK: - Stored Properties
     //==================================================
-    
-    @IBOutlet weak var imageView: UIImageView!
+
+    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
     //==================================================
@@ -23,7 +23,7 @@ class StoreCollectionViewCell: UICollectionViewCell {
     
     func updateWithStore(store: Store) {
         
-        imageView.image = UIImage(data: store.image)
+        iconImageView.image = UIImage(data: store.image)
         nameLabel.text = store.name
     }
     
@@ -31,7 +31,7 @@ class StoreCollectionViewCell: UICollectionViewCell {
     // MARK: - Action(s)
     //==================================================
     
-    @IBAction func editStoreButtonTapped(sender: UIButton) {
+    @IBAction func editButtonTapped(sender: UIButton) {
         
         
     }
