@@ -110,16 +110,23 @@ class ItemModelController {
         
         if let itemCloudKitRecord = item.cloudKitRecord {
         
-            cloudKitManager.modifyRecord(itemCloudKitRecord, completion: { (record, error) in
+            cloudKitManager.modifyRecords([itemCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
                 
                 if error != nil {
-                    NSLog("Error: Could not modify an existing item in CloudKit: \(error?.localizedDescription)")
+                    
+                    NSLog("Error: Could not modify the existing \"\(item.name)\"item in CloudKit: \(error?.localizedDescription)")
+                    
+                    if let completion = completion {
+                        completion()
+                    }
                 }
                 
-                if let record = record {
-                    NSLog("Updated item save successfully to CloudKit.")
+                if let _ = records {
+                    
+                    NSLog("Updated \"\(item.name)\" item saved successfully to CloudKit.")
                 }
             })
+        
         }
     }
     
