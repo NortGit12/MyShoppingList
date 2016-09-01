@@ -15,7 +15,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     //==================================================
     
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
-    @IBOutlet weak var storeCategoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
     private let storeCategorySectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     var selectedStoreCategory: StoreCategory?
     let defaultStoreCategoryIndex = 4
@@ -34,9 +33,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         self.automaticallyAdjustsScrollViewInsets = false
         
         self.storeCategoriesCollectionView.allowsMultipleSelection = false
-        self.storeCategoriesCollectionViewFlowLayout.scrollDirection = .Horizontal
-        self.storeCategoriesCollectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-        self.storeCategoriesCollectionViewFlowLayout.itemSize = CGSize(width: 70, height: 74)
         
         self.storesCollectionView.allowsMultipleSelection = false
         self.storesCollectionViewFlowLayout.scrollDirection = .Vertical

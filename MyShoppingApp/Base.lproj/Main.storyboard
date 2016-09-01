@@ -306,7 +306,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8IA-07-Rva">
-                                <rect key="frame" x="10" y="142" width="300" height="366"/>
+                                <rect key="frame" x="10" y="146" width="300" height="362"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="366" id="uck-I6-2gH"/>
@@ -368,20 +368,20 @@
                                 </connections>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LLN-BI-USW">
-                                <rect key="frame" x="0.0" y="64" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="74"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="VuP-11-bV9"/>
+                                    <constraint firstAttribute="height" constant="74" id="VuP-11-bV9"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="udn-ue-t66">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="udn-ue-t66">
                                     <size key="itemSize" width="70" height="74"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="1" minY="0.0" maxX="1" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="storeCategoryCollectionViewCell" id="4dy-wu-Oup" customClass="StoreCategoryCollectionViewCell" customModule="MyShoppingApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="70" height="74"/>
+                                        <rect key="frame" x="1" y="0.0" width="70" height="74"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="70" height="74"/>
@@ -461,7 +461,6 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="storeCategoriesCollectionView" destination="LLN-BI-USW" id="9Yh-JD-00H"/>
-                        <outlet property="storeCategoriesCollectionViewFlowLayout" destination="udn-ue-t66" id="aSL-We-4h4"/>
                         <outlet property="storesCollectionView" destination="8IA-07-Rva" id="Kqh-Ba-k0E"/>
                         <outlet property="storesCollectionViewFlowLayout" destination="nda-6Q-ME2" id="U6O-Gz-u9g"/>
                     </connections>
