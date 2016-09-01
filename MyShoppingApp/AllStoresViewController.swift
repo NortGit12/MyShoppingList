@@ -92,8 +92,12 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
                     , stores = StoreModelController.sharedController.getStores()
                     else { return }
                 
+                let backBarButtonItem = UIBarButtonItem()
+                backBarButtonItem.title = "Stores"
+                
                 // Are we done packing?
                 itemsTableViewController.store = stores[index]
+                self.navigationController?.navigationBar.topItem?.backBarButtonItem = backBarButtonItem
             }
         }
     }

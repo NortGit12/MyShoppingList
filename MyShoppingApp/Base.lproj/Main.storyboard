@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--New Store View Controller-->
+        <!--New Store-->
         <scene sceneID="NN1-9k-GXJ">
             <objects>
                 <viewController id="cjJ-nN-Fbh" customClass="NewStoreViewController" customModule="MyShoppingApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,32 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yZU-zL-7YL">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Obx-8L-fsb"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Title" id="M9q-X4-oxL">
-                                        <barButtonItem key="leftBarButtonItem" title="&lt; Cancel" id="oVo-BH-ao0">
-                                            <connections>
-                                                <action selector="cancelButtonTapped:" destination="cjJ-nN-Fbh" id="1aH-jC-PDd"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="vWZ-Y1-kLt">
-                                            <connections>
-                                                <action selector="saveButtonTapped:" destination="cjJ-nN-Fbh" id="HgZ-2X-lMS"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A2o-G3-fVo">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A2o-G3-fVo">
                                 <rect key="frame" x="16" y="70" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="431-zx-d89">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="431-zx-d89">
                                 <rect key="frame" x="85" y="108" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -51,7 +31,7 @@
                                     <constraint firstAttribute="height" constant="150" id="joJ-7L-tnd"/>
                                 </constraints>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MpE-IC-1aW">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MpE-IC-1aW">
                                 <rect key="frame" x="16" y="289" width="288" height="214"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -85,13 +65,13 @@
                                     <outlet property="delegate" destination="cjJ-nN-Fbh" id="2IP-7b-QY8"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store Categories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbf-xT-u6c">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Store Categories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbf-xT-u6c">
                                 <rect key="frame" x="16" y="266" width="288" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVW-mN-bNs">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVW-mN-bNs">
                                 <rect key="frame" x="85" y="108" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="DGf-dN-TWi"/>
@@ -113,10 +93,6 @@
                             <constraint firstItem="MpE-IC-1aW" firstAttribute="top" secondItem="qbf-xT-u6c" secondAttribute="bottom" constant="2" id="QW0-4V-mOV"/>
                             <constraint firstItem="MpE-IC-1aW" firstAttribute="trailing" secondItem="84m-m5-nlX" secondAttribute="trailingMargin" id="U7M-tz-NjU"/>
                             <constraint firstItem="jJI-5b-dj5" firstAttribute="top" secondItem="MpE-IC-1aW" secondAttribute="bottom" constant="16" id="WR5-Kd-KJm"/>
-                            <constraint firstItem="yZU-zL-7YL" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leading" id="Xh1-oy-lWw"/>
-                            <constraint firstAttribute="trailing" secondItem="yZU-zL-7YL" secondAttribute="trailing" id="Y8w-EJ-nFH"/>
-                            <constraint firstItem="yZU-zL-7YL" firstAttribute="top" secondItem="84m-m5-nlX" secondAttribute="top" id="j7b-VM-eHU"/>
-                            <constraint firstItem="A2o-G3-fVo" firstAttribute="top" secondItem="yZU-zL-7YL" secondAttribute="bottom" constant="20" id="n3V-2R-5yp"/>
                             <constraint firstItem="qbf-xT-u6c" firstAttribute="top" secondItem="431-zx-d89" secondAttribute="bottom" constant="8" id="ooX-Dq-9W7"/>
                             <constraint firstItem="NVW-mN-bNs" firstAttribute="top" secondItem="A2o-G3-fVo" secondAttribute="bottom" constant="8" id="pxI-mx-Hul"/>
                             <constraint firstItem="431-zx-d89" firstAttribute="centerX" secondItem="84m-m5-nlX" secondAttribute="centerX" id="sV1-Cu-dYe"/>
@@ -125,6 +101,18 @@
                             <constraint firstItem="A2o-G3-fVo" firstAttribute="leading" secondItem="84m-m5-nlX" secondAttribute="leadingMargin" id="yka-LD-uh6"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="New Store" id="M9q-X4-oxL">
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Cancel" id="oVo-BH-ao0">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="cjJ-nN-Fbh" id="1aH-jC-PDd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="vWZ-Y1-kLt">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="cjJ-nN-Fbh" id="HgZ-2X-lMS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="imageView" destination="431-zx-d89" id="2lD-Vw-brO"/>
@@ -630,8 +618,8 @@
         <image name="triangle_right-pointing" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0QE-E2-6Sd"/>
-        <segue reference="b2J-ME-g0o"/>
         <segue reference="U29-3f-cxf"/>
+        <segue reference="Czn-zW-54I"/>
+        <segue reference="Jsa-3N-Xt7"/>
     </inferredMetricsTieBreakers>
 </document>

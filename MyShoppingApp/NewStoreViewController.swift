@@ -75,7 +75,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func cancelButtonTapped(sender: UIButton) {
         
-        dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func saveButtonTapped(sender: UIButton) {
@@ -102,7 +102,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         
         StoreModelController.sharedController.createStore(name, image: image, categories: storeCategories)
         
-        dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func selectImageButtonTapped(sender: UIButton) {
