@@ -211,6 +211,16 @@ class CloudKitManager {
         }
     }
     
+    func modifyRecord(record: CKRecord, completion: ((record: CKRecord?, error: NSError?) -> Void)?) {
+        
+        publicDatabase.saveRecord(record) { (record, error) in
+            
+            if let completion = completion {
+                completion(record: record, error: error)
+            }
+        }
+    }
+    
     func modifyRecords(records: [CKRecord], perRecordCompletion: ((record: CKRecord?, error: NSError?) -> Void)?, completion: ((records: [CKRecord]?, error: NSError?) -> Void)?) {
         
         let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: nil)

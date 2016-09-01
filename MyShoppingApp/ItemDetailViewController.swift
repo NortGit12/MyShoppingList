@@ -77,9 +77,13 @@ class ItemDetailViewController: UIViewController {
         // Update an existing Item
         if let item = item {
             
-            print("This will eventually update the existing item in CoreData and CloudKit")
+            print("Items will update soon")
             
-//            ItemModelController.sharedController.updateItem(<#T##item: Item##Item#>, store: <#T##Store#>)
+//            item.name = name
+//            item.quantity = quantity
+//            item.notes = notes
+//            
+//            ItemModelController.sharedController.updateItem(item, store: store)
             
         // Save a new Item
         } else {

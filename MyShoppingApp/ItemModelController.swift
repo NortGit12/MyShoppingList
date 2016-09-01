@@ -45,7 +45,7 @@ class ItemModelController {
                 
                 if error != nil {
                     
-                    NSLog("Error: New Item could not be saved to CloudKit: \(error)")
+                    NSLog("Error: New Item could not be saved to CloudKit: \(error?.localizedDescription)")
                 }
                 
                 if let record = record {
@@ -83,7 +83,10 @@ class ItemModelController {
         let predicate = NSPredicate(format: "store.recordName == %@", argumentArray: [storeIdName])
         request.predicate = predicate
         
-        return (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Item] ?? nil
+        var resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Item]
+        resultsArray?.sortInPlace({ $0.name < $1.name })
+        
+        return resultsArray ?? nil
     }
     
     func updateItem(item: Item, store: Store, completion: (() -> Void)? = nil) {
@@ -108,33 +111,19 @@ class ItemModelController {
             completion()
         }
         
-//        if let itemCloudKitRecord = item.cloudKitRecord {
+        if let itemCloudKitRecord = item.cloudKitRecord {
         
-//            cloudKitManager.modifyRecords([itemCloudKitRecord], perRecordCompletion: { (record, error) in
-//                
-//                // Per Record Block
-//                
-//                if error != nil {
-//                    print("Error: CloudKit record could not be modified: \(error)")
-//                }
-//                
-//                guard let record = record else { return }
-//                
-//                /*
-//                 This supports multi-threading.  Anything we do with MangedObjectContexts must need to be done on the same thread that it is in.  The code inside this cloudKitManager.saveRecords(...) method will be on a background thread and the MangedObjectContext (moc) is on the main thread, so we need a way to get this.  ALL pieces of things that deal with Core Data need to be in here, working on the main thread where the moc is.  In here the $0.recordName accesses Core Data and so does the .update(...) method.
-//                 */
-//                
-//                let moc = PersistenceController.sharedController.moc
-//                moc.performBlock({ 
-//                    
-//                    if let matchingRecord = 
-//                })
-//                
-//                // Completion Block
-//                }, completion: { (records, error) in
-//                    <#code#>
-//            })
-//        }
+            cloudKitManager.modifyRecord(itemCloudKitRecord, completion: { (record, error) in
+                
+                if error != nil {
+                    NSLog("Error: Could not modify an existing item in CloudKit: \(error?.localizedDescription)")
+                }
+                
+                if let record = record {
+                    NSLog("Updated item save successfully to CloudKit.")
+                }
+            })
+        }
     }
     
     func deleteItem(item: Item, store: Store, completion: (() -> Void)? = nil) {

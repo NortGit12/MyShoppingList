@@ -41,9 +41,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         self.storesCollectionView.allowsMultipleSelection = false
         self.storesCollectionViewFlowLayout.scrollDirection = .Vertical
         
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         requestFullSync {
             
             dispatch_async(dispatch_get_main_queue(), {
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 self.storeCategoriesCollectionView.reloadData()
                 self.storesCollectionView.reloadData()
@@ -62,10 +65,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         super.viewWillAppear(animated)
         
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         requestFullSync { 
             
             dispatch_async(dispatch_get_main_queue(), {
                 
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.storeCategoriesCollectionView.reloadData()
                 self.storesCollectionView.reloadData()
                 
@@ -253,11 +258,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     func requestFullSync(completion: (() -> Void)? = nil) {
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
         PersistenceController.sharedController.performFullSync {
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
             if let completion = completion {
                 completion()
