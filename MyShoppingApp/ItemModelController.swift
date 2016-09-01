@@ -91,9 +91,6 @@ class ItemModelController {
     
     func updateItem(item: Item, store: Store, completion: (() -> Void)? = nil) {
         
-        guard let notes = item.notes
-            else { return }
-        
         let request = NSFetchRequest(entityName: Item.type)
         let predicate = NSPredicate(format: "recordName = %@", argumentArray: [item.recordName])
         request.predicate = predicate
@@ -103,7 +100,7 @@ class ItemModelController {
         
         existingItem?.name = item.name
         existingItem?.quantity = item.quantity
-        existingItem?.notes = notes
+        existingItem?.notes = item.notes
         
         PersistenceController.sharedController.saveContext()
         

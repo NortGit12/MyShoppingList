@@ -112,7 +112,7 @@ class StoreCategoryModelController {
         createStoreCategory("Department", image: UIImage(named: "department-store")!)
         createStoreCategory("Electronics", image: UIImage(named: "electronics")!)
         createStoreCategory("Grocery", image: UIImage(named: "groceries")!)
-        createStoreCategory("Health & Beauty", image: UIImage(named: "yoga")!)
+        createStoreCategory("Health & Beauty", image: UIImage(named: "health-and-beauty")!)
         createStoreCategory("Home Improvement", image: UIImage(named: "home-improvement")!)
         createStoreCategory("Misc", image: UIImage(named: "misc")!)
         createStoreCategory("Office Supply", image: UIImage(named: "office-supply")!)

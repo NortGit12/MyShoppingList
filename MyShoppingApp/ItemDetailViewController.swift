@@ -79,11 +79,11 @@ class ItemDetailViewController: UIViewController {
             
             print("Items will update soon")
             
-//            item.name = name
-//            item.quantity = quantity
-//            item.notes = notes
-//            
-//            ItemModelController.sharedController.updateItem(item, store: store)
+            item.name = name
+            item.quantity = quantity
+            item.notes = notes
+            
+            ItemModelController.sharedController.updateItem(item, store: store)
             
         // Save a new Item
         } else {
