@@ -71,14 +71,6 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         self.recordName = nameForManagedObject()
         self.name = name
         self.image = image
-        
-//        let storesMutableOrderedSet = NSMutableOrderedSet()
-//        for store in stores {
-//            
-//            storesMutableOrderedSet.addObject(store)
-//        }
-//        
-//        self.stores = storesMutableOrderedSet.copy() as? NSOrderedSet
     }
     
     convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
@@ -99,20 +91,5 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         self.name = name
         self.image = image
-        
-//        var storesArray = [Store]()
-//        if let storesReferencesArray = record[StoreCategory.storesKey] as? [CKReference] {
-//            
-//            for storeReference in storesReferencesArray {
-//                
-//                let storeIDName = storeReference.recordID.recordName
-//                if let store = StoreController.sharedController.getStoreByIdName(storeIDName) {
-//                    
-//                    storesArray.append(store)
-//                }
-//            }
-//            
-//            self.stores = NSOrderedSet(array: storesArray)
-//        }
     }
 }

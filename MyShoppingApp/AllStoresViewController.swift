@@ -24,6 +24,8 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         
         self.automaticallyAdjustsScrollViewInsets = false
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
     }
     
     override func viewWillAppear(animated: Bool) {

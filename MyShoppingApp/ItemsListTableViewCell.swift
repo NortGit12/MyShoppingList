@@ -25,7 +25,7 @@ class ItemsListTableViewCell: UITableViewCell {
     func updateWithItem(item: Item) {
         
         nameLabel.text = item.name
-        quantityLabel.text = "[\(item.quantity)]"
+        quantityLabel.text = "\(item.quantity)"
     }
 
 }

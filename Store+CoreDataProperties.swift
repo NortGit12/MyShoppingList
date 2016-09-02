@@ -17,6 +17,6 @@ extension Store {
     @NSManaged var name: String
     @NSManaged var image: NSData
     @NSManaged var categories: NSOrderedSet
-    @NSManaged var items: NSOrderedSet?
+    @NSManaged var storeItems: NSOrderedSet?
 
 }

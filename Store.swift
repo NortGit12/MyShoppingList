@@ -47,9 +47,9 @@ class Store: SyncableObject, CloudKitManagedObject {
         record[Store.categoriesKey] = categoriesReferencesArray
         
         var itemsReferencesArray = [CKReference]()
-        if self.items?.count > 0 {
+        if self.storeItems?.count > 0 {
             
-            if let items = self.items {
+            if let items = self.storeItems {
                 
                 for item in items {
                     
@@ -98,7 +98,7 @@ class Store: SyncableObject, CloudKitManagedObject {
                 itemsMutableOrderedSet.addObject(item)
             }
             
-            self.items = itemsMutableOrderedSet.copy() as? NSOrderedSet
+            self.storeItems = itemsMutableOrderedSet.copy() as? NSOrderedSet
         }
     }
     
@@ -123,33 +123,71 @@ class Store: SyncableObject, CloudKitManagedObject {
         
         if let storeCategoriesReferencesArray = record[Store.categoriesKey] as? [CKReference] {
             
-            var storeCategoriesArray = [StoreCategory]()
-            for storeCategoryReference in storeCategoriesReferencesArray {
-                
-                let storeCategoryIDName = storeCategoryReference.recordID.recordName
-                if let storeCategory = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(storeCategoryIDName) {
-                    
-                    storeCategoriesArray.append(storeCategory)
-                }
-            }
+//            var storeCategoriesArray = [StoreCategory]()
+//            for storeCategoryReference in storeCategoriesReferencesArray {
+//                
+//                let storeCategoryIDName = storeCategoryReference.recordID.recordName
+//                if let storeCategory = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(storeCategoryIDName) {
+//                    
+//                    storeCategoriesArray.append(storeCategory)
+//                }
+//            }
+            
+            let storeCategoriesArray = setStoreCategories(storeCategoriesReferencesArray)
             
             self.categories = NSOrderedSet(array: storeCategoriesArray)
         }
         
         if let itemsReferencesArray = record[Store.itemsKey] as? [CKReference] {
             
-            var itemsArray = [Item]()
-            for itemReference in itemsReferencesArray {
-                
-                let itemIDName = itemReference.recordID.recordName
-                if let item = ItemModelController.sharedController.getItemByIdName(itemIDName) {
-                    
-                    itemsArray.append(item)
-                }
-            }
+//            var itemsArray = [Item]()
+//            for itemReference in itemsReferencesArray {
+//                
+//                let itemIDName = itemReference.recordID.recordName
+//                if let item = ItemModelController.sharedController.getItemByIdName(itemIDName) {
+//                    
+//                    itemsArray.append(item)
+//                }
+//            }
             
-            self.items = NSOrderedSet(array: itemsArray)
+            let itemsArray = setItems(itemsReferencesArray)
+            
+            self.storeItems = NSOrderedSet(array: itemsArray)
         }
+    }
+    
+    //==================================================
+    // MARK: - Methods
+    //==================================================
+    
+    func setStoreCategories(storeCategoriesReferencesArray: [CKReference]) -> [StoreCategory] {
+        
+        var storeCategoriesArray = [StoreCategory]()
+        for storeCategoryReference in storeCategoriesReferencesArray {
+            
+            let storeCategoryIDName = storeCategoryReference.recordID.recordName
+            if let storeCategory = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(storeCategoryIDName) {
+                
+                storeCategoriesArray.append(storeCategory)
+            }
+        }
+        
+        return storeCategoriesArray
+    }
+    
+    func setItems(itemsReferencesArray: [CKReference]) -> [Item] {
+        
+        var itemsArray = [Item]()
+        for itemReference in itemsReferencesArray {
+            
+            let itemIDName = itemReference.recordID.recordName
+            if let item = ItemModelController.sharedController.getItemByIdName(itemIDName) {
+                
+                itemsArray.append(item)
+            }
+        }
+        
+        return itemsArray
     }
 }
 

@@ -27,6 +27,9 @@ class ItemsTableViewController: UITableViewController {
             
             self.title = "\(store.name) List"
         }
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
     }
     
     override func viewWillAppear(animated: Bool) {
