@@ -104,6 +104,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let name = nameTextField.text where name.characters.count > 0
             , let indexPaths = storeCategoriesTableView.indexPathsForSelectedRows
             , image = imageView.image
+            , imageData = UIImagePNGRepresentation(image)
             else {
                 
                 NSLog("Error: Could not collect the required values for name, image, or index paths for store categories.")
@@ -119,7 +120,20 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         
-        StoreModelController.sharedController.createStore(name, image: image, categories: storeCategories)
+        // Update an existing Store
+        if let store = store {
+            
+            store.name = name
+            store.image = imageData
+            store.categories = NSOrderedSet(array: storeCategories)
+            
+            StoreModelController.sharedController.updateStore(store)
+            
+        // Create a new Store
+        } else {
+        
+            StoreModelController.sharedController.createStore(name, image: image, categories: storeCategories)
+        }
         
         self.navigationController?.popViewControllerAnimated(true)
     }

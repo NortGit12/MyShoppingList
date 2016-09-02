@@ -94,6 +94,47 @@ class StoreModelController {
         return resultsArray ?? nil
     }
     
+    func updateStore(store: Store, completion: (() -> Void)? = nil) {
+        
+        let request = NSFetchRequest(entityName: Store.type)
+        let predicate = NSPredicate(format: "recordName = %@", argumentArray: [store.recordName])
+        request.predicate = predicate
+        
+        let resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Store]
+        let existingStore = resultsArray?.first
+        
+        existingStore?.name = store.name
+        existingStore?.image = store.image
+        existingStore?.categories = store.categories
+        
+        PersistenceController.sharedController.saveContext()
+        
+        if let completion = completion {
+            completion()
+        }
+        
+        if let storeCloudKitRecord = store.cloudKitRecord {
+            
+            cloudKitManager.modifyRecords([storeCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
+                
+                if error != nil {
+                    
+                    NSLog("Error: Could not modify the existing \"\(store.name)\" store in CloudKit: \(error?.localizedDescription)")
+                    
+                    if let completion = completion {
+                        completion()
+                    }
+                }
+                
+                if let _ = records {
+                    
+                    NSLog("Updated \"\(store.name)\" store saved successfully to CloudKit.")
+                }
+            })
+            
+        }
+    }
+    
     func deleteStore(store: Store, completion: (() -> Void)? = nil) {
         
         if let storeCloudKitRecord = store.cloudKitRecord {

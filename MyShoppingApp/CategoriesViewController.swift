@@ -255,22 +255,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     //==================================================
     
     func editStoreButtonTapped(cell: StoreCollectionViewCell) {
-        
-//        guard let index = storesCollectionView.indexPathForCell(cell)?.row
-//            , selectedStoreCategory = self.selectedStoreCategory
-//            , stores = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)
-//            else { return }
-//        
-//        let store = stores[index]
-//        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let storeDetailController = storyboard.instantiateViewControllerWithIdentifier("storeDetailView")
-//        
-//        guard let storeDetailViewController = storeDetailController as? NewStoreViewController else { return }
-//        storeDetailViewController.store = store
-//        
-//        self.presentViewController(storeDetailViewController, animated: true, completion: nil)
-        
+                
         self.performSegueWithIdentifier("storeCategoriesToExistingStoreSegue", sender: cell)
     }
     
@@ -324,8 +309,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 // What do we need to pack?
                 guard let cell = sender as? StoreCollectionViewCell
                     , storeIndexPath = storesCollectionView.indexPathForCell(cell)
-//                    , let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
-//                    , storeIndex = storesCollectionView.indexPathsForSelectedItems()?.first?.row
                     , selectedStoreCategory = self.selectedStoreCategory
                     else {
                         

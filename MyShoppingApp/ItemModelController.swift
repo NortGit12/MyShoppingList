@@ -108,7 +108,7 @@ class ItemModelController {
                 
                 if error != nil {
                     
-                    NSLog("Error: Could not modify the existing \"\(item.name)\"item in CloudKit: \(error?.localizedDescription)")
+                    NSLog("Error: Could not modify the existing \"\(item.name)\" item in CloudKit: \(error?.localizedDescription)")
                     
                     if let completion = completion {
                         completion()
