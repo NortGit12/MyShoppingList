@@ -9,7 +9,7 @@
         <!--New Store-->
         <scene sceneID="NN1-9k-GXJ">
             <objects>
-                <viewController id="cjJ-nN-Fbh" customClass="NewStoreViewController" customModule="MyShoppingApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="storeDetailView" id="cjJ-nN-Fbh" customClass="NewStoreViewController" customModule="MyShoppingApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zNk-df-sjr"/>
                         <viewControllerLayoutGuide type="bottom" id="jJI-5b-dj5"/>
@@ -39,7 +39,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mqL-Sl-stF" id="yKy-98-Ndy">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store Category Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3E-L6-Xjl">
@@ -140,13 +140,13 @@
                                 <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yjw-0y-siQ" id="0dM-Cg-gZP">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-TE-fy4">
                                             <rect key="frame" x="8" y="8" width="304" height="27"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" misplaced="YES" text="Item" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4KF-OU-46U">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Item" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4KF-OU-46U">
                                                     <rect key="frame" x="0.0" y="0.0" width="187" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -336,7 +336,7 @@
                                                     <rect key="frame" x="22" y="15" width="30" height="30"/>
                                                     <state key="normal" title="Button" image="edit-pencil"/>
                                                     <connections>
-                                                        <action selector="editStoreButtonTapped:" destination="Bm5-CQ-YEp" eventType="touchUpInside" id="bVI-e7-Syk"/>
+                                                        <action selector="editStoreButtonTapped:" destination="Bm5-CQ-YEp" eventType="touchUpInside" id="1DP-vn-YQQ"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -465,6 +465,7 @@
                         <outlet property="storeCategoriesCollectionView" destination="LLN-BI-USW" id="9Yh-JD-00H"/>
                         <outlet property="storesCollectionView" destination="8IA-07-Rva" id="Kqh-Ba-k0E"/>
                         <outlet property="storesCollectionViewFlowLayout" destination="nda-6Q-ME2" id="U6O-Gz-u9g"/>
+                        <segue destination="cjJ-nN-Fbh" kind="show" identifier="storeCategoriesToExistingStoreSegue" id="K8l-Ao-ai5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CwI-pC-SpR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -491,7 +492,7 @@
                                         <rect key="frame" x="0.0" y="92" width="308" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tC2-Dx-kn1" id="xXm-oV-ar1">
-                                            <rect key="frame" x="0.0" y="0.0" width="308" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="308" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lmp-uw-pX4">
@@ -511,7 +512,7 @@
                                                     </constraints>
                                                     <state key="normal" title="Button" image="edit-pencil"/>
                                                     <connections>
-                                                        <action selector="editButtonTapped:" destination="tC2-Dx-kn1" eventType="touchUpInside" id="ytG-4J-CMp"/>
+                                                        <action selector="editStoreButtonTapped:" destination="tC2-Dx-kn1" eventType="touchUpInside" id="mJH-Hd-XSr"/>
                                                     </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangle_right-pointing" translatesAutoresizingMaskIntoConstraints="NO" id="YFk-Uw-GCx">
@@ -562,6 +563,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="fWC-kh-xLN" id="Tfw-Hx-oYF"/>
+                        <segue destination="cjJ-nN-Fbh" kind="show" identifier="allStoresToExistinStoreSegue" id="Lxx-01-yar"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWG-9i-gKy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -636,8 +638,8 @@
         <image name="triangle_right-pointing" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ugk-QQ-oGs"/>
-        <segue reference="AR2-GN-9e0"/>
+        <segue reference="K8l-Ao-ai5"/>
+        <segue reference="Czn-zW-54I"/>
         <segue reference="Jsa-3N-Xt7"/>
     </inferredMetricsTieBreakers>
 </document>

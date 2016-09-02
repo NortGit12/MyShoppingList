@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllStoresViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class AllStoresViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AllStoresTableViewCellDelegate {
     
     //==================================================
     // MARK: - Stored Properties
@@ -50,6 +50,8 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
         
         cell.updateWithStore(store)
         
+        cell.delegate = self
+        
         return cell
     }
     
@@ -71,6 +73,15 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
                 })
             })
         }
+    }
+    
+    //==================================================
+    // MARK: - AllStoresTableViewCellDelegate
+    //==================================================
+    
+    func editStoreButtonTapped(cell: AllStoresTableViewCell) {
+        
+        self.performSegueWithIdentifier("allStoresToExistinStoreSegue", sender: cell)
     }
     
     //==================================================
@@ -99,13 +110,14 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
                 self.navigationController?.navigationBar.topItem?.backBarButtonItem = backBarButtonItem
             }
             
-        } else if segue.identifier == "allStoresToExistingStoreSegue" {
+        } else if segue.identifier == "allStoresToExistinStoreSegue" {
             
             // Where are we going?
             if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
                 
                 // What do we need to pack?
-                guard let index = tableView.indexPathForSelectedRow?.row
+                guard let cell = sender as? AllStoresTableViewCell
+                    , index = tableView.indexPathForCell(cell)?.row
                     else {
                         
                         NSLog("Error: The store index could not be found.")

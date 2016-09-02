@@ -189,7 +189,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
         
-        selectImageButton.titleLabel?.text = ""
+        selectImageButton.setTitle("", forState: .Normal)
         imageView.image = image
         
         dismissViewControllerAnimated(true, completion: nil)

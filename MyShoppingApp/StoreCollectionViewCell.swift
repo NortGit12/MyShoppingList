@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol StoreCollectionViewCellDelegate {
+    
+    func editStoreButtonTapped(cell: StoreCollectionViewCell)
+}
+
 class StoreCollectionViewCell: UICollectionViewCell {
     
     //==================================================
@@ -16,6 +21,8 @@ class StoreCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    
+    var delegate: StoreCollectionViewCellDelegate?
     
     //==================================================
     // MARK: - Method(s)
@@ -33,6 +40,9 @@ class StoreCollectionViewCell: UICollectionViewCell {
     
     @IBAction func editStoreButtonTapped(sender: UIButton) {
         
-        
+        if let delegate = delegate {
+            
+            delegate.editStoreButtonTapped(self)
+        }
     }
 }

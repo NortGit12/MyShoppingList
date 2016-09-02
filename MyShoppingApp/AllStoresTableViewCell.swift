@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol AllStoresTableViewCellDelegate {
+    
+    func editStoreButtonTapped(cell: AllStoresTableViewCell)
+}
+
 class AllStoresTableViewCell: UITableViewCell {
     
     //==================================================
@@ -16,6 +21,8 @@ class AllStoresTableViewCell: UITableViewCell {
 
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    
+    var delegate: AllStoresTableViewCellDelegate?
     
     //==================================================
     // MARK: - Method(s)
@@ -31,8 +38,11 @@ class AllStoresTableViewCell: UITableViewCell {
     // MARK: - Action(s)
     //==================================================
     
-    @IBAction func editButtonTapped(sender: UIButton) {
+    @IBAction func editStoreButtonTapped(sender: UIButton) {
         
-        
+        if let delegate = delegate {
+            
+            delegate.editStoreButtonTapped(self)
+        }
     }
 }

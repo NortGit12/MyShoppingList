@@ -9,78 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MyShoppingApp/NewStoreViewController.swift"
-            timestampString = "494462744.199742"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "MyShoppingApp/CategoriesViewController.swift"
-            timestampString = "494462759.517752"
+            timestampString = "494477345.637908"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
             landmarkName = "prepareForSegue(_:sender:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MyShoppingApp/AllStoresViewController.swift"
-            timestampString = "494463930.307876"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "prepareForSegue(_:sender:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MyShoppingApp.AllStoresViewController.prepareForSegue (__ObjC.UIStoryboardSegue, sender : Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()"
-                  moduleName = "MyShoppingApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/AllStoresViewController.swift"
-                  timestampString = "494463963.799019"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "105"
-                  endingLineNumber = "105"
-                  offsetFromSymbolStart = "2037">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MyShoppingApp.AllStoresViewController.prepareForSegue (__ObjC.UIStoryboardSegue, sender : Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()"
-                  moduleName = "MyShoppingApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jeff/google-drive/03_career/training/dev-mountain/modules/07-01_capstone-project/03_projects/MyShoppingApp/MyShoppingApp/AllStoresViewController.swift"
-                  timestampString = "494463963.799192"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "105"
-                  endingLineNumber = "105"
-                  offsetFromSymbolStart = "2192">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
