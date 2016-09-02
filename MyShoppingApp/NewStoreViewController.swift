@@ -214,6 +214,15 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         nameTextField.text = store.name
         imageView.image = UIImage(data: store.image)
         
+        guard let defaultStoreImage = UIImage(named: "default-image_store")
+            , defaultStoreImageData = UIImagePNGRepresentation(defaultStoreImage)
+            else { return }
+        
+        if store.image != defaultStoreImageData {
+            
+            selectImageButton.setTitle("", forState: .Normal)
+        }
+        
         storeCategoriesTableView.reloadData()
     }
 }
