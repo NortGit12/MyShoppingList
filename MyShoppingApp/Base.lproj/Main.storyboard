@@ -397,11 +397,12 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMo-24-D4M">
-                                                    <rect key="frame" x="20" y="55" width="28" height="10"/>
+                                                    <rect key="frame" x="0.5" y="56" width="70" height="10"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" constant="70" id="Go5-Ae-I2q"/>
                                                         <constraint firstAttribute="height" constant="10" id="Rk9-xP-c0w"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -413,11 +414,11 @@
                                             <constraint firstItem="fM2-Fl-cyC" firstAttribute="centerY" secondItem="4dy-wu-Oup" secondAttribute="centerY" id="5cj-iw-waP"/>
                                             <constraint firstItem="fM2-Fl-cyC" firstAttribute="leading" secondItem="4dy-wu-Oup" secondAttribute="leadingMargin" constant="1" id="GdM-ix-UNZ"/>
                                             <constraint firstItem="fM2-Fl-cyC" firstAttribute="centerX" secondItem="4dy-wu-Oup" secondAttribute="centerX" constant="-1" id="K1L-4K-bUB"/>
-                                            <constraint firstAttribute="bottom" secondItem="OMo-24-D4M" secondAttribute="bottom" constant="9" id="Njt-eF-g8n"/>
+                                            <constraint firstAttribute="bottom" secondItem="OMo-24-D4M" secondAttribute="bottom" constant="8" id="Njt-eF-g8n"/>
                                             <constraint firstItem="fM2-Fl-cyC" firstAttribute="top" secondItem="4dy-wu-Oup" secondAttribute="topMargin" constant="-4" id="bdt-fD-3nl"/>
-                                            <constraint firstItem="OMo-24-D4M" firstAttribute="top" secondItem="fM2-Fl-cyC" secondAttribute="bottom" constant="1" id="cvk-ji-HqH"/>
-                                            <constraint firstItem="OMo-24-D4M" firstAttribute="centerX" secondItem="4dy-wu-Oup" secondAttribute="centerX" constant="-1" id="hZa-9j-g6I"/>
-                                            <constraint firstItem="fM2-Fl-cyC" firstAttribute="centerX" secondItem="OMo-24-D4M" secondAttribute="centerX" id="ya9-eE-4xT"/>
+                                            <constraint firstItem="OMo-24-D4M" firstAttribute="top" secondItem="fM2-Fl-cyC" secondAttribute="bottom" constant="2" id="cvk-ji-HqH"/>
+                                            <constraint firstItem="OMo-24-D4M" firstAttribute="centerX" secondItem="4dy-wu-Oup" secondAttribute="centerX" constant="0.5" id="hZa-9j-g6I"/>
+                                            <constraint firstItem="fM2-Fl-cyC" firstAttribute="centerX" secondItem="OMo-24-D4M" secondAttribute="centerX" constant="-1.5" id="ya9-eE-4xT"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
