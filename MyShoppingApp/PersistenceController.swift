@@ -85,55 +85,7 @@ class PersistenceController {
             
             moc.performBlock({
                 
-                switch type {
-                    
-                case StoreCategory.type:
-                    
-                    // Existing CoreData StoreCategory
-                    guard let _ = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(record.recordID.recordName) else {
-                        
-                        // New CoreData StoreCategory
-                        guard let _ = StoreCategory(record: record) else {
-                            
-                            NSLog("Error: Could not create a new Store Category from the CloudKit record.")
-                            return
-                        }
-                        
-                        return
-                    }
-                    
-                case Store.type:
-                    
-                    // Existing CoreData Store
-                    guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
-                        
-                        // New CoreData Store
-                        guard let _ = Store(record: record) else {
-                            
-                            NSLog("Error: Could not create a new Store from the CloudKit record.")
-                            return
-                        }
-                        
-                        return
-                    }
-                
-                case Item.type:
-                    
-                    // Existing CoreData Item
-                    guard let _ = ItemModelController.sharedController.getItemByIdName(record.recordID.recordName) else {
-                        
-                        // New CoreData Item
-                        guard let _ = Item(record: record) else {
-                            
-                            NSLog("Error: Could not create a new Item from the CloudKit record.")
-                            return
-                        }
-                        
-                        return
-                    }
-                    
-                default: return
-                }
+                self.evaluateToCreateNewCoreDataObjectsForCloudKitRecordsByType(type, record: record)
                 
                 PersistenceController.sharedController.saveContext()
             })
@@ -147,6 +99,59 @@ class PersistenceController {
             if let completion = completion {
                 completion()
             }
+        }
+    }
+    
+    func evaluateToCreateNewCoreDataObjectsForCloudKitRecordsByType(type: String, record: CKRecord) {
+        
+        switch type {
+            
+        case StoreCategory.type:
+            
+            // Existing CoreData StoreCategory
+            guard let _ = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(record.recordID.recordName) else {
+                
+                // New CoreData StoreCategory
+                guard let _ = StoreCategory(record: record) else {
+                    
+                    NSLog("Error: Could not create a new Store Category from the CloudKit record.")
+                    return
+                }
+                
+                return
+            }
+            
+        case Store.type:
+            
+            // Existing CoreData Store
+            guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
+                
+                // New CoreData Store
+                guard let _ = Store(record: record) else {
+                    
+                    NSLog("Error: Could not create a new Store from the CloudKit record.")
+                    return
+                }
+                
+                return
+            }
+            
+        case Item.type:
+            
+            // Existing CoreData Item
+            guard let _ = ItemModelController.sharedController.getItemByIdName(record.recordID.recordName) else {
+                
+                // New CoreData Item
+                guard let _ = Item(record: record) else {
+                    
+                    NSLog("Error: Could not create a new Item from the CloudKit record.")
+                    return
+                }
+                
+                return
+            }
+            
+        default: return
         }
     }
     

@@ -26,6 +26,7 @@ class StoreCategoryModelController {
     
     init() {
         
+        // Run createMockData() to populate the StoreCategories
 //        createMockData()
     }
     
