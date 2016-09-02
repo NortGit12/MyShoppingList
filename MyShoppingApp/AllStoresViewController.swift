@@ -48,9 +48,8 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
             , store = StoreModelController.sharedController.getStores()?[indexPath.row]
             else { return UITableViewCell() }
         
-        cell.updateWithStore(store)
-        
         cell.delegate = self
+        cell.updateWithStore(store)
         
         return cell
     }
@@ -94,44 +93,54 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
         // How are we getting there?
         if segue.identifier == "storeInAllStoresToItemsListSegue" {
             
-            // Where are we going?
-            if let itemsTableViewController = segue.destinationViewController as? ItemsTableViewController {
-                
-                // What do we need to pack?
-                guard let index = tableView.indexPathForSelectedRow?.row
-                    , stores = StoreModelController.sharedController.getStores()
-                    else { return }
-                
-                let backBarButtonItem = UIBarButtonItem()
-                backBarButtonItem.title = "Stores"
-                
-                // Are we done packing?
-                itemsTableViewController.store = stores[index]
-                self.navigationController?.navigationBar.topItem?.backBarButtonItem = backBarButtonItem
-            }
+            self.segueToItemsList(segue)
             
         } else if segue.identifier == "allStoresToExistinStoreSegue" {
             
-            // Where are we going?
-            if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
-                
-                // What do we need to pack?
-                guard let cell = sender as? AllStoresTableViewCell
-                    , index = tableView.indexPathForCell(cell)?.row
-                    else {
-                        
-                        NSLog("Error: The store index could not be found.")
-                        return
-                }
-                
-                guard let stores = StoreModelController.sharedController.getStores()
-                    else { return }
-                
-                let store = stores[index]
-                
-                // Are we done packing?
-                newStoreViewController.store = store
+            self.segueToExistingStore(segue, sender: sender)
+        }
+    }
+    
+    func segueToItemsList(segue: UIStoryboardSegue) {
+        
+        // Where are we going?
+        if let itemsTableViewController = segue.destinationViewController as? ItemsTableViewController {
+            
+            // What do we need to pack?
+            guard let index = tableView.indexPathForSelectedRow?.row
+                , stores = StoreModelController.sharedController.getStores()
+                else { return }
+            
+            let backBarButtonItem = UIBarButtonItem()
+            backBarButtonItem.title = "Stores"
+            
+            // Are we done packing?
+            itemsTableViewController.store = stores[index]
+            self.navigationController?.navigationBar.topItem?.backBarButtonItem = backBarButtonItem
+        }
+    }
+    
+    func segueToExistingStore(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        // Where are we going?
+        if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
+            
+            // What do we need to pack?
+            guard let cell = sender as? AllStoresTableViewCell
+                , index = tableView.indexPathForCell(cell)?.row
+                else {
+                    
+                    NSLog("Error: The store index could not be found.")
+                    return
             }
+            
+            guard let stores = StoreModelController.sharedController.getStores()
+                else { return }
+            
+            let store = stores[index]
+            
+            // Are we done packing?
+            newStoreViewController.store = store
         }
     }
 }

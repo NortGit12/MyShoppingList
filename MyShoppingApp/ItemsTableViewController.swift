@@ -30,6 +30,7 @@ class ItemsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
         
         self.tableView.reloadData()
@@ -96,28 +97,38 @@ class ItemsTableViewController: UITableViewController {
         // How am I getting there?
         if segue.identifier == "itemsListAddToItemDetailSegue" {
             
-            // Where am I going?
-            if let itemDetailViewController = segue.destinationViewController as? ItemDetailViewController
-                , store = store {
-                
-                // Am I done packing?
-                itemDetailViewController.store = store
-            }
+            self.segueToNewItem(segue)
             
         } else if segue.identifier == "itemsListCellToItemDetailSegue" {
             
-            // Where am I going?
-            if let itemDetailViewController = segue.destinationViewController as? ItemDetailViewController
-                , store = store
-                , index = tableView.indexPathForSelectedRow?.row
-                , storeItems = ItemModelController.sharedController.getItemsForStore(store) {
-                
-                // Am I done packing?
-                let item = storeItems[index]
-                
-                itemDetailViewController.store = store
-                itemDetailViewController.item = item
-            }
+            segueToExistingItem(segue)
+        }
+    }
+    
+    func segueToNewItem(segue: UIStoryboardSegue) {
+        
+        // Where am I going?
+        if let itemDetailViewController = segue.destinationViewController as? ItemDetailViewController
+            , store = store {
+            
+            // Am I done packing?
+            itemDetailViewController.store = store
+        }
+    }
+    
+    func segueToExistingItem(segue: UIStoryboardSegue) {
+        
+        // Where am I going?
+        if let itemDetailViewController = segue.destinationViewController as? ItemDetailViewController
+            , store = store
+            , index = tableView.indexPathForSelectedRow?.row
+            , storeItems = ItemModelController.sharedController.getItemsForStore(store) {
+            
+            // Am I done packing?
+            let item = storeItems[index]
+            
+            itemDetailViewController.store = store
+            itemDetailViewController.item = item
         }
     }
  

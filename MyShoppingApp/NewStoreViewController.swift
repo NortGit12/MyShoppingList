@@ -99,8 +99,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func saveButtonTapped(sender: UIButton) {
         
-        // What do we need to pack?
-        
+        // Gather all of the Store's data
         guard let name = nameTextField.text where name.characters.count > 0
             , let indexPaths = storeCategoriesTableView.indexPathsForSelectedRows
             , image = imageView.image
