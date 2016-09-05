@@ -42,11 +42,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 
                 self.refreshCollectionViewsAfterSyncing()
                 
-                // Select "Grocery" as the default Store Category
-                self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: self.defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
-                
                 guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories() else { return }
                 self.selectedStoreCategory = storeCategories[self.defaultStoreCategoryIndex]
+                
+                // Select "Grocery" as the default Store Category
+                self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: self.defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
             })
         }
     }
