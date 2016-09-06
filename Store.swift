@@ -19,11 +19,24 @@ class Store: SyncableObject, CloudKitManagedObject {
     
     static let type = "Store"
     static let nameKey = "name"
-    static let imageKey = "image"
+    static let imageKey = "storeImage"
     static let categoriesKey = "categories"
     static let itemsKey = "items"
     
     var recordType: String { return Store.type }
+    
+    lazy var temporaryImageURL: NSURL = {
+        
+        // Must write to temporary directory to be able to pass image file path URL to CKAsset
+        
+        let temporaryDirectory = NSTemporaryDirectory()
+        let temporaryDirectoryURL = NSURL(fileURLWithPath: temporaryDirectory)
+        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName).URLByAppendingPathExtension("jpg")
+        
+        self.image.writeToURL(fileURL, atomically: true)
+        
+        return fileURL
+    }()
     
     var cloudKitRecord: CKRecord? {
         
@@ -31,7 +44,7 @@ class Store: SyncableObject, CloudKitManagedObject {
         let record = CKRecord(recordType: recordType, recordID: recordID)
         
         record[Store.nameKey] = self.name
-        record[Store.imageKey] = self.image
+        record[Store.imageKey] = CKAsset(fileURL: self.temporaryImageURL)
         
         var categoriesReferencesArray = [CKReference]()
         for category in self.categories {
@@ -109,7 +122,8 @@ class Store: SyncableObject, CloudKitManagedObject {
     convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
         guard let name = record[Store.nameKey] as? String
-            , image = record[Store.imageKey] as? NSData
+            , imageAssetData = record[Store.imageKey] as? CKAsset
+            , imageData = NSData(contentsOfURL: imageAssetData.fileURL)
             else {
                 
                 NSLog("Error: Could not create the Store from the CloudKit record.")
@@ -127,19 +141,9 @@ class Store: SyncableObject, CloudKitManagedObject {
         self.recordName = record.recordID.recordName
         self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         self.name = name
-        self.image = image
+        self.image = imageData
         
         if let storeCategoriesReferencesArray = record[Store.categoriesKey] as? [CKReference] {
-            
-//            var storeCategoriesArray = [StoreCategory]()
-//            for storeCategoryReference in storeCategoriesReferencesArray {
-//                
-//                let storeCategoryIDName = storeCategoryReference.recordID.recordName
-//                if let storeCategory = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(storeCategoryIDName) {
-//                    
-//                    storeCategoriesArray.append(storeCategory)
-//                }
-//            }
             
             let storeCategoriesArray = setStoreCategories(storeCategoriesReferencesArray)
             
@@ -147,16 +151,6 @@ class Store: SyncableObject, CloudKitManagedObject {
         }
         
         if let itemsReferencesArray = record[Store.itemsKey] as? [CKReference] {
-            
-//            var itemsArray = [Item]()
-//            for itemReference in itemsReferencesArray {
-//                
-//                let itemIDName = itemReference.recordID.recordName
-//                if let item = ItemModelController.sharedController.getItemByIdName(itemIDName) {
-//                    
-//                    itemsArray.append(item)
-//                }
-//            }
             
             let itemsArray = setItems(itemsReferencesArray)
             
