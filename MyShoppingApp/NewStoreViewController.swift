@@ -199,6 +199,9 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
             imageActionSheet.addAction(cameraAction)
         }
         
+        imageActionSheet.popoverPresentationController?.sourceView = sender
+        imageActionSheet.popoverPresentationController?.sourceRect = sender.bounds
+        
         self.presentViewController(imageActionSheet, animated: true, completion: nil)
     }
     
