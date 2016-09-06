@@ -117,66 +117,6 @@ class PersistenceController {
                 completion()
             }
         }
-        
-//        userController.getLoggedInUser { (record, error) in
-//            
-//            var predicate: NSPredicate!
-//            let moc = PersistenceController.sharedController.moc
-//            moc.performBlockAndWait {
-//                
-//                /*
-//                 All users will use the same set of ten Store Categories.  They should only see their Stores and Items.
-//                 */
-//                if type != StoreCategory.type {
-//                    
-//                    guard let creatorUserRecord = self.userController.loggedInUserRecord
-//                        , creatorUserRecordID = creatorUserRecord.creatorUserRecordID
-//                        else {
-//                            
-//                            NSLog("Error: Could not either identify the logged in user or get their record ID.")
-//                            return
-//                    }
-//                    
-//                    referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
-//                    
-//                    predicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
-//                    let recordExclusionPredicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
-//                    let specificUserPredicate = NSPredicate(format: "creatorUserRecordID == %@", argumentArray: [creatorUserRecordID])
-//                    
-//                    print("\ncreatorUserRecordID = \(creatorUserRecordID)\n")
-//                    
-//                    predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [recordExclusionPredicate, specificUserPredicate])
-//                }
-//                
-//                if referencesToExclude.isEmpty {
-//                    predicate = NSPredicate(value: true)
-//                }
-//            }
-//            
-//            self.cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
-//                
-//                /*
-//                 Again, doing this CoreData work on the same thread as the moc
-//                 */
-//                
-//                moc.performBlock({
-//                    
-//                    self.evaluateToCreateNewCoreDataObjectsForCloudKitRecordsByType(type, record: record)
-//                    
-//                    PersistenceController.sharedController.saveContext()
-//                })
-//                
-//            }) { (records, error) in        // completion block
-//                
-//                if error != nil {
-//                    print("Error: Could not fetch unsynced CloudKit records: \(error)")
-//                }
-//                
-//                if let completion = completion {
-//                    completion()
-//                }
-//            }
-//        }
     }
     
     func evaluateToCreateNewCoreDataObjectsForCloudKitRecordsByType(type: String, record: CKRecord) {
