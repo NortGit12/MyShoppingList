@@ -38,7 +38,11 @@ class StoreCategoryModelController {
         
         guard let imageData = UIImagePNGRepresentation(image)
             , storeCategory = StoreCategory(name: name, image: imageData, stores: nil)
-            else { return }
+            else {
+                
+                NSLog("Error: Could not either access the image data or create a new StoreCategory.")
+                return
+            }
         
         PersistenceController.sharedController.saveContext()
         
@@ -99,7 +103,11 @@ class StoreCategoryModelController {
         
         guard let storesSet = storeCategory.stores
             , storesArray = Array(storesSet) as? [Store]
-            else { return nil }
+            else {
+            
+                NSLog("Error: Could not either unwrap the set of Stores or convert it to an Array of Stores.")
+                return nil
+            }
         
         let sortedStoresArray = storesArray.sort({ $0.0.name < $0.1.name })
         

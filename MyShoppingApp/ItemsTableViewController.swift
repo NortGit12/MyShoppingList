@@ -57,7 +57,11 @@ class ItemsTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCellWithIdentifier("itemsListCell", forIndexPath: indexPath) as? ItemsListTableViewCell
             , store = store
             , storeItems = ItemModelController.sharedController.getItemsForStore(store)
-            else { return UITableViewCell() }
+            else {
+            
+                NSLog("Error: Could not do one of the following: 1) Cast a UITableViewCell to an ItemsListTableViewCell, 2) Unwrap the store, or 3) Get all of the items for the store.")
+                return UITableViewCell()
+            }
         
         let item = storeItems[indexPath.row]
         

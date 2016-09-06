@@ -62,7 +62,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         
         guard let storeCategoryEntity = NSEntityDescription.entityForName(StoreCategory.type, inManagedObjectContext: context) else {
         
-            NSLog("Error: Could not initialize the \(StoreCategory.type)")
+            NSLog("Error: Could not create the entity description for a \(StoreCategory.type).")
             return nil
         }
         

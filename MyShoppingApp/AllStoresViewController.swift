@@ -48,7 +48,11 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
         
         guard let cell = tableView.dequeueReusableCellWithIdentifier("allStoresListCell", forIndexPath: indexPath) as? AllStoresTableViewCell
             , store = StoreModelController.sharedController.getStores()?[indexPath.row]
-            else { return UITableViewCell() }
+            else {
+        
+                NSLog("Error: Could not cast the UITableViewCell to an AllStoresTableViewCell.")
+                return UITableViewCell()
+        }
         
         cell.delegate = self
         cell.updateWithStore(store)
@@ -111,7 +115,11 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
             // What do we need to pack?
             guard let index = tableView.indexPathForSelectedRow?.row
                 , stores = StoreModelController.sharedController.getStores()
-                else { return }
+                else {
+            
+                    NSLog("Error: Could not either identify the index of the selected row in AllStoresTableView or get all of the stores when attempting to segue to the items list.")
+                    return
+            }
             
             let backBarButtonItem = UIBarButtonItem()
             backBarButtonItem.title = "Stores"
@@ -132,12 +140,16 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
                 , index = tableView.indexPathForCell(cell)?.row
                 else {
                     
-                    NSLog("Error: The store index could not be found.")
+                    NSLog("Error: Could not either cast the UITableViewCell as an AllStoresTableViewCell or could not get the indexPath for the cell when attempting to segue to an existing store.")
                     return
             }
             
             guard let stores = StoreModelController.sharedController.getStores()
-                else { return }
+                else {
+                    
+                    NSLog("Error: Could not get all of the stores when attempting to segue to an existing store.")
+                    return
+            }
             
             let store = stores[index]
             

@@ -74,7 +74,11 @@ class Store: SyncableObject, CloudKitManagedObject {
 
     convenience init?(name: String, image: NSData, categories: [StoreCategory], items: [Item]?, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
-        guard let storeEntity = NSEntityDescription.entityForName(Store.type, inManagedObjectContext: context) else { return nil }
+        guard let storeEntity = NSEntityDescription.entityForName(Store.type, inManagedObjectContext: context) else {
+            
+            NSLog("Error: Could not create the entity description for a \(Store.type).")
+            return nil
+        }
         
         self.init(entity: storeEntity, insertIntoManagedObjectContext: context)
         
@@ -112,7 +116,11 @@ class Store: SyncableObject, CloudKitManagedObject {
                 return nil
         }
         
-        guard let storeEntity = NSEntityDescription.entityForName(Store.type, inManagedObjectContext: context) else { return nil }
+        guard let storeEntity = NSEntityDescription.entityForName(Store.type, inManagedObjectContext: context) else {
+            
+            NSLog("Error: Could not create the entity description for an \(Store.type).")
+            return nil
+        }
         
         self.init(entity: storeEntity, insertIntoManagedObjectContext: context)
         

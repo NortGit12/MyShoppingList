@@ -56,7 +56,11 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         
         guard let cell = tableView.dequeueReusableCellWithIdentifier("newStoreCategoryCell", forIndexPath: indexPath) as? NewStoreCategoryTableViewCell
             , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
-            else { return UITableViewCell() }
+            else {
+                
+                NSLog("Error: Could not either cast the UITableViewCell to a NewStoreCategoryTableViewCell or identify the StoreCategory for the selected cell.")
+                return UITableViewCell()
+            }
         
         if self.store != nil {
         
@@ -166,7 +170,11 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let browserAction = UIAlertAction(title: "Browser", style: .Default) { (_) in
             
-            guard let googleImagesUrl = NSURL(string: "https://www.google.com/imghp?gws_rd=ssl") else { return }
+            guard let googleImagesUrl = NSURL(string: "https://www.google.com/imghp?gws_rd=ssl") else {
+                
+                NSLog("Error: Could not create the Google Images URL.")
+                return
+            }
             
             let safariViewController = SFSafariViewController(URL: googleImagesUrl)
             
@@ -200,7 +208,11 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            
+            NSLog("Error: Could not get the ImagePicker's original image.")
+            return
+        }
         
         selectImageButton.setTitle("", forState: .Normal)
         imageView.image = image
@@ -215,7 +227,11 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         
         guard let defaultStoreImage = UIImage(named: "default-image_store")
             , defaultStoreImageData = UIImagePNGRepresentation(defaultStoreImage)
-            else { return }
+            else {
+                
+                NSLog("Error: Could not access the default image or its data.")
+                return
+            }
         
         if store.image != defaultStoreImageData {
             

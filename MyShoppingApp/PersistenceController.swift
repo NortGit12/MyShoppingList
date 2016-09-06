@@ -68,16 +68,33 @@ class PersistenceController {
         let moc = PersistenceController.sharedController.moc
         moc.performBlockAndWait {
             
-            referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
-            
-            predicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
+            /*
+             All users will use the same set of ten Store Categories.  They should only see their Stores and Items.
+             */
+            if type != StoreCategory.type {
+                
+                guard let creatorUserRecord = UserController.sharedController.loggedInUserRecord
+                    , creatorUserRecordID = creatorUserRecord.creatorUserRecordID
+                    else {
+                        
+                        NSLog("Error: Could not either identify the logged in user or get their record ID.")
+                        return
+                }
+                
+                referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
+                
+                let recordExclusionPredicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
+                let specificUserPredicate = NSPredicate(format: "creatorUserRecordID == %@", argumentArray: [creatorUserRecordID])
+                
+                predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [recordExclusionPredicate, specificUserPredicate])
+            }
             
             if referencesToExclude.isEmpty {
                 predicate = NSPredicate(value: true)
             }
         }
         
-        cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
+        self.cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
             
             /*
              Again, doing this CoreData work on the same thread as the moc
@@ -100,6 +117,66 @@ class PersistenceController {
                 completion()
             }
         }
+        
+//        userController.getLoggedInUser { (record, error) in
+//            
+//            var predicate: NSPredicate!
+//            let moc = PersistenceController.sharedController.moc
+//            moc.performBlockAndWait {
+//                
+//                /*
+//                 All users will use the same set of ten Store Categories.  They should only see their Stores and Items.
+//                 */
+//                if type != StoreCategory.type {
+//                    
+//                    guard let creatorUserRecord = self.userController.loggedInUserRecord
+//                        , creatorUserRecordID = creatorUserRecord.creatorUserRecordID
+//                        else {
+//                            
+//                            NSLog("Error: Could not either identify the logged in user or get their record ID.")
+//                            return
+//                    }
+//                    
+//                    referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
+//                    
+//                    predicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
+//                    let recordExclusionPredicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
+//                    let specificUserPredicate = NSPredicate(format: "creatorUserRecordID == %@", argumentArray: [creatorUserRecordID])
+//                    
+//                    print("\ncreatorUserRecordID = \(creatorUserRecordID)\n")
+//                    
+//                    predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [recordExclusionPredicate, specificUserPredicate])
+//                }
+//                
+//                if referencesToExclude.isEmpty {
+//                    predicate = NSPredicate(value: true)
+//                }
+//            }
+//            
+//            self.cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
+//                
+//                /*
+//                 Again, doing this CoreData work on the same thread as the moc
+//                 */
+//                
+//                moc.performBlock({
+//                    
+//                    self.evaluateToCreateNewCoreDataObjectsForCloudKitRecordsByType(type, record: record)
+//                    
+//                    PersistenceController.sharedController.saveContext()
+//                })
+//                
+//            }) { (records, error) in        // completion block
+//                
+//                if error != nil {
+//                    print("Error: Could not fetch unsynced CloudKit records: \(error)")
+//                }
+//                
+//                if let completion = completion {
+//                    completion()
+//                }
+//            }
+//        }
     }
     
     func evaluateToCreateNewCoreDataObjectsForCloudKitRecordsByType(type: String, record: CKRecord) {
@@ -166,7 +243,11 @@ class PersistenceController {
                 print("Error: Could not push unsynced record to CloudKit: \(error)")
             }
             
-            guard let record = record else { return }
+            guard let record = record else {
+                
+                NSLog("Error: Could not unwrap the saved record.")
+                return
+            }
             
             /*
              This supports multi-threading.  Anything we do with MangedObjectContexts must need to be done on the same thread that it is in.  The code inside this cloudKitManager.saveRecords(...) method will be on a background thread and the MangedObjectContext (moc) is on the main thread, so we need a way to get this.  ALL pieces of things that deal with Core Data need to be in here, working on the main thread where the moc is.  In here the $0.recordName accesses Core Data and so does the .update(...) method.

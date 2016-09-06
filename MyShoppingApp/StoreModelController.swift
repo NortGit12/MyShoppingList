@@ -37,7 +37,11 @@ class StoreModelController {
         
         guard let imageData = UIImagePNGRepresentation(storeImage)
             , store = Store(name: name, image: imageData, categories: categories, items: nil)
-            else { return }
+            else {
+                
+                NSLog("Error: Could not either access the image data or create a new Store.")
+                return
+            }
         
         PersistenceController.sharedController.saveContext()
         

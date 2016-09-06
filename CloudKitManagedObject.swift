@@ -47,14 +47,22 @@ extension CloudKitManagedObject {
     
     var cloudKitRecordID: CKRecordID? {
         
-        guard let recordIDData = recordIDData else { return nil }
+        guard let recordIDData = recordIDData else {
+            
+            NSLog("Info: recordIDData is nil when attempting to compute the cloudKitRecordID.")
+            return nil
+        }
         
         return NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData) as? CKRecordID
     }
     
     var cloudKitReference: CKReference? {
         
-        guard let cloudKitRecordID = cloudKitRecordID else { return nil }
+        guard let cloudKitRecordID = cloudKitRecordID else {
+            
+            NSLog("Info: cloudKitRecordID is nill when attempting to compute the cloudKitReference.")
+            return nil
+        }
         
         return CKReference(recordID: cloudKitRecordID, action: .DeleteSelf)
     }

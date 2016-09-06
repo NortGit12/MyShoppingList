@@ -34,7 +34,11 @@ class Item: SyncableObject, CloudKitManagedObject {
         record[Item.quantityKey] = self.quantity
         record[Item.notesKey] = self.notes
         
-        guard let storeRecordID = NSKeyedUnarchiver.unarchiveObjectWithData(self.store.recordIDData!) as? CKRecordID else { return nil }
+        guard let storeRecordID = NSKeyedUnarchiver.unarchiveObjectWithData(self.store.recordIDData!) as? CKRecordID else {
+            
+            NSLog("Error: Could not unarchive the recordIDData when attempting to compute the cloudKitRecord")
+            return nil
+        }
         let storeReference = CKReference(recordID: storeRecordID, action: .DeleteSelf)
         record[Item.storeKey] = storeReference
         
@@ -47,7 +51,11 @@ class Item: SyncableObject, CloudKitManagedObject {
     
     convenience init?(name: String, quantity: String, notes: String? = nil, store: Store, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
-        guard let itemEntity = NSEntityDescription.entityForName(Item.type, inManagedObjectContext: context) else { return nil }
+        guard let itemEntity = NSEntityDescription.entityForName(Item.type, inManagedObjectContext: context) else {
+            
+            NSLog("Error: Could not create the entity description for an \(Item.type).")
+            return nil
+        }
         
         self.init(entity: itemEntity, insertIntoManagedObjectContext: context)
         
@@ -75,7 +83,11 @@ class Item: SyncableObject, CloudKitManagedObject {
                 return nil
         }
         
-        guard let itemEntity = NSEntityDescription.entityForName(Item.type, inManagedObjectContext: context) else { return nil }
+        guard let itemEntity = NSEntityDescription.entityForName(Item.type, inManagedObjectContext: context) else {
+            
+            NSLog("Error: Could not create the entity description for an \(Item.type).")
+            return nil
+        }
         
         self.init(entity: itemEntity, insertIntoManagedObjectContext: context)
         
@@ -86,7 +98,11 @@ class Item: SyncableObject, CloudKitManagedObject {
         self.notes = notes
         
         let storeIDName = storeReference.recordID.recordName
-        guard let store = StoreModelController.sharedController.getStoreByIdName(storeIDName) else { return nil }
+        guard let store = StoreModelController.sharedController.getStoreByIdName(storeIDName) else {
+            
+            NSLog("Error: Could not identify the store by its ID name \"\(storeIDName)\"")
+            return nil
+        }
         
         self.store = store
     }

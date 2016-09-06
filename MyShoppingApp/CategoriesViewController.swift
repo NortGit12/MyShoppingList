@@ -21,6 +21,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var storesCollectionView: UICollectionView!
     @IBOutlet weak var storesCollectionViewFlowLayout: UICollectionViewFlowLayout!
     
+    var initialLoadingAndAppearingComplete = false
+    
     var collectionViewSelectedBorderWidth: CGFloat = 1.0
     var collectionViewUnselectedBorderWidth: CGFloat = 0.0
     var collectionViewSelectedBackgroundColor: UIColor = .orangeColor()
@@ -33,21 +35,29 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupCollectionViews()
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        requestFullSync {
+        UserController.sharedController.getLoggedInUser { (record, error) in
             
-            dispatch_async(dispatch_get_main_queue(), {
+            self.setupCollectionViews()
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            self.requestFullSync {
                 
-                self.refreshCollectionViewsAfterSyncing()
-                
-                guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories() else { return }
-                self.selectedStoreCategory = storeCategories[self.defaultStoreCategoryIndex]
-                
-                // Select "Grocery" as the default Store Category
-                self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: self.defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
-            })
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    self.refreshCollectionViewsAfterSyncing()
+                    
+                    guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories() else {
+                        
+                        NSLog("Error: No StoreCategories found.")
+                        return
+                    }
+                    
+                    self.selectedStoreCategory = storeCategories[self.defaultStoreCategoryIndex]
+                    
+                    // Select "Grocery" as the default Store Category
+                    self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: self.defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+                })
+            }
         }
     }
     
@@ -55,14 +65,21 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         super.viewWillAppear(animated)
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        requestFullSync { 
+        if initialLoadingAndAppearingComplete == false {
             
-            dispatch_async(dispatch_get_main_queue(), {
+            initialLoadingAndAppearingComplete = true
+            
+        } else {
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            requestFullSync {
                 
-                self.refreshCollectionViewsAfterSyncing()
-                
-            })
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    self.refreshCollectionViewsAfterSyncing()
+                    
+                })
+            }
         }
     }
     
@@ -97,7 +114,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
             guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCategoryCollectionViewCell", forIndexPath: indexPath) as? StoreCategoryCollectionViewCell
                 , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
-                else { return UICollectionViewCell() }
+                else {
+                    
+                    NSLog("Error: Could not either cast the UITableViewCell as a StoreCategoryCollectionViewCell or identify the selected StoreCategory.")
+                    return UICollectionViewCell()
+            }
             
             cell.updateWithStoreCategory(storeCategory)
             
@@ -121,7 +142,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 
                 guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
                     , store = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
-                    else { return UICollectionViewCell() }
+                    else {
+                        
+                        NSLog("Error: Could not either cast the UITableViewCell as a StoreCollectionViewCell or get all of the stores for the selected StoreCategory.")
+                        return UICollectionViewCell()
+                }
                 
                 cell.delegate = self
                 cell.updateWithStore(store)
@@ -142,7 +167,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         if collectionView == storeCategoriesCollectionView {
             
             guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
-                else { return }
+                else {
+                
+                    NSLog("Error: Could not get all of the StoreCategories.")
+                    return
+                }
             
             guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
             
@@ -158,7 +187,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if collectionView == storeCategoriesCollectionView {
             
-            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else {
+                
+                NSLog("Error: Could not identify the selected StoreCategory cell.")
+                return
+            }
             
             handleSelectionFormattingForCell(cell, indexPathForCell: indexPath, borderWidth: self.collectionViewUnselectedBorderWidth, backgroundColor: self.collectionViewUnselectedBackgroundColor)
         }
@@ -180,9 +213,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     func setupCollectionViews() {
         
         self.automaticallyAdjustsScrollViewInsets = false
-        
         self.storeCategoriesCollectionView.allowsMultipleSelection = false
-        
         self.storesCollectionView.allowsMultipleSelection = false
     }
     
@@ -242,7 +273,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 , let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
                 else {
                     
-                    NSLog("Error: The index or the Store Categories could not be found.")
+                    NSLog("Error: The index or the Store Categories could not be found when attempting to segue to a new store.")
                     return
             }
             
@@ -264,12 +295,16 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 , selectedStoreCategory = self.selectedStoreCategory
                 else {
                     
-                    NSLog("Error: The index or the Store Categories could not be found.")
+                    NSLog("Error: The index or the Store Categories could not be found when attempting to segue to an existing store.")
                     return
             }
             
             guard let stores = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)
-                else { return }
+                else {
+                
+                    NSLog("Error: Could not get all the stores for the the selected StoreCategory when attempting to segue to an existing store.")
+                    return
+                }
             
             let store = stores[storeIndexPath.row]
             
@@ -290,7 +325,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 , stores = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)
                 else {
                     
-                    NSLog("Error: Problem identifying the selected store for the upcoming items list")
+                    NSLog("Error: Problem identifying the selected store for the upcoming items list when attempting to segue to the items list.")
                     return
             }
             
