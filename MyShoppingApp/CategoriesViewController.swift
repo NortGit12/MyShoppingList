@@ -21,6 +21,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var storesCollectionView: UICollectionView!
     @IBOutlet weak var storesCollectionViewFlowLayout: UICollectionViewFlowLayout!
     
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     var initialLoadingAndAppearingComplete = false
     
     var collectionViewSelectedBorderWidth: CGFloat = 1.0
@@ -35,11 +36,14 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityIndicatorView.hidesWhenStopped = true
+        
         UserController.sharedController.getLoggedInUser { (record, error) in
             
             self.setupCollectionViews()
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            self.activityIndicatorView.startAnimating()
             self.requestFullSync {
                 
                 dispatch_async(dispatch_get_main_queue(), {
@@ -56,6 +60,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                     
                     // Select "Grocery" as the default Store Category
                     self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: self.defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+                    
+                    self.activityIndicatorView.stopAnimating()
                 })
             }
         }
@@ -72,11 +78,13 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         } else {
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            self.activityIndicatorView.startAnimating()
             requestFullSync {
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     
                     self.refreshCollectionViewsAfterSyncing()
+                    self.activityIndicatorView.stopAnimating()
                     
                 })
             }
