@@ -16,7 +16,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
     var selectedStoreCategory: StoreCategory?
-    let defaultStoreCategoryIndex = 4
+    let defaultStoreCategoryName = "Grocery"
     
     @IBOutlet weak var storesCollectionView: UICollectionView!
     @IBOutlet weak var storesCollectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -50,16 +50,19 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                     
                     self.refreshCollectionViewsAfterSyncing()
                     
-                    guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories() else {
+                    guard let defaultStoreCategory = StoreCategoryModelController.sharedController.getStoreCategoryByName(self.defaultStoreCategoryName)
+                        , storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
+                        , defaultStoreCategoryIndex = storeCategories.indexOf(defaultStoreCategory)
+                        else {
                         
-                        NSLog("Error: No StoreCategories found.")
-                        return
-                    }
+                            NSLog("Error: Could not find the default Store Category.")
+                            return
+                        }
                     
-                    self.selectedStoreCategory = storeCategories[self.defaultStoreCategoryIndex]
+                    self.selectedStoreCategory = defaultStoreCategory
                     
                     // Select "Grocery" as the default Store Category
-                    self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: self.defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+                    self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
                     
                     self.activityIndicatorView.stopAnimating()
                 })

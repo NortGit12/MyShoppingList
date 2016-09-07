@@ -87,6 +87,19 @@ class StoreCategoryModelController {
         return resultsArray?.first
     }
     
+    func getStoreCategoryByName(name: String) -> StoreCategory? {
+        
+        if name.isEmpty { return nil }
+        
+        let request = NSFetchRequest(entityName: StoreCategory.type)
+        let predicate = NSPredicate(format: "name == %@", argumentArray: [name])
+        request.predicate = predicate
+        
+        let resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory] ?? nil
+        
+        return resultsArray?.first
+    }
+    
     func getStoreCategories() -> [StoreCategory]? {
         
         let request = NSFetchRequest(entityName: StoreCategory.type)
