@@ -148,11 +148,22 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                     return
                 }
             
-            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
+            let selectedStoreCategory = storeCategories[indexPath.row]
             
-            handleSelectionFormattingForCell(cell, indexPathForCell: indexPath, borderWidth: self.collectionViewSelectedBorderWidth, backgroundColor: self.collectionViewSelectedBackgroundColor)
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath)
+                , selectedStoreCategoryIndex = storeCategories.indexOf(selectedStoreCategory)
+                else {
+                
+                    NSLog("Error: Could not either unwrap the cell or identify the Store Category index.")
+                    return
+                }
             
-            self.selectedStoreCategory = storeCategories[indexPath.row]
+            self.handleSelectionFormattingForCell(cell, indexPathForCell: indexPath, borderWidth: self.collectionViewSelectedBorderWidth, backgroundColor: self.collectionViewSelectedBackgroundColor)
+            
+            self.selectedStoreCategory = selectedStoreCategory
+            
+            self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: selectedStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+            
             self.storeCategoriesCollectionView.reloadData()
             self.storesCollectionView.reloadData()
         }
