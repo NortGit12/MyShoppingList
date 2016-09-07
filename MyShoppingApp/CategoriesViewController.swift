@@ -22,7 +22,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var storesCollectionViewFlowLayout: UICollectionViewFlowLayout!
     
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    var initialLoadingAndAppearingComplete = false
     
     var collectionViewSelectedBorderWidth: CGFloat = 1.0
     var collectionViewUnselectedBorderWidth: CGFloat = 0.0
@@ -38,35 +37,17 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         activityIndicatorView.hidesWhenStopped = true
         
-        UserController.sharedController.getLoggedInUser { (record, error) in
+        UserController.sharedController.getLoggedInUser { (_, _) in
             
             self.setupCollectionViews()
             
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            self.activityIndicatorView.startAnimating()
-            self.requestFullSync {
+            dispatch_async(dispatch_get_main_queue(), {
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    self.refreshCollectionViewsAfterSyncing()
-                    
-                    guard let defaultStoreCategory = StoreCategoryModelController.sharedController.getStoreCategoryByName(self.defaultStoreCategoryName)
-                        , storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
-                        , defaultStoreCategoryIndex = storeCategories.indexOf(defaultStoreCategory)
-                        else {
-                        
-                            NSLog("Error: Could not find the default Store Category.")
-                            return
-                        }
-                    
-                    self.selectedStoreCategory = defaultStoreCategory
-                    
-                    // Select "Grocery" as the default Store Category
-                    self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
-                    
-                    self.activityIndicatorView.stopAnimating()
-                })
-            }
+                self.refreshCollectionViews()
+                self.setupSelectedStoreCategory()
+            })
+            
+            self.requestFullSync()
         }
     }
     
@@ -74,24 +55,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         super.viewWillAppear(animated)
         
-        if initialLoadingAndAppearingComplete == false {
-            
-            initialLoadingAndAppearingComplete = true
-            
-        } else {
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            self.activityIndicatorView.startAnimating()
-            requestFullSync {
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    self.refreshCollectionViewsAfterSyncing()
-                    self.activityIndicatorView.stopAnimating()
-                    
-                })
-            }
-        }
+        self.refreshCollectionViews()
     }
     
     //==================================================
@@ -189,8 +153,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             handleSelectionFormattingForCell(cell, indexPathForCell: indexPath, borderWidth: self.collectionViewSelectedBorderWidth, backgroundColor: self.collectionViewSelectedBackgroundColor)
             
             self.selectedStoreCategory = storeCategories[indexPath.row]
+            self.storeCategoriesCollectionView.reloadData()
             self.storesCollectionView.reloadData()
-            
         }
     }
     
@@ -205,6 +169,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             }
             
             handleSelectionFormattingForCell(cell, indexPathForCell: indexPath, borderWidth: self.collectionViewUnselectedBorderWidth, backgroundColor: self.collectionViewUnselectedBackgroundColor)
+            
+            self.storeCategoriesCollectionView.reloadData()
         }
     }
     
@@ -228,21 +194,49 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         self.storesCollectionView.allowsMultipleSelection = false
     }
     
-    func refreshCollectionViewsAfterSyncing() {
+    func setupSelectedStoreCategory() {
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        StoreCategoryModelController.sharedController.getStoreCategoriesWithCompletion({ (categories) in
+            
+            guard let defaultStoreCategory = StoreCategoryModelController.sharedController.getStoreCategoryByName(self.defaultStoreCategoryName)
+                , storeCategories = categories
+                , defaultStoreCategoryIndex = storeCategories.indexOf(defaultStoreCategory)
+                else {
+                    
+                    NSLog("Error: Could not either unwrap the Store Categories or identify the Store Category's index.")
+                    return
+            }
+            
+            self.selectedStoreCategory = defaultStoreCategory
+            
+            // Select "Grocery" as the default Store Category
+            self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+            
+            self.storeCategoriesCollectionView.reloadData()
+            
+            self.activityIndicatorView.stopAnimating()
+        })
+    }
+    
+    func refreshCollectionViews() {
         
         self.storeCategoriesCollectionView.reloadData()
         self.storesCollectionView.reloadData()
     }
     
-    func requestFullSync(completion: (() -> Void)? = nil) {
+    func requestFullSync() {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        self.activityIndicatorView.startAnimating()
         
         PersistenceController.sharedController.performFullSync {
             
-            if let completion = completion {
-                completion()
-            }
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.activityIndicatorView.stopAnimating()
+                self.refreshCollectionViews()
+            })
         }
     }
     

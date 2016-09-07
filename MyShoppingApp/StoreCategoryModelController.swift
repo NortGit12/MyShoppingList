@@ -112,6 +112,20 @@ class StoreCategoryModelController {
         return resultsArray ?? nil
     }
     
+    func getStoreCategoriesWithCompletion(completion: ((categories: [StoreCategory]?) -> Void)? = nil) {
+        
+        let request = NSFetchRequest(entityName: StoreCategory.type)
+        let predicate = NSPredicate(value: true)
+        request.predicate = predicate
+        
+        var resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory]
+        resultsArray?.sortInPlace({ $0.0.name < $0.1.name })
+        
+        if let completion = completion {
+            completion(categories: resultsArray)
+        }
+    }
+    
     func getStoresForStoreCategory(storeCategory: StoreCategory) -> [Store]? {
         
         guard let storesSet = storeCategory.stores
