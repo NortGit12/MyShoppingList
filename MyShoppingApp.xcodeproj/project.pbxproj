@@ -14,6 +14,8 @@
 		1F1775F61D6CE38000604DFA /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775F51D6CE38000604DFA /* CategoriesViewController.swift */; };
 		1F1775F81D6CE91100604DFA /* StoreCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775F71D6CE91100604DFA /* StoreCategoryCollectionViewCell.swift */; };
 		1F1775FB1D6CEC3E00604DFA /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1775FA1D6CEC3E00604DFA /* CloudKit.framework */; };
+		1F2C7B4E1D81CE7000104707 /* UIColor+AppColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C7B4D1D81CE7000104707 /* UIColor+AppColorPalette.swift */; };
+		1F2C7B501D81CF0A00104707 /* AppearanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C7B4F1D81CF0A00104707 /* AppearanceController.swift */; };
 		1F34762C1D6E425500B74073 /* StoreModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F34762B1D6E425500B74073 /* StoreModelController.swift */; };
 		1F34762E1D6E45EA00B74073 /* ItemModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F34762D1D6E45EA00B74073 /* ItemModelController.swift */; };
 		1F3476301D6E527D00B74073 /* NewStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */; };
@@ -52,6 +54,8 @@
 		1F1775F71D6CE91100604DFA /* StoreCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		1F1775F91D6CEC3800604DFA /* MyShoppingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MyShoppingApp.entitlements; sourceTree = "<group>"; };
 		1F1775FA1D6CEC3E00604DFA /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		1F2C7B4D1D81CE7000104707 /* UIColor+AppColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColorPalette.swift"; sourceTree = "<group>"; };
+		1F2C7B4F1D81CF0A00104707 /* AppearanceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceController.swift; sourceTree = "<group>"; };
 		1F34762B1D6E425500B74073 /* StoreModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreModelController.swift; sourceTree = "<group>"; };
 		1F34762D1D6E45EA00B74073 /* ItemModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemModelController.swift; sourceTree = "<group>"; };
 		1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewStoreViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +107,15 @@
 				1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */,
 			);
 			name = ModelController;
+			sourceTree = "<group>";
+		};
+		1F2C7B4C1D81CDB700104707 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1F4DE99A1D8192BF004C169A /* GenericExtensions.swift */,
+				1F2C7B4D1D81CE7000104707 /* UIColor+AppColorPalette.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		1F8561901D6BA27C009A6B7A = {
@@ -171,7 +184,7 @@
 				1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */,
 				1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */,
 				1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */,
-				1F4DE99A1D8192BF004C169A /* GenericExtensions.swift */,
+				1F2C7B4C1D81CDB700104707 /* Extensions */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -183,6 +196,7 @@
 				1F79D7011D7E192200115608 /* UserController.swift */,
 				1F1775F31D6CC14500604DFA /* PersistenceController.swift */,
 				1F1775F11D6CC12300604DFA /* CloudKitManager.swift */,
+				1F2C7B4F1D81CF0A00104707 /* AppearanceController.swift */,
 			);
 			name = OtherController;
 			sourceTree = "<group>";
@@ -276,6 +290,7 @@
 				1F8561D51D6BB5B1009A6B7A /* Store+CoreDataProperties.swift in Sources */,
 				1F79D7021D7E192200115608 /* UserController.swift in Sources */,
 				1F8561CC1D6BB4FF009A6B7A /* Stack.swift in Sources */,
+				1F2C7B501D81CF0A00104707 /* AppearanceController.swift in Sources */,
 				1F8561D91D6BB5B1009A6B7A /* Item+CoreDataProperties.swift in Sources */,
 				1F3476341D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift in Sources */,
 				1F4DE99B1D8192BF004C169A /* GenericExtensions.swift in Sources */,
@@ -290,6 +305,7 @@
 				1F6A90A81D777978004A2AF8 /* ItemsListTableViewCell.swift in Sources */,
 				1F8561DC1D6BB5B1009A6B7A /* StoreCategory.swift in Sources */,
 				1F3476301D6E527D00B74073 /* NewStoreViewController.swift in Sources */,
+				1F2C7B4E1D81CE7000104707 /* UIColor+AppColorPalette.swift in Sources */,
 				1F85619D1D6BA27C009A6B7A /* AppDelegate.swift in Sources */,
 				1F1775F81D6CE91100604DFA /* StoreCategoryCollectionViewCell.swift in Sources */,
 				1F8561D81D6BB5B1009A6B7A /* SyncableObject.swift in Sources */,

@@ -10,6 +10,8 @@ import UIKit
 
 extension UIViewController {
     
+    // Hiding keyboard
+    
     func hideKeyboardWhenTappedAround() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
@@ -20,4 +22,10 @@ extension UIViewController {
         
         view.endEditing(true)
     }
+    
+//    // Changing the status bar text to a light color
+//    
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return .LightContent
+//    }
 }

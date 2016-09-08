@@ -31,7 +31,7 @@ class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hideKeyboardWhenTappedAround()
+//        self.hideKeyboardWhenTappedAround()
         
         StoreCategoryModelController.sharedController.getStoreCategoriesWithCompletion({ (categories) in
             

@@ -14,6 +14,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     // MARK: - Stored Properties
     //==================================================
     
+    @IBOutlet weak var addNewStoreBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
     var storeCategories: [StoreCategory]?
     var selectedStoreCategory: StoreCategory?
