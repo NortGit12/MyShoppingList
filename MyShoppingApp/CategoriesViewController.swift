@@ -15,7 +15,9 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     //==================================================
     
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
+    var storeCategories: [StoreCategory]?
     var selectedStoreCategory: StoreCategory?
+    var selectedStoreCategoryIndex = -1
     let defaultStoreCategoryName = "Grocery"
     
     @IBOutlet weak var storesCollectionView: UICollectionView!
@@ -45,9 +47,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                 
                 self.refreshCollectionViews()
                 self.setupSelectedStoreCategory()
+                self.requestFullSync()
             })
-            
-            self.requestFullSync()
         }
     }
     
@@ -68,7 +69,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if collectionView == storeCategoriesCollectionView {
             
-            numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoreCategories()?.count ?? 0
+            numberOfItemsInSection = self.storeCategories?.count ?? 0
             
         } else if collectionView == storesCollectionView {
             
@@ -88,7 +89,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         if collectionView == storeCategoriesCollectionView {
             
             guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCategoryCollectionViewCell", forIndexPath: indexPath) as? StoreCategoryCollectionViewCell
-                , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
+                , storeCategory = self.storeCategories?[indexPath.row]
                 else {
                     
                     NSLog("Error: Could not either cast the UITableViewCell as a StoreCategoryCollectionViewCell or identify the selected StoreCategory.")
@@ -141,7 +142,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if collectionView == storeCategoriesCollectionView {
             
-            guard let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
+            guard let storeCategories = self.storeCategories
                 else {
                 
                     NSLog("Error: Could not get all of the StoreCategories.")
@@ -157,6 +158,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                     NSLog("Error: Could not either unwrap the cell or identify the Store Category index.")
                     return
                 }
+            
+            self.selectedStoreCategoryIndex = selectedStoreCategoryIndex
             
             self.handleSelectionFormattingForCell(cell, indexPathForCell: indexPath, borderWidth: self.collectionViewSelectedBorderWidth, backgroundColor: self.collectionViewSelectedBackgroundColor)
             
@@ -218,7 +221,9 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                     return
             }
             
+            self.storeCategories = storeCategories
             self.selectedStoreCategory = defaultStoreCategory
+            self.selectedStoreCategoryIndex = defaultStoreCategoryIndex
             
             // Select "Grocery" as the default Store Category
             self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
@@ -285,15 +290,14 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
             
             // What do we need to pack?
-            guard let index = storeCategoriesCollectionView.indexPathsForSelectedItems()?.first?.row
-                , let storeCategories = StoreCategoryModelController.sharedController.getStoreCategories()
+            guard let storeCategories = self.storeCategories
                 else {
                     
-                    NSLog("Error: The index or the Store Categories could not be found when attempting to segue to a new store.")
+                    NSLog("Error: The Store Categories could not be found when attempting to segue to a new store.")
                     return
             }
             
-            let selectedStoreCategory = storeCategories[index]
+            let selectedStoreCategory = storeCategories[self.selectedStoreCategoryIndex]
             
             // Are we done packing?
             newStoreViewController.selectedStoreCategory = selectedStoreCategory

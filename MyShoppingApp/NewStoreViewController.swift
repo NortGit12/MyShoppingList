@@ -21,7 +21,7 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var storeCategoriesTableView: UITableView!
     
     var store: Store?
-    var indexPathRowOfSelectedStoreCategory = -1
+    var allStoreCategories: [StoreCategory]?
     var selectedStoreCategory: StoreCategory?
     
     //==================================================
@@ -30,6 +30,14 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        StoreCategoryModelController.sharedController.getStoreCategoriesWithCompletion({ (categories) in
+            
+            if let categories = categories {
+            
+                self.allStoreCategories = categories
+            }
+        })
         
         if let store = store {
             
@@ -49,18 +57,20 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return StoreCategoryModelController.sharedController.getStoreCategories()?.count ?? 0
+        return self.allStoreCategories?.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCellWithIdentifier("newStoreCategoryCell", forIndexPath: indexPath) as? NewStoreCategoryTableViewCell
-            , storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row]
+            , allStoreCategories = self.allStoreCategories  // #3
             else {
                 
                 NSLog("Error: Could not either cast the UITableViewCell to a NewStoreCategoryTableViewCell or identify the StoreCategory for the selected cell.")
                 return UITableViewCell()
             }
+        
+        let storeCategory = allStoreCategories[indexPath.row]  // #3
         
         if self.store != nil {
         
@@ -117,8 +127,9 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         var storeCategories = [StoreCategory]()
         for indexPath in indexPaths {
             
-            if let storeCategory = StoreCategoryModelController.sharedController.getStoreCategories()?[indexPath.row] {
+            if let allStoreCategories = allStoreCategories {
                 
+                let storeCategory = allStoreCategories[indexPath.row]
                 storeCategories.append(storeCategory)
             }
         }
