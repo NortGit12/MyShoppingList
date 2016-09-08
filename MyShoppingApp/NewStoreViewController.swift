@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class NewStoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     //==================================================
     // MARK: - Stored Properties
@@ -31,6 +31,8 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        
         StoreCategoryModelController.sharedController.getStoreCategoriesWithCompletion({ (categories) in
             
             if let categories = categories {
@@ -49,6 +51,15 @@ class NewStoreViewController: UIViewController, UITableViewDataSource, UITableVi
         }
 
         nameTextField.becomeFirstResponder()
+    }
+    
+    //==================================================
+    // MARK: - UITextFieldDelegate
+    //==================================================
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        return textField.endEditing(true)
     }
     
     //==================================================

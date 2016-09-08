@@ -20,6 +20,7 @@
 		1F3476341D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */; };
 		1F3476361D6E5BE900B74073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F3476351D6E5BE900B74073 /* Assets.xcassets */; };
 		1F3E07EE1D78E2AC004744E0 /* AllStoresTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */; };
+		1F4DE99B1D8192BF004C169A /* GenericExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4DE99A1D8192BF004C169A /* GenericExtensions.swift */; };
 		1F6416E51D763D4E00EA371B /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */; };
 		1F6416E71D76443D00EA371B /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */; };
 		1F6A90A81D777978004A2AF8 /* ItemsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */; };
@@ -57,6 +58,7 @@
 		1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewStoreCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		1F3476351D6E5BE900B74073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStoresTableViewCell.swift; sourceTree = "<group>"; };
+		1F4DE99A1D8192BF004C169A /* GenericExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericExtensions.swift; sourceTree = "<group>"; };
 		1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
 		1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsListTableViewCell.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */,
 				1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */,
 				1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */,
+				1F4DE99A1D8192BF004C169A /* GenericExtensions.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				1F8561CC1D6BB4FF009A6B7A /* Stack.swift in Sources */,
 				1F8561D91D6BB5B1009A6B7A /* Item+CoreDataProperties.swift in Sources */,
 				1F3476341D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift in Sources */,
+				1F4DE99B1D8192BF004C169A /* GenericExtensions.swift in Sources */,
 				1F6416E71D76443D00EA371B /* ItemDetailViewController.swift in Sources */,
 				1F34762E1D6E45EA00B74073 /* ItemModelController.swift in Sources */,
 				1F8561B71D6BB1B2009A6B7A /* Model.xcdatamodeld in Sources */,

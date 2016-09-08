@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemDetailViewController: UIViewController {
+class ItemDetailViewController: UIViewController, UITextFieldDelegate {
     
     //==================================================
     // MARK: - Stored Properties
@@ -27,6 +27,8 @@ class ItemDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.hideKeyboardWhenTappedAround()
 
         if let item = item {
             
@@ -34,6 +36,15 @@ class ItemDetailViewController: UIViewController {
         }
         
         nameTextField.becomeFirstResponder()
+    }
+    
+    //==================================================
+    // MARK: - UITextFieldDelegate
+    //==================================================
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        return textField.endEditing(true)
     }
     
     //==================================================
