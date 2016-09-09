@@ -52,7 +52,7 @@ class StoreCategoryModelController {
         
         if let storeCategoryCloudKitRecord = storeCategory.cloudKitRecord {
             
-            cloudKitManager.saveRecord(storeCategoryCloudKitRecord, completion: { (record, error) in
+            cloudKitManager.saveRecord(cloudKitManager.publicDatabase, record: storeCategoryCloudKitRecord, completion: { (record, error) in
                 
                 if error != nil {
                     
@@ -74,7 +74,7 @@ class StoreCategoryModelController {
         }
     }
     
-    func getStoreCategoryByIdName(idName: String) -> StoreCategory? {
+    func fetchStoreCategoryByIdName(idName: String) -> StoreCategory? {
         
         if idName.isEmpty { return nil }
         
@@ -87,7 +87,7 @@ class StoreCategoryModelController {
         return resultsArray?.first
     }
     
-    func getStoreCategoryByName(name: String) -> StoreCategory? {
+    func fetchStoreCategoryByName(name: String) -> StoreCategory? {
         
         if name.isEmpty { return nil }
         
@@ -100,18 +100,32 @@ class StoreCategoryModelController {
         return resultsArray?.first
     }
     
-    func getStoreCategoriesWithCompletion(completion: ((categories: [StoreCategory]?) -> Void)? = nil) {
-        
+//    func getStoreCategoriesWithCompletion(completion: ((categories: [StoreCategory]?) -> Void)? = nil) {
+    func fetchStoreCategories() -> [StoreCategory]? {
+    
         let request = NSFetchRequest(entityName: StoreCategory.type)
         let predicate = NSPredicate(value: true)
         request.predicate = predicate
         
-        var resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory]
-        resultsArray?.sortInPlace({ $0.0.name < $0.1.name })
+//        var resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory]
         
-        if let completion = completion {
-            completion(categories: resultsArray)
+        var resultsArray = [StoreCategory]()
+        do {
+            if let tempResultsArray = try PersistenceController.sharedController.moc.executeFetchRequest(request) as? [StoreCategory] {
+                resultsArray = tempResultsArray
+            }
+        } catch let error as NSError {
+            NSLog("Error: Troublems.  \(error.localizedDescription)")
         }
+        
+//        resultsArray?.sortInPlace({ $0.0.name < $0.1.name })
+        resultsArray.sortInPlace({ $0.0.name < $0.1.name })
+        
+//        if let completion = completion {
+//            completion(categories: resultsArray)
+//        }
+        
+        return resultsArray
     }
     
     func getStoresForStoreCategory(storeCategory: StoreCategory) -> [Store]? {

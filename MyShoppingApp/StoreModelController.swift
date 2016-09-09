@@ -52,8 +52,8 @@ class StoreModelController {
         
         if let storeCloudKitRecord = store.cloudKitRecord {
             
-            cloudKitManager.saveRecord(storeCloudKitRecord, completion: { (record, error) in
-                
+            cloudKitManager.saveRecord(cloudKitManager.privateDatabase, record: storeCloudKitRecord, completion: { (record, error) in
+            
                 if error != nil {
                     
                     NSLog("Error: New Store could not be saved to CloudKit: \(error)")
@@ -73,7 +73,7 @@ class StoreModelController {
         }
     }
     
-    func getStoreByIdName(idName: String) -> Store? {
+    func fetchStoreByIdName(idName: String) -> Store? {
         
         if idName.isEmpty { return nil }
         
@@ -86,7 +86,7 @@ class StoreModelController {
         return resultsArray?.first ?? nil
     }
     
-    func getStores() -> [Store]? {
+    func fetchStores() -> [Store]? {
         
         let request = NSFetchRequest(entityName: Store.type)
         let predicate = NSPredicate(value: true)
@@ -119,8 +119,8 @@ class StoreModelController {
         
         if let storeCloudKitRecord = store.cloudKitRecord {
             
-            cloudKitManager.modifyRecords([storeCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
-                
+            cloudKitManager.modifyRecords(cloudKitManager.privateDatabase, records: [storeCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
+            
                 if error != nil {
                     
                     NSLog("Error: Could not modify the existing \"\(store.name)\" store in CloudKit: \(error?.localizedDescription)")
@@ -143,8 +143,8 @@ class StoreModelController {
         
         if let storeCloudKitRecord = store.cloudKitRecord {
             
-            cloudKitManager.deleteRecordWithID(storeCloudKitRecord.recordID, completion: { (recordID, error) in
-                
+            cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: storeCloudKitRecord.recordID, completion: { (recordID, error) in
+            
                 if error != nil {
                     
                     NSLog("Error: Store could not be deleted in CloudKit: \(error)")

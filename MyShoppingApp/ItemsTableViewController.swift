@@ -44,7 +44,7 @@ class ItemsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var numRows = 0
-        if let store = store, storeItems = ItemModelController.sharedController.getItemsForStore(store) {
+        if let store = store, storeItems = ItemModelController.sharedController.fetchItemsForStore(store) {
             
             numRows = storeItems.count
         }
@@ -56,7 +56,7 @@ class ItemsTableViewController: UITableViewController {
         
         guard let cell = tableView.dequeueReusableCellWithIdentifier("itemsListCell", forIndexPath: indexPath) as? ItemsListTableViewCell
             , store = store
-            , storeItems = ItemModelController.sharedController.getItemsForStore(store)
+            , storeItems = ItemModelController.sharedController.fetchItemsForStore(store)
             else {
             
                 NSLog("Error: Could not do one of the following: 1) Cast a UITableViewCell to an ItemsListTableViewCell, 2) Unwrap the store, or 3) Get all of the items for the store.")
@@ -75,7 +75,7 @@ class ItemsTableViewController: UITableViewController {
         if editingStyle == .Delete {
             
             guard let store = store
-                , storeItems = ItemModelController.sharedController.getItemsForStore(store)
+                , storeItems = ItemModelController.sharedController.fetchItemsForStore(store)
                 else {
                     
                     print("Error: Item could not be identified when attempting to delete it.")
@@ -129,7 +129,7 @@ class ItemsTableViewController: UITableViewController {
         if let itemDetailViewController = segue.destinationViewController as? ItemDetailViewController
             , store = store
             , index = tableView.indexPathForSelectedRow?.row
-            , storeItems = ItemModelController.sharedController.getItemsForStore(store) {
+            , storeItems = ItemModelController.sharedController.fetchItemsForStore(store) {
             
             // Am I done packing?
             let item = storeItems[index]

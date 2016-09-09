@@ -39,8 +39,8 @@ class ItemModelController {
         
         if let itemCloudKitRecord = item.cloudKitRecord {
             
-            cloudKitManager.saveRecord(itemCloudKitRecord, completion: { (record, error) in
-                
+            cloudKitManager.saveRecord(cloudKitManager.privateDatabase, record: itemCloudKitRecord, completion: { (record, error) in
+            
                 if error != nil {
                     
                     NSLog("Error: New Item could not be saved to CloudKit: \(error?.localizedDescription)")
@@ -60,7 +60,7 @@ class ItemModelController {
         }
     }
     
-    func getItemByIdName(idName: String) -> Item? {
+    func fetchItemByIdName(idName: String) -> Item? {
         
         if idName.isEmpty { return nil }
         
@@ -73,7 +73,7 @@ class ItemModelController {
         return resultsArray?.first ?? nil
     }
     
-    func getItemsForStore(store: Store) -> [Item]? {
+    func fetchItemsForStore(store: Store) -> [Item]? {
         
         let storeIdName = store.recordName
         
@@ -108,8 +108,8 @@ class ItemModelController {
         
         if let itemCloudKitRecord = item.cloudKitRecord {
         
-            cloudKitManager.modifyRecords([itemCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
-                
+            cloudKitManager.modifyRecords(cloudKitManager.privateDatabase, records: [itemCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
+            
                 if error != nil {
                     
                     NSLog("Error: Could not modify the existing \"\(item.name)\" item in CloudKit: \(error?.localizedDescription)")
@@ -132,8 +132,8 @@ class ItemModelController {
         
         if let itemCloudKitRecord = item.cloudKitRecord {
             
-            cloudKitManager.deleteRecordWithID(itemCloudKitRecord.recordID, completion: { (recordID, error) in
-                
+            cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: itemCloudKitRecord.recordID, completion: { (recordID, error) in
+            
                 if error != nil {
                     
                     NSLog("Error: Item could not be deleted in CloudKit: \(error)")

@@ -62,40 +62,54 @@ class PersistenceController {
     
     func fetchNewRecords(type: String, completion: (() -> Void)? = nil) {
         
-        var referencesToExclude = [CKReference]()
+//        var referencesToExclude = [CKReference]()
         
         var predicate: NSPredicate!
         let moc = PersistenceController.sharedController.moc
-        moc.performBlockAndWait {
-            
+//        moc.performBlockAndWait {
+        
             /*
              All users will use the same set of ten Store Categories.  They should only see their Stores and Items.
              */
-            if type != StoreCategory.type {
-                
-                guard let creatorUserRecord = UserController.sharedController.loggedInUserRecord
-                    , creatorUserRecordID = creatorUserRecord.creatorUserRecordID
-                    else {
-                        
-                        NSLog("Error: Could not either identify the logged in user or get their record ID.")
-                        return
-                }
-                
-                referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
-                
-                let recordExclusionPredicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
-                let specificUserPredicate = NSPredicate(format: "creatorUserRecordID == %@", argumentArray: [creatorUserRecordID])
-                
-                predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [recordExclusionPredicate, specificUserPredicate])
-            }
+//            if type != StoreCategory.type {
+//            
+//                guard let creatorUserRecord = UserController.sharedController.loggedInUserRecord
+//                    , creatorUserRecordID = creatorUserRecord.creatorUserRecordID
+//                    else {
+//                        
+//                        NSLog("Error: Could not either identify the logged in user or get their record ID.")
+//                        return
+//                }
+//                
+//                referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
+//
+//                predicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
+//                let specificUserPredicate = NSPredicate(format: "creatorUserRecordID == %@", argumentArray: [creatorUserRecordID])
+//                
+//                predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [recordExclusionPredicate, specificUserPredicate])
+//            }
             
-            if referencesToExclude.isEmpty {
-                predicate = NSPredicate(value: true)
-            }
+//            referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
+//            
+//            if referencesToExclude.isEmpty {
+//                predicate = NSPredicate(value: true)
+//            }
+//        }
+        
+//        // Get all of the records (StoreCategories from the public database and Stores and Items from the private database)
+//        let predicate = NSPredicate(value: true)
+        
+        predicate = NSPredicate(value: true)
+
+        let database: CKDatabase
+        switch type {
+        case StoreCategory.type: database = cloudKitManager.publicDatabase
+        default: database = cloudKitManager.privateDatabase
         }
         
-        self.cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
-            
+//        self.cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
+        cloudKitManager.fetchRecordsWithType(database, type: type, predicate: predicate, recordFetchedBlock: { (record) in
+        
             /*
              Again, doing this CoreData work on the same thread as the moc
              */
@@ -126,7 +140,7 @@ class PersistenceController {
         case StoreCategory.type:
             
             // Existing CoreData StoreCategory
-            guard let _ = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(record.recordID.recordName) else {
+            guard let _ = StoreCategoryModelController.sharedController.fetchStoreCategoryByIdName(record.recordID.recordName) else {
                 
                 // New CoreData StoreCategory
                 guard let _ = StoreCategory(record: record) else {
@@ -141,7 +155,7 @@ class PersistenceController {
         case Store.type:
             
             // Existing CoreData Store
-            guard let _ = StoreModelController.sharedController.getStoreByIdName(record.recordID.recordName) else {
+            guard let _ = StoreModelController.sharedController.fetchStoreByIdName(record.recordID.recordName) else {
                 
                 // New CoreData Store
                 guard let _ = Store(record: record) else {
@@ -156,7 +170,7 @@ class PersistenceController {
         case Item.type:
             
             // Existing CoreData Item
-            guard let _ = ItemModelController.sharedController.getItemByIdName(record.recordID.recordName) else {
+            guard let _ = ItemModelController.sharedController.fetchItemByIdName(record.recordID.recordName) else {
                 
                 // New CoreData Item
                 guard let _ = Item(record: record) else {
@@ -177,7 +191,8 @@ class PersistenceController {
         let unsyncedManagedObjectsArray = self.unsyncedManagedObjects(StoreCategory.type) + self.unsyncedManagedObjects(Store.type) + self.unsyncedManagedObjects(Item.type)
         let unsyncedRecordsArray = unsyncedManagedObjectsArray.flatMap({ $0.cloudKitRecord })
         
-        cloudKitManager.saveRecords(unsyncedRecordsArray, perRecordCompletion: { (record, error) in     // per record block
+//        cloudKitManager.saveRecords(unsyncedRecordsArray, perRecordCompletion: { (record, error) in     // per record block
+        cloudKitManager.saveRecords(cloudKitManager.privateDatabase, records: unsyncedRecordsArray, perRecordCompletion: { (record, error) in     // per record block
             
             if error != nil {
                 print("Error: Could not push unsynced record to CloudKit: \(error)")

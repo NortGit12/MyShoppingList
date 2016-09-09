@@ -75,13 +75,15 @@ class Item: SyncableObject, CloudKitManagedObject {
         
         guard let name = record[Item.nameKey] as? String
             , quantity = record[Item.quantityKey] as? String
-            , notes = record[Item.notesKey] as? String
+//            , notes = record[Item.notesKey] as? String
             , storeReference = record[Item.storeKey] as? CKReference
             else {
                 
                 NSLog("Error: Could not create the Item from the CloudKit record.")
                 return nil
         }
+        
+        let notes = record[Item.notesKey] as? String
         
         guard let itemEntity = NSEntityDescription.entityForName(Item.type, inManagedObjectContext: context) else {
             
@@ -98,7 +100,7 @@ class Item: SyncableObject, CloudKitManagedObject {
         self.notes = notes
         
         let storeIDName = storeReference.recordID.recordName
-        guard let store = StoreModelController.sharedController.getStoreByIdName(storeIDName) else {
+        guard let store = StoreModelController.sharedController.fetchStoreByIdName(storeIDName) else {
             
             NSLog("Error: Could not identify the store by its ID name \"\(storeIDName)\"")
             return nil

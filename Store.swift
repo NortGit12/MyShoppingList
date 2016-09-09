@@ -168,7 +168,7 @@ class Store: SyncableObject, CloudKitManagedObject {
         for storeCategoryReference in storeCategoriesReferencesArray {
             
             let storeCategoryIDName = storeCategoryReference.recordID.recordName
-            if let storeCategory = StoreCategoryModelController.sharedController.getStoreCategoryByIdName(storeCategoryIDName) {
+            if let storeCategory = StoreCategoryModelController.sharedController.fetchStoreCategoryByIdName(storeCategoryIDName) {
                 
                 storeCategoriesArray.append(storeCategory)
             }
@@ -183,7 +183,7 @@ class Store: SyncableObject, CloudKitManagedObject {
         for itemReference in itemsReferencesArray {
             
             let itemIDName = itemReference.recordID.recordName
-            if let item = ItemModelController.sharedController.getItemByIdName(itemIDName) {
+            if let item = ItemModelController.sharedController.fetchItemByIdName(itemIDName) {
                 
                 itemsArray.append(item)
             }

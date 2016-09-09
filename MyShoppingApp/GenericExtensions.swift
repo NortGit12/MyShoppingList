@@ -22,10 +22,4 @@ extension UIViewController {
         
         view.endEditing(true)
     }
-    
-//    // Changing the status bar text to a light color
-//    
-//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-//        return .LightContent
-//    }
 }

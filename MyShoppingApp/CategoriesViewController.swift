@@ -16,7 +16,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var addNewStoreBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
-    var storeCategories: [StoreCategory]?
+    var storeCategories = [StoreCategory]()
     var selectedStoreCategory: StoreCategory?
     var selectedStoreCategoryIndex = -1
     let defaultStoreCategoryName = "Grocery"
@@ -40,15 +40,32 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         activityIndicatorView.hidesWhenStopped = true
         
+        self.setupCollectionViews()
+        
         UserController.sharedController.getLoggedInUser { (_, _) in
-            
-            self.setupCollectionViews()
             
             dispatch_async(dispatch_get_main_queue(), {
                 
-                self.refreshCollectionViews()
-                self.setupSelectedStoreCategory()
-                self.requestFullSync()
+                self.setupStoreCategories({
+                    
+                    if self.storeCategories.count == 0 {
+                        
+                        self.activityIndicatorView.startAnimating()
+                        
+                        self.requestFullSync({
+                            self.setupStoreCategories({ 
+                                
+                                self.activityIndicatorView.stopAnimating()
+                                self.refreshCollectionViews()
+                                self.setupSelectedStoreCategory()
+                            })
+                        })
+                    } else {
+                        self.refreshCollectionViews()
+                        self.setupSelectedStoreCategory()
+                        self.requestFullSync()
+                    }
+                })
             })
         }
     }
@@ -70,7 +87,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if collectionView == storeCategoriesCollectionView {
             
-            numberOfItemsInSection = self.storeCategories?.count ?? 0
+            numberOfItemsInSection = self.storeCategories.count ?? 0
             
         } else if collectionView == storesCollectionView {
             
@@ -90,12 +107,13 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         if collectionView == storeCategoriesCollectionView {
             
             guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCategoryCollectionViewCell", forIndexPath: indexPath) as? StoreCategoryCollectionViewCell
-                , storeCategory = self.storeCategories?[indexPath.row]
                 else {
                     
                     NSLog("Error: Could not either cast the UITableViewCell as a StoreCategoryCollectionViewCell or identify the selected StoreCategory.")
                     return UICollectionViewCell()
             }
+            
+            let storeCategory = self.storeCategories[indexPath.row]
             
             cell.updateWithStoreCategory(storeCategory)
             
@@ -143,14 +161,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if collectionView == storeCategoriesCollectionView {
             
-            guard let storeCategories = self.storeCategories
-                else {
-                
-                    NSLog("Error: Could not get all of the StoreCategories.")
-                    return
-                }
-            
-            let selectedStoreCategory = storeCategories[indexPath.row]
+            let selectedStoreCategory = self.storeCategories[indexPath.row]
             
             guard let cell = collectionView.cellForItemAtIndexPath(indexPath)
                 , selectedStoreCategoryIndex = storeCategories.indexOf(selectedStoreCategory)
@@ -202,57 +213,25 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     // MARK: - Methods
     //==================================================
     
-    func setupCollectionViews() {
-        
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.storeCategoriesCollectionView.allowsMultipleSelection = false
-        self.storesCollectionView.allowsMultipleSelection = false
-    }
-    
-    func setupSelectedStoreCategory() {
-        
-        StoreCategoryModelController.sharedController.getStoreCategoriesWithCompletion({ (categories) in
-            
-            guard let defaultStoreCategory = StoreCategoryModelController.sharedController.getStoreCategoryByName(self.defaultStoreCategoryName)
-                , storeCategories = categories
-                , defaultStoreCategoryIndex = storeCategories.indexOf(defaultStoreCategory)
-                else {
-                    
-                    NSLog("Error: Could not either unwrap the Store Categories or identify the Store Category's index.")
-                    return
-            }
-            
-            self.storeCategories = storeCategories
-            self.selectedStoreCategory = defaultStoreCategory
-            self.selectedStoreCategoryIndex = defaultStoreCategoryIndex
-            
-            // Select "Grocery" as the default Store Category
-            self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: defaultStoreCategoryIndex, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
-            
-            self.storeCategoriesCollectionView.reloadData()
-            
-            self.activityIndicatorView.stopAnimating()
-        })
-    }
-    
     func refreshCollectionViews() {
         
         self.storeCategoriesCollectionView.reloadData()
         self.storesCollectionView.reloadData()
     }
     
-    func requestFullSync() {
+    func requestFullSync(completion: (() -> Void)? = nil) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        self.activityIndicatorView.startAnimating()
         
         PersistenceController.sharedController.performFullSync {
             
             dispatch_async(dispatch_get_main_queue(), {
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                self.activityIndicatorView.stopAnimating()
-                self.refreshCollectionViews()
+                
+                if let completion = completion {
+                    completion()
+                }
             })
         }
     }
@@ -261,6 +240,45 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
         cell.layer.borderWidth = borderWidth
         cell.backgroundColor = backgroundColor
+    }
+    
+    func setupCollectionViews() {
+        
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.storeCategoriesCollectionView.allowsMultipleSelection = false
+        self.storesCollectionView.allowsMultipleSelection = false
+    }
+    
+    func setupStoreCategories(completion: (() -> Void)? = nil) {
+    
+        guard let storeCategories = StoreCategoryModelController.sharedController.fetchStoreCategories() else {
+            
+            NSLog("Error: Could not unwrap the Store Categories.")
+            return
+        }
+        
+        self.storeCategories = storeCategories
+        
+        if let completion = completion {
+            completion()
+        }
+    }
+    
+    func setupSelectedStoreCategory() {
+        
+        guard let defaultStoreCategory = StoreCategoryModelController.sharedController.fetchStoreCategoryByName(self.defaultStoreCategoryName)
+            , defaultStoreCategoryIndex = storeCategories.indexOf(defaultStoreCategory)
+            else {
+                
+                NSLog("Error: Could not identify the Store Category's index.")
+                return
+        }
+        
+        self.selectedStoreCategory = defaultStoreCategory
+        self.selectedStoreCategoryIndex = defaultStoreCategoryIndex
+        
+        // Select "Grocery" as the default Store Category
+        self.storeCategoriesCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: defaultStoreCategoryIndex, inSection: 0), animated: true, scrollPosition: .CenteredHorizontally)
     }
     
     //==================================================
@@ -291,14 +309,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
             
             // What do we need to pack?
-            guard let storeCategories = self.storeCategories
-                else {
-                    
-                    NSLog("Error: The Store Categories could not be found when attempting to segue to a new store.")
-                    return
-            }
-            
-            let selectedStoreCategory = storeCategories[self.selectedStoreCategoryIndex]
+            let selectedStoreCategory = self.storeCategories[self.selectedStoreCategoryIndex]
             
             // Are we done packing?
             newStoreViewController.selectedStoreCategory = selectedStoreCategory

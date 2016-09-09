@@ -332,10 +332,9 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" id="SgD-3P-iEu">
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="TCC-Os-tqc">
                                     <rect key="frame" x="0.0" y="-64" width="320" height="381"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="storeCollectionViewCell" id="Bm5-CQ-YEp" customClass="StoreCollectionViewCell" customModule="MyShoppingApp" customModuleProvider="target">
@@ -477,7 +476,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="SgD-3P-iEu" id="6Zf-tY-FUR"/>
+                        <outlet property="activityIndicatorView" destination="TCC-Os-tqc" id="mnv-Vp-dMJ"/>
                         <outlet property="addNewStoreBarButtonItem" destination="oO0-rA-l3t" id="ucB-hl-iNC"/>
                         <outlet property="storeCategoriesCollectionView" destination="LLN-BI-USW" id="9Yh-JD-00H"/>
                         <outlet property="storesCollectionView" destination="8IA-07-Rva" id="Kqh-Ba-k0E"/>

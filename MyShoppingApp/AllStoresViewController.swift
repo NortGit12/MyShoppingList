@@ -41,13 +41,13 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return StoreModelController.sharedController.getStores()?.count ?? 0
+        return StoreModelController.sharedController.fetchStores()?.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCellWithIdentifier("allStoresListCell", forIndexPath: indexPath) as? AllStoresTableViewCell
-            , store = StoreModelController.sharedController.getStores()?[indexPath.row]
+            , store = StoreModelController.sharedController.fetchStores()?[indexPath.row]
             else {
         
                 NSLog("Error: Could not cast the UITableViewCell to an AllStoresTableViewCell.")
@@ -64,7 +64,7 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
         
         if editingStyle == .Delete {
             
-            guard let store = StoreModelController.sharedController.getStores()?[indexPath.row] else {
+            guard let store = StoreModelController.sharedController.fetchStores()?[indexPath.row] else {
                 
                 print("Error: Store could not be identified when attempting to delete it.")
                 return
@@ -114,7 +114,7 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
             
             // What do we need to pack?
             guard let index = tableView.indexPathForSelectedRow?.row
-                , stores = StoreModelController.sharedController.getStores()
+                , stores = StoreModelController.sharedController.fetchStores()
                 else {
             
                     NSLog("Error: Could not either identify the index of the selected row in AllStoresTableView or get all of the stores when attempting to segue to the items list.")
@@ -144,7 +144,7 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
                     return
             }
             
-            guard let stores = StoreModelController.sharedController.getStores()
+            guard let stores = StoreModelController.sharedController.fetchStores()
                 else {
                     
                     NSLog("Error: Could not get all of the stores when attempting to segue to an existing store.")

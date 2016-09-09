@@ -25,7 +25,8 @@ class UserController {
     
     func getLoggedInUser(completion: ((record: CKRecord?, error: NSError?) -> Void)? = nil) {
         
-        cloudKitManager.fetchLoggedInUserRecord { (record, error) in
+//        cloudKitManager.fetchLoggedInUserRecord { (record, error) in
+        cloudKitManager.fetchLoggedInUserRecord(cloudKitManager.publicDatabase) { (record, error) in
             
             if error != nil {
                 
@@ -49,5 +50,7 @@ class UserController {
                 }
             }
         }
+        
+        // TODO: Identify parts of the user's name and store them (to make it easier to see on the CloudKit Dashboard what belongs to who)
     }
 }

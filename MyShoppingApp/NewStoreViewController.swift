@@ -33,13 +33,15 @@ class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableView
         
 //        self.hideKeyboardWhenTappedAround()
         
-        StoreCategoryModelController.sharedController.getStoreCategoriesWithCompletion({ (categories) in
-            
-            if let categories = categories {
-            
-                self.allStoreCategories = categories
-            }
-        })
+//        StoreCategoryModelController.sharedController.fetchStoreCategoriesWithCompletion({ (categories) in
+//            
+//            if let categories = categories {
+//            
+//                self.allStoreCategories = categories
+//            }
+//        })
+        
+        allStoreCategories = StoreCategoryModelController.sharedController.fetchStoreCategories()
         
         if let store = store {
             
