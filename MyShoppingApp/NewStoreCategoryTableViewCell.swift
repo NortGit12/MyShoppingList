@@ -15,6 +15,7 @@ class NewStoreCategoryTableViewCell: UITableViewCell {
     //==================================================
     
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var storeCategoryImage: UIImageView!
     
     //==================================================
     // MARK: - General
@@ -38,5 +39,21 @@ class NewStoreCategoryTableViewCell: UITableViewCell {
     func updateWithStoreCategory(storeCategory: StoreCategory) {
         
         nameLabel.text = storeCategory.name
+        nameLabel.textColor = .blackColor()
+        storeCategoryImage.image = UIImage(data: storeCategory.image)
+    }
+    
+    func isSelected(isSelected: Bool = false) {
+        
+        if isSelected {
+            
+            self.contentView.backgroundColor = .basicGrayColor()
+            nameLabel.textColor = .whiteColor()
+            
+        } else {
+        
+            self.contentView.backgroundColor = .whiteColor()
+            nameLabel.textColor = .blackColor()
+        }
     }
 }

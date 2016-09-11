@@ -31,6 +31,8 @@ class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupAppearance()
+        
 //        self.hideKeyboardWhenTappedAround()
         
 //        StoreCategoryModelController.sharedController.fetchStoreCategoriesWithCompletion({ (categories) in
@@ -90,13 +92,17 @@ class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableView
             if store!.categories.containsObject(storeCategory) {
                 
                 storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPath.row, inSection: 0), animated: true, scrollPosition: .None)
-                cell.accessoryType = .Checkmark
+                cell.contentView.backgroundColor = .basicGrayColor()
+                cell.isSelected(true)
+            } else {
+                cell.isSelected(false)
             }
             
         } else if storeCategory == selectedStoreCategory {
             
             storeCategoriesTableView.selectRowAtIndexPath(NSIndexPath(forItem: indexPath.row, inSection: 0), animated: true, scrollPosition: .None)
-            cell.accessoryType = .Checkmark
+            cell.contentView.backgroundColor = .basicGrayColor()
+            cell.isSelected(true)
             
         }
         
@@ -107,12 +113,32 @@ class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? NewStoreCategoryTableViewCell else {
+            
+            NSLog("Error: Selected Store Category Cell in New Store view could not be identified.")
+            return
+        }
+        
+        cell.contentView.backgroundColor = .basicGrayColor()
+        cell.isSelected(true)
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? NewStoreCategoryTableViewCell else {
+            
+            NSLog("Error: Selected Store Category Cell in New Store view could not be identified.")
+            return
+        }
+        
+        cell.contentView.backgroundColor = .whiteColor()
+        cell.isSelected(false)
+    }
+    
+    func setupAppearance() {
+        
+        nameTextField.backgroundColor = .basicBlueColor()
+        nameTextField.attributedPlaceholder = NSAttributedString(string: "Name...", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
     }
     
     //==================================================

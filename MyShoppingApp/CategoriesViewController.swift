@@ -256,7 +256,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         let screenWidth = screenSize.width
         
         self.storesCollectionView.allowsMultipleSelection = false
-//        storesCollectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 2.0)
         storesCollectionViewFlowLayout.itemSize = CGSize(width: ((screenWidth / 2) - 2), height: ((screenWidth / 2) - 2))
         storesCollectionViewFlowLayout.minimumInteritemSpacing = 2.0
         storesCollectionViewFlowLayout.minimumLineSpacing = 2.0
