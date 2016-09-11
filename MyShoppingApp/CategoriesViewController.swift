@@ -16,6 +16,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var addNewStoreBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
+    @IBOutlet weak var storeCategoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
     var storeCategories = [StoreCategory]()
     var selectedStoreCategory: StoreCategory?
     var selectedStoreCategoryIndex = -1
@@ -245,8 +246,20 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     func setupCollectionViews() {
         
         self.automaticallyAdjustsScrollViewInsets = false
+        
         self.storeCategoriesCollectionView.allowsMultipleSelection = false
+        storeCategoriesCollectionViewFlowLayout.itemSize = CGSize(width: 70.0, height: 70.0)
+        storeCategoriesCollectionViewFlowLayout.minimumInteritemSpacing = 2.0
+        storeCategoriesCollectionViewFlowLayout.minimumLineSpacing = 2.0
+        
+        let screenSize = UIScreen.mainScreen().bounds
+        let screenWidth = screenSize.width
+        
         self.storesCollectionView.allowsMultipleSelection = false
+//        storesCollectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 2.0)
+        storesCollectionViewFlowLayout.itemSize = CGSize(width: ((screenWidth / 2) - 2), height: ((screenWidth / 2) - 2))
+        storesCollectionViewFlowLayout.minimumInteritemSpacing = 2.0
+        storesCollectionViewFlowLayout.minimumLineSpacing = 2.0
     }
     
     func setupStoreCategories(completion: (() -> Void)? = nil) {

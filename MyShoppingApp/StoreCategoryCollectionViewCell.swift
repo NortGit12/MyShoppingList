@@ -15,7 +15,6 @@ class StoreCategoryCollectionViewCell: UICollectionViewCell {
     //==================================================
     
     @IBOutlet weak var roundedCategoryImageView: UIImageView!
-    @IBOutlet weak var categoryNameLabel: UILabel!
     
     //==================================================
     // MARK: - Methods
@@ -26,7 +25,6 @@ class StoreCategoryCollectionViewCell: UICollectionViewCell {
         roundedCategoryImageView.layer.cornerRadius = roundedCategoryImageView.frame.height / 2
         
         roundedCategoryImageView.image = UIImage(data: storeCategory.image)
-        categoryNameLabel.text = storeCategory.name
     }
     
 }
