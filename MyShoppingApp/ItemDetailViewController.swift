@@ -28,6 +28,8 @@ class ItemDetailViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupAppearance()
+        
         self.hideKeyboardWhenTappedAround()
 
         if let item = item {
@@ -51,7 +53,23 @@ class ItemDetailViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Methods
     //==================================================
     
+    func setupAppearance() {
+        
+        nameTextField.backgroundColor = .basicBlueColor()
+        nameTextField.attributedPlaceholder = NSAttributedString(string: "Name...", attributes: [NSForegroundColorAttributeName: UIColor.basicGrayColor()])
+        
+        quantityTextField.backgroundColor = .basicBlueColor()
+        quantityTextField.attributedPlaceholder = NSAttributedString(string: "Quantity... (2, 1-3pk, etc.)", attributes: [NSForegroundColorAttributeName: UIColor.basicGrayColor()])
+        
+        notesTextView.backgroundColor = .basicBlueColor()
+        notesTextView.attributedText = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+    }
+    
     func updateWithItem(item: Item) {
+        
+        nameTextField.textColor = .whiteColor()
+        quantityTextField.textColor = .whiteColor()
+        notesTextView.textColor = .whiteColor()
         
         nameTextField.text = item.name
         quantityTextField.text = item.quantity
