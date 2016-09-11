@@ -31,6 +31,8 @@ class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBarController?.tabBar.hidden = true
+        
         setupAppearance()
         
 //        self.hideKeyboardWhenTappedAround()

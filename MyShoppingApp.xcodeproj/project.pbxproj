@@ -175,15 +175,15 @@
 			isa = PBXGroup;
 			children = (
 				1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */,
-				1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */,
 				1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */,
+				1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */,
 				1F1775F51D6CE38000604DFA /* CategoriesViewController.swift */,
 				1F1775F71D6CE91100604DFA /* StoreCategoryCollectionViewCell.swift */,
 				1FEE27AA1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift */,
 				1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */,
 				1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */,
-				1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */,
 				1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */,
+				1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */,
 				1F2C7B4C1D81CDB700104707 /* Extensions */,
 			);
 			name = ViewController;

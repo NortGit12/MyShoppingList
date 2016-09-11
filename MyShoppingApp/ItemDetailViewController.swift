@@ -28,6 +28,8 @@ class ItemDetailViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBarController?.tabBar.hidden = true
+        
         setupAppearance()
         
         self.hideKeyboardWhenTappedAround()

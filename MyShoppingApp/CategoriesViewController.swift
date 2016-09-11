@@ -73,6 +73,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     override func viewWillAppear(animated: Bool) {
         
+        self.tabBarController?.tabBar.hidden = false
+        
         super.viewWillAppear(animated)
         
         self.refreshCollectionViews()

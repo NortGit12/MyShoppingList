@@ -22,6 +22,8 @@ class ItemsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tabBarController?.tabBar.hidden = true
 
         if let store = store {
             

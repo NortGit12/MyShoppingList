@@ -30,6 +30,8 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewWillAppear(animated: Bool) {
         
+        self.tabBarController?.tabBar.hidden = false
+        
         super.viewWillAppear(animated)
         
         tableView.reloadData()
