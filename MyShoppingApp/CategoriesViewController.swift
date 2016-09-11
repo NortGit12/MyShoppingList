@@ -28,7 +28,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     
     var collectionViewSelectedBorderWidth: CGFloat = 1.0
     var collectionViewUnselectedBorderWidth: CGFloat = 0.0
-    var collectionViewSelectedBackgroundColor: UIColor = .orangeColor()
+    var collectionViewSelectedBackgroundColor: UIColor = .basicGrayColor()
     var collectionViewUnselectedBackgroundColor: UIColor = .whiteColor()
     
     //==================================================

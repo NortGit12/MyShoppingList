@@ -14,13 +14,16 @@ class AppearanceController {
     // MARK: - Method(s)
     //==================================================
     
+    static let fontName = "Avenir Next"
+    static let fontSize: CGFloat = 20.0
+    
     static func initializeAppearanceDefaults() {
         
         // UINavigationBar
         
         let titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor()
-            , NSFontAttributeName: UIFont(name: "Avenir Next", size: 20.0)!
+            , NSFontAttributeName: UIFont(name: AppearanceController.fontName, size: AppearanceController.fontSize)!
         ]
         
         UINavigationBar.appearance().barTintColor = .basicBlueColor()
@@ -37,7 +40,10 @@ class AppearanceController {
         
         // TabBar
         
-        UITabBar.appearance().backgroundColor = .purpleColor()
+        UITabBar.appearance().barTintColor = .basicBlueColor()
         UITabBar.appearance().tintColor = .whiteColor()
+        
+        let tabBarAttributes = [NSFontAttributeName: UIFont(name: AppearanceController.fontName, size: AppearanceController.fontSize)!]
+        UITabBarItem.appearance().setTitleTextAttributes(tabBarAttributes, forState: .Normal)
     }
 }
