@@ -156,10 +156,21 @@ class NewStoreViewController: UIViewController, UITextFieldDelegate, UITableView
         
         // Gather all of the Store's data
         guard let name = nameTextField.text where name.characters.count > 0
-            , let indexPaths = storeCategoriesTableView.indexPathsForSelectedRows
-            , image = imageView.image
+            , let indexPaths = storeCategoriesTableView.indexPathsForSelectedRows where indexPaths.count > 0
+            , let image = imageView.image
             , imageData = UIImagePNGRepresentation(image)
             else {
+                
+                if nameTextField.text?.characters.count == 0 || storeCategoriesTableView.indexPathsForSelectedRows == nil {
+                    
+                    let alertController = UIAlertController(title: "Missing Details", message: "Name and at least one Category are required.", preferredStyle: .Alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    
+                    alertController.addAction(okAction)
+                    
+                    presentViewController(alertController, animated: true, completion: nil)
+                }
                 
                 NSLog("Error: Could not collect the required values for name, image, or index paths for store categories.")
                 return

@@ -59,12 +59,15 @@ class ItemDetailViewController: UIViewController, UITextFieldDelegate {
         
         nameTextField.backgroundColor = .basicBlueColor()
         nameTextField.attributedPlaceholder = NSAttributedString(string: "Name...", attributes: [NSForegroundColorAttributeName: UIColor.basicGrayColor()])
+        nameTextField.textColor = .whiteColor()
         
         quantityTextField.backgroundColor = .basicBlueColor()
         quantityTextField.attributedPlaceholder = NSAttributedString(string: "Quantity... (2, 1-3pk, etc.)", attributes: [NSForegroundColorAttributeName: UIColor.basicGrayColor()])
+        quantityTextField.textColor = .whiteColor()
         
         notesTextView.backgroundColor = .basicBlueColor()
         notesTextView.attributedText = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        notesTextView.textColor = .whiteColor()
     }
     
     func updateWithItem(item: Item) {
@@ -90,12 +93,25 @@ class ItemDetailViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         
         guard let store = store
-            , name = nameTextField.text where name.characters.count > 0
-            , let quantity = quantityTextField.text where quantity.characters.count > 0
+            , name = nameTextField.text
+            , let quantity = quantityTextField.text
             else {
                 
                 NSLog("Error: Not all required values could be retrieved from the view elements.")
                 return
+        }
+        
+        if name.characters.count == 0 || quantity.characters.count == 0 {
+            
+            let alertController = UIAlertController(title: "Missing Details", message: "Name and Quantity are required.", preferredStyle: .Alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            
+            alertController.addAction(okAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+            
+            return
         }
         
         let notes: String?

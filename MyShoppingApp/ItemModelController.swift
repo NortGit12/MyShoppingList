@@ -141,7 +141,7 @@ class ItemModelController {
                 
                 if let recordID = recordID {
                     
-                    print("Item with the ID of \"\(recordID)\" successfully deleted from CloudKit")
+                    print("Item with the ID of \"\(recordID)\" successfully deleted \"\(item.name)\" from CloudKit")
                 }
                 
                 PersistenceController.sharedController.moc.deleteObject(item)

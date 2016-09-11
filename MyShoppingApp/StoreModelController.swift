@@ -152,7 +152,7 @@ class StoreModelController {
                 
                 if let _ = recordID {
                     
-                    print("Store \"\(store.name)\" successfully deleted from CloudKit")
+                    print("Store \"\(store.name)\" successfully deleted \"\(store.name)\" from CloudKit")
                 }
                 
                 PersistenceController.sharedController.moc.deleteObject(store)
