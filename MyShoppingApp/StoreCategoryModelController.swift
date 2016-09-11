@@ -34,10 +34,11 @@ class StoreCategoryModelController {
     // MARK: - Method(s)
     //==================================================
     
-    func createStoreCategory(name: String, image: UIImage, completion: (() -> Void)? = nil) {
+    func createStoreCategory(name: String, image: UIImage, imageFlat: UIImage, completion: (() -> Void)? = nil) {
         
         guard let imageData = UIImagePNGRepresentation(image)
-            , storeCategory = StoreCategory(name: name, image: imageData, stores: nil)
+            , imageFlatData = UIImagePNGRepresentation(imageFlat)
+            , storeCategory = StoreCategory(name: name, image: imageData, imageFlat: imageFlatData, stores: nil)
             else {
                 
                 NSLog("Error: Could not either access the image data or create a new StoreCategory.")
@@ -145,15 +146,15 @@ class StoreCategoryModelController {
     
     func createMockData() {
         
-        createStoreCategory("Cars", image: UIImage(named: "cars")!)
-        createStoreCategory("Clothing", image: UIImage(named: "clothing")!)
-        createStoreCategory("Department", image: UIImage(named: "department-store")!)
-        createStoreCategory("Electronics", image: UIImage(named: "electronics")!)
-        createStoreCategory("Grocery", image: UIImage(named: "groceries")!)
-        createStoreCategory("Health & Beauty", image: UIImage(named: "health-and-beauty")!)
-        createStoreCategory("Home Improvement", image: UIImage(named: "home-improvement")!)
-        createStoreCategory("Misc", image: UIImage(named: "misc")!)
-        createStoreCategory("Office Supply", image: UIImage(named: "office-supply")!)
-        createStoreCategory("Pet", image: UIImage(named: "pet")!)
+        createStoreCategory("Cars", image: UIImage(named: "cars")!, imageFlat: UIImage(named: "cars_flat")!)
+        createStoreCategory("Clothing", image: UIImage(named: "clothing")!, imageFlat: UIImage(named: "clothing_flat")!)
+        createStoreCategory("Department", image: UIImage(named: "department-store")!, imageFlat: UIImage(named: "department-store_flat")!)
+        createStoreCategory("Electronics", image: UIImage(named: "electronics")!, imageFlat: UIImage(named: "electronics_flat")!)
+        createStoreCategory("Grocery", image: UIImage(named: "groceries")!, imageFlat: UIImage(named: "groceries_flat")!)
+        createStoreCategory("Health & Beauty", image: UIImage(named: "health-and-beauty")!, imageFlat: UIImage(named: "health-and-beauty_flat")!)
+        createStoreCategory("Home Improvement", image: UIImage(named: "home-improvement")!, imageFlat: UIImage(named: "home-improvement_flat")!)
+        createStoreCategory("Misc", image: UIImage(named: "misc")!, imageFlat: UIImage(named: "misc_flat")!)
+        createStoreCategory("Office Supply", image: UIImage(named: "office-supply")!, imageFlat: UIImage(named: "office-supply_flat")!)
+        createStoreCategory("Pet", image: UIImage(named: "pet")!, imageFlat: UIImage(named: "pet_flat")!)
     }
 }

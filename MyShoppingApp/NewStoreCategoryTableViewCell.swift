@@ -40,7 +40,7 @@ class NewStoreCategoryTableViewCell: UITableViewCell {
         
         nameLabel.text = storeCategory.name
         nameLabel.textColor = .blackColor()
-        storeCategoryImage.image = UIImage(data: storeCategory.image)
+        storeCategoryImage.image = UIImage(data: storeCategory.image_flat)
     }
     
     func isSelected(isSelected: Bool = false) {

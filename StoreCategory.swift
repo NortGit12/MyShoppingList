@@ -20,6 +20,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
     static let type = "StoreCategory"
     static let nameKey = "name"
     static let imageKey = "categoryImage"
+    static let imageFlatKey = "categoryImageFlat"
     static let storesKey = "stores"
     
     var recordType: String { return StoreCategory.type }
@@ -37,6 +38,19 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         return fileURL
     }()
     
+    lazy var temporaryFlatImageURL: NSURL = {
+        
+        // Must write to temporary directory to be able to pass image file path URL to CKAsset
+        
+        let temporaryDirectory = NSTemporaryDirectory()
+        let temporaryDirectoryURL = NSURL(fileURLWithPath: temporaryDirectory)
+        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName).URLByAppendingPathExtension("jpg")
+        
+        self.image_flat.writeToURL(fileURL, atomically: true)
+        
+        return fileURL
+    }()
+    
     var cloudKitRecord: CKRecord? {
         
         let recordID = CKRecordID(recordName: self.recordName)
@@ -44,6 +58,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         
         record[StoreCategory.nameKey] = self.name
         record[StoreCategory.imageKey] = CKAsset(fileURL: self.temporaryImageURL)
+        record[StoreCategory.imageFlatKey] = CKAsset(fileURL: self.temporaryFlatImageURL)
         
         var storesReferencesArray = [CKReference]()
         if self.stores?.count > 0 {
@@ -71,7 +86,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
     // MARK: - Initializer(s)
     //==================================================
     
-    convenience init?(name: String, image: NSData, stores: [Store]?, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {      // stores: [Store] = [Store](),
+    convenience init?(name: String, image: NSData, imageFlat: NSData, stores: [Store]?, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {      // stores: [Store] = [Store](),
         
         guard let storeCategoryEntity = NSEntityDescription.entityForName(StoreCategory.type, inManagedObjectContext: context) else {
         
@@ -84,6 +99,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         self.recordName = nameForManagedObject()
         self.name = name
         self.image = image
+        self.image_flat = imageFlat
     }
     
     convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
@@ -91,6 +107,8 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         guard let name = record[StoreCategory.nameKey] as? String
             , imageAssetData = record[StoreCategory.imageKey] as? CKAsset
             , imageData = NSData(contentsOfURL: imageAssetData.fileURL)
+            , imageFlatAssetData = record[StoreCategory.imageFlatKey] as? CKAsset
+            , imageFlatData = NSData(contentsOfURL: imageFlatAssetData.fileURL)
             else {
         
                 NSLog("Error: Could not create the Store Category from the CloudKit record.")
@@ -105,5 +123,6 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         self.name = name
         self.image = imageData
+        self.image_flat = imageFlatData
     }
 }
