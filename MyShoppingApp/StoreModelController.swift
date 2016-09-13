@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CloudKit
 
 class StoreModelController {
     
@@ -17,10 +18,6 @@ class StoreModelController {
     
     static let sharedController = StoreModelController()
     let cloudKitManager = CloudKitManager()
-    
-    //==================================================
-    // MARK: - Initializer(s)
-    //==================================================
     
     //==================================================
     // MARK: - Methods
@@ -71,6 +68,8 @@ class StoreModelController {
                 }
             })
         }
+        
+        
     }
     
     func fetchStoreByIdName(idName: String) -> Store? {
@@ -164,6 +163,37 @@ class StoreModelController {
                     completion()
                 }
             })
+        }
+    }
+    
+    func subscribeToStoresForOptionType(optionType: CKSubscriptionOptions, completion: ((success: Bool, error: NSError?) -> Void)?) {
+        
+        var optionTypeString: String
+        switch optionType {
+        case CKSubscriptionOptions.FiresOnRecordCreation: optionTypeString = "New"
+        case CKSubscriptionOptions.FiresOnRecordUpdate: optionTypeString = "Updated"
+        case CKSubscriptionOptions.FiresOnRecordDeletion: optionTypeString = "Deleted"
+        default:
+            NSLog("Error: Unsupported CKSubscriptionOption (\(optionType))used for Store.")
+            return
+        }
+        
+        let predicate = NSPredicate(value: true)
+//        let desiredKeys = [Store.nameKey, Store.imageKey, Store.categoriesKey, Store.itemsKey]
+        let desiredKeys = [Store.nameKey]
+        
+        cloudKitManager.subscribe(cloudKitManager.privateDatabase, type: Store.type, predicate: predicate, subscriptionID: "all\(optionTypeString)Stores", contentAvailable: true, desiredKeys: desiredKeys, options: optionType) { (subscription, error) in
+            
+            if error != nil {
+                
+                NSLog("Error: There was a problem creating the \(optionTypeString.lowercaseString) Store subscription.  \(error!.localizedDescription)")
+            }
+            
+            if let completion = completion {
+                
+                let success = subscription != nil
+                completion(success: success, error: error)
+            }
         }
     }
 }

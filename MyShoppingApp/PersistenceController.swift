@@ -271,4 +271,68 @@ class PersistenceController {
             })
         }
     }
+    
+    func identifyManagedObjectType(recordID: CKRecordID) -> String {
+        
+        let storeCategoryManagedObject = StoreCategoryModelController.sharedController.fetchStoreCategoryByIdName(recordID.recordName)
+        let storeManagedObject = StoreModelController.sharedController.fetchStoreByIdName(recordID.recordName)
+        let itemManagedObject = ItemModelController.sharedController.fetchItemByIdName(recordID.recordName)
+        
+        var managedObjectType = String()
+        
+        if storeCategoryManagedObject != nil { managedObjectType = StoreCategory.type}
+        else if storeManagedObject != nil { managedObjectType = Store.type}
+        else if itemManagedObject != nil { managedObjectType = Item.type}
+        
+        return managedObjectType
+    }
+    
+    func createUpdateSubscription(recordType: String) {
+        
+        let predicate = NSPredicate(value: true)
+        
+        var database: CKDatabase
+        var desiredKeys: [String]?
+        switch recordType {
+        case StoreCategory.type:
+            database = cloudKitManager.publicDatabase
+            desiredKeys = [StoreCategory.nameKey, StoreCategory.imageKey, StoreCategory.imageFlatKey, StoreCategory.storesKey]
+        case Store.type:
+            database = cloudKitManager.privateDatabase
+            desiredKeys = [Store.nameKey, Store.imageKey, Store.categoriesKey, Store.itemsKey]
+        case Item.type:
+            database = cloudKitManager.privateDatabase
+            desiredKeys = [Item.nameKey, Item.quantityKey, Item.notesKey, Item.storeKey]
+        default:
+            NSLog("Error: Could not identify the record type when attempting to create an update subscription.")
+            return
+        }
+        
+        cloudKitManager.subscribe(database, type: recordType, predicate: predicate, subscriptionID: "\(recordType)Updates", contentAvailable: true, alertBody: nil, desiredKeys: desiredKeys, options: .FiresOnRecordUpdate) { (subscription, error) in
+            
+            // TODO: Implement this, possibly making it flexible enough for creating, update, & delete
+        }
+    }
+    
+    func createDeleteSubscription() {
+        
+        
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

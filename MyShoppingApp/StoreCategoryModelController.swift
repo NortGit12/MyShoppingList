@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CloudKit
 
 class StoreCategoryModelController {
     
@@ -142,6 +143,42 @@ class StoreCategoryModelController {
         let sortedStoresArray = storesArray.sort({ $0.0.name < $0.1.name })
         
         return sortedStoresArray
+    }
+    
+    func subscribeToStoreCategoriesForOptionType(optionType: CKSubscriptionOptions, completion: ((success: Bool, error: NSError?) -> Void)?) {
+        
+        var optionTypeString: String
+        switch optionType {
+        case CKSubscriptionOptions.FiresOnRecordCreation: optionTypeString = "New"
+        case CKSubscriptionOptions.FiresOnRecordUpdate: optionTypeString = "Updated"
+        case CKSubscriptionOptions.FiresOnRecordDeletion: optionTypeString = "Deleted"
+        default:
+            NSLog("Error: Unsupported CKSubscriptionOption (\(optionType))used for StoreCategory.")
+            return
+        }
+        
+        cloudKitManager.fetchSubscriptions(cloudKitManager.publicDatabase) { (subscriptions, error) in
+            
+            print("See what subscriptions contains")
+        }
+        
+        let predicate = NSPredicate(value: true)
+//        let desiredKeys = [StoreCategory.nameKey, StoreCategory.imageKey, StoreCategory.imageFlatKey]
+        let desiredKeys = [StoreCategory.nameKey]
+        
+        cloudKitManager.subscribe(cloudKitManager.publicDatabase, type: StoreCategory.type, predicate: predicate, subscriptionID: "all\(optionTypeString)StoreCategories", contentAvailable: true, desiredKeys: desiredKeys, options: optionType) { (subscription, error) in
+            
+            if error != nil {
+                
+                NSLog("Error: There was a problem creating the \(optionTypeString.lowercaseString) StoreCategory subscription.  \(error!.localizedDescription)")
+            }
+            
+            if let completion = completion {
+                
+                let success = subscription != nil
+                completion(success: success, error: error)
+            }
+        }
     }
     
     func createMockData() {

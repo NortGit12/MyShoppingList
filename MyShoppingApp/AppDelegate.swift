@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
+        subscribeToAllRecordCreations { 
+            
+            self.subscribeToAllRecordUpdates({
+                
+                self.subscribeToAllRecordDeletions()
+            })
+        }
+        
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         AppearanceController.initializeAppearanceDefaults()
@@ -46,8 +60,83 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        
+        /*
+         Right now this only handles notification related to new records.  Make it so that it also supports update and deletes.
+         */
+        
+//        guard let notificationInfo = userInfo as? [String : NSObject] else {
+//            
+//            NSLog("Error: Unable to get userInfo dictionary when receiving a remote notification.")
+//            return
+//        }
+//        
+//        let queryNotification = CKQueryNotification(fromRemoteNotificationDictionary: notificationInfo)
+//        
+//        guard let recordID =  queryNotification.recordID else {
+//            
+//            NSLog("Error: No Record ID available from CKQueryNotification.")
+//            return
+//        }
+//        
+//        let cloudKitManager = PersistenceController.sharedController.cloudKitManager
+//        let managedObjectType = PersistenceController.sharedController.identifyManagedObjectType(recordID)
+//        
+//        /*
+//         StoreCategories are in the public database and Stores and Items are in the private database
+//         */
+//        var database: CKDatabase
+//        switch managedObjectType {
+//        case StoreCategory.type: database = cloudKitManager.publicDatabase
+//        default: database = cloudKitManager.privateDatabase
+//        }
+//        
+//        cloudKitManager.fetchRecordWithID(database, recordID: recordID) { (record, error) in
+//            
+//            guard let record = record else {
+//                
+//                NSLog("Error: Unable to fetch CKRecord for \(managedObjectType) from Record ID.")
+//                return
+//            }
+//            
+//            switch record.recordType {
+//                
+//            case StoreCategory.type: let _ = StoreCategory(record: record)
+//            case Store.type: let _ = Store(record: record)
+//            case Item.type: let _ = Item(record: record)
+//            default:
+//                NSLog("Error: Couldn't switch on the record type and create a \(record.recordType) successfully.")
+//                return
+//            }
+//            
+//            PersistenceController.sharedController.saveContext()
+//        }
+        
+        print("See what's in the userInfo dictionary")
+        
+        PersistenceController.sharedController.fetchNewRecords(StoreCategory.type) {
+            
+            print("Fetching new StoreCategories from CloudKit (triggered by remote notification)...")
+            
+            PersistenceController.sharedController.fetchNewRecords(Store.type) {
+                
+                print("Fetching new Stores from CloudKit (triggered by remote notification)...")
+                
+                PersistenceController.sharedController.fetchNewRecords(Item.type) {
+                    
+                    print("Fetching new Items from CloudKit (triggered by remote notification)...")
+                }
+            }
+        }
+        
+        completionHandler(UIBackgroundFetchResult.NewData)
+    }
 
+    //==================================================
     // MARK: - Core Data stack
+    //==================================================
 
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.jcn.MyShoppingApp" in the application's documents Application Support directory.
@@ -94,7 +183,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return managedObjectContext
     }()
 
+    //==================================================
     // MARK: - Core Data Saving support
+    //==================================================
 
     func saveContext () {
         if managedObjectContext.hasChanges {
@@ -106,6 +197,112 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let nserror = error as NSError
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
                 abort()
+            }
+        }
+    }
+    
+    //==================================================
+    // MARK: - Methods
+    //==================================================
+    
+    func subscribeToAllRecordCreations(completion: (() -> Void)? = nil) {
+        
+        StoreCategoryModelController.sharedController.subscribeToStoreCategoriesForOptionType(.FiresOnRecordCreation) { (success, error) in
+            
+            if success == true {
+                NSLog("Subscribed successfully to all new Store Categories.")
+            } else {
+                NSLog("Error: Problem subscribing to new Store Categories.")
+            }
+            
+            StoreModelController.sharedController.subscribeToStoresForOptionType(.FiresOnRecordCreation) { (success, error) in
+                
+                if success == true {
+                    NSLog("Subscribed successfully to all new Stores.")
+                } else {
+                    NSLog("Error: Problem subscribing to new Stores.")
+                }
+                
+                ItemModelController.sharedController.subscribeToItemsForOptionType(.FiresOnRecordCreation) { (success, error) in
+                    
+                    if success == true {
+                        NSLog("Subscribed successfully to all new Items.")
+                    } else {
+                        NSLog("Error: Problem subscribing to new Items.")
+                    }
+                    
+                    if let completion = completion {
+                        completion()
+                    }
+                }
+            }
+        }
+    }
+    
+    func subscribeToAllRecordUpdates(completion: (() -> Void)? = nil) {
+        
+        StoreCategoryModelController.sharedController.subscribeToStoreCategoriesForOptionType(.FiresOnRecordUpdate) { (success, error) in
+            
+            if success == true {
+                NSLog("Subscribed successfully to all new Store Categories.")
+            } else {
+                NSLog("Error: Problem subscribing to new Store Categories.")
+            }
+            
+            StoreModelController.sharedController.subscribeToStoresForOptionType(.FiresOnRecordUpdate) { (success, error) in
+                
+                if success == true {
+                    NSLog("Subscribed successfully to all new Stores.")
+                } else {
+                    NSLog("Error: Problem subscribing to new Stores.")
+                }
+                
+                ItemModelController.sharedController.subscribeToItemsForOptionType(.FiresOnRecordUpdate) { (success, error) in
+                    
+                    if success == true {
+                        NSLog("Subscribed successfully to all new Items.")
+                    } else {
+                        NSLog("Error: Problem subscribing to new Items.")
+                    }
+                    
+                    if let completion = completion {
+                        completion()
+                    }
+                }
+            }
+        }
+    }
+    
+    func subscribeToAllRecordDeletions(completion: (() -> Void)? = nil) {
+        
+        StoreCategoryModelController.sharedController.subscribeToStoreCategoriesForOptionType(.FiresOnRecordDeletion) { (success, error) in
+            
+            if success == true {
+                NSLog("Subscribed successfully to all new Store Categories.")
+            } else {
+                NSLog("Error: Problem subscribing to new Store Categories.")
+            }
+            
+            StoreModelController.sharedController.subscribeToStoresForOptionType(.FiresOnRecordDeletion) { (success, error) in
+                
+                if success == true {
+                    NSLog("Subscribed successfully to all new Stores.")
+                } else {
+                    NSLog("Error: Problem subscribing to new Stores.")
+                }
+                
+                ItemModelController.sharedController.subscribeToItemsForOptionType(.FiresOnRecordDeletion) { (success, error) in
+                    
+                    if success == true {
+                        NSLog("Subscribed successfully to all new Items.")
+                    } else {
+                        NSLog("Error: Problem subscribing to new Items.")
+                    }
+                    
+                    if let completion = completion {
+                        completion()
+                    }
+                }
             }
         }
     }

@@ -263,9 +263,9 @@ class CloudKitManager {
     // MARK: - Subscriptions
     //==================================================
     
-    // TODO: Do these subsicription-related methods need to also be able to use the private database?
-    func subscribe(type: String, predicate: NSPredicate, subscriptionID: String, contentAvailable: Bool, alertBody: String? = nil, desiredKeys: [String]? = nil, options: CKSubscriptionOptions, completion: ((subscription: CKSubscription?, error: NSError?) -> Void)?) {
-        
+//    func subscribe(type: String, predicate: NSPredicate, subscriptionID: String, contentAvailable: Bool, alertBody: String? = nil, desiredKeys: [String]? = nil, options: CKSubscriptionOptions, completion: ((subscription: CKSubscription?, error: NSError?) -> Void)?) {
+    func subscribe(database: CKDatabase = CKContainer.defaultContainer().publicCloudDatabase, type: String, predicate: NSPredicate, subscriptionID: String, contentAvailable: Bool, alertBody: String? = nil, desiredKeys: [String]? = nil, options: CKSubscriptionOptions, completion: ((subscription: CKSubscription?, error: NSError?) -> Void)?) {
+    
         let subscription = CKSubscription(recordType: type, predicate: predicate, subscriptionID: subscriptionID, options: options)
         
         let notificationInfo = CKNotificationInfo()
@@ -275,38 +275,45 @@ class CloudKitManager {
         
         subscription.notificationInfo = notificationInfo
         
-        publicDatabase.saveSubscription(subscription) { (subscription, error) in
-            
+//        publicDatabase.saveSubscription(subscription) { (subscription, error) in
+        database.saveSubscription(subscription) { (subscription, error) in
+        
             if let completion = completion {
                 completion(subscription: subscription, error: error)
             }
         }
     }
     
-    func unsubscribe(subscriptionID: String, completion: ((subscriptionID: String?, error: NSError?) -> Void)?) {
+//    func unsubscribe(subscriptionID: String, completion: ((subscriptionID: String?, error: NSError?) -> Void)?) {
+    func unsubscribe(database: CKDatabase = CKContainer.defaultContainer().publicCloudDatabase, subscriptionID: String, completion: ((subscriptionID: String?, error: NSError?) -> Void)?) {
+    
+//        publicDatabase.deleteSubscriptionWithID(subscriptionID) { (subscriptionID, error) in
+        database.deleteSubscriptionWithID(subscriptionID) { (subscriptionID, error) in
         
-        publicDatabase.deleteSubscriptionWithID(subscriptionID) { (subscriptionID, error) in
-            
             if let completion = completion {
                 completion(subscriptionID: subscriptionID, error: error)
             }
         }
     }
     
-    func fetchSubscriptions(completion: ((subscriptions: [CKSubscription]?, error: NSError?) -> Void)?) {
-        
-        publicDatabase.fetchAllSubscriptionsWithCompletionHandler { (subscriptions, error) in
+//    func fetchSubscriptions(completion: ((subscriptions: [CKSubscription]?, error: NSError?) -> Void)?) {
+    func fetchSubscriptions(database: CKDatabase = CKContainer.defaultContainer().publicCloudDatabase, completion: ((subscriptions: [CKSubscription]?, error: NSError?) -> Void)?) {
             
+//        publicDatabase.fetchAllSubscriptionsWithCompletionHandler { (subscriptions, error) in
+        database.fetchAllSubscriptionsWithCompletionHandler { (subscriptions, error) in
+        
             if let completion = completion {
                 completion(subscriptions: subscriptions, error: error)
             }
         }
     }
     
-    func fetchSubscription(subscriptionID: String, completion: ((subscription: CKSubscription?, error: NSError?) -> Void)?) {
+//    func fetchSubscription(subscriptionID: String, completion: ((subscription: CKSubscription?, error: NSError?) -> Void)?) {
+    func fetchSubscription(database: CKDatabase = CKContainer.defaultContainer().publicCloudDatabase, subscriptionID: String, completion: ((subscription: CKSubscription?, error: NSError?) -> Void)?) {
+    
+//        publicDatabase.fetchSubscriptionWithID(subscriptionID) { (subscription, error) in
+        database.fetchSubscriptionWithID(subscriptionID) { (subscription, error) in
         
-        publicDatabase.fetchSubscriptionWithID(subscriptionID) { (subscription, error) in
-            
             if let completion = completion {
                 completion(subscription: subscription, error: error)
             }

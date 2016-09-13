@@ -17,7 +17,6 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var addNewStoreBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var storeCategoriesCollectionView: UICollectionView!
     @IBOutlet weak var storeCategoriesCollectionViewFlowLayout: UICollectionViewFlowLayout!
-    var storeCategories = [StoreCategory]()
     var selectedStoreCategory: StoreCategory?
     var selectedStoreCategoryIndex = -1
     let defaultStoreCategoryName = "Grocery"
@@ -47,35 +46,31 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
             dispatch_async(dispatch_get_main_queue(), {
                 
-                self.setupStoreCategories({
+                if self.fetchStoreCategories().count == 0 {
                     
-                    if self.storeCategories.count == 0 {
+                    self.activityIndicatorView.startAnimating()
+                    
+                    self.requestFullSync({
                         
-                        self.activityIndicatorView.startAnimating()
-                        
-                        self.requestFullSync({
-                            self.setupStoreCategories({ 
-                                
-                                self.activityIndicatorView.stopAnimating()
-                                self.refreshCollectionViews()
-                                self.setupSelectedStoreCategory()
-                            })
-                        })
-                    } else {
+                        self.activityIndicatorView.stopAnimating()
                         self.refreshCollectionViews()
                         self.setupSelectedStoreCategory()
-                        self.requestFullSync()
-                    }
-                })
+                    })
+                } else {
+                    self.refreshCollectionViews()
+                    self.setupSelectedStoreCategory()
+                    self.requestFullSync()
+                }
+                
             })
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         
-        self.tabBarController?.tabBar.hidden = false
-        
         super.viewWillAppear(animated)
+        
+        self.tabBarController?.tabBar.hidden = false
         
         self.refreshCollectionViews()
     }
@@ -90,7 +85,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if collectionView == storeCategoriesCollectionView {
             
-            numberOfItemsInSection = self.storeCategories.count ?? 0
+            numberOfItemsInSection = fetchStoreCategories().count
             
         } else if collectionView == storesCollectionView {
             
@@ -116,7 +111,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                     return UICollectionViewCell()
             }
             
-            let storeCategory = self.storeCategories[indexPath.row]
+            let storeCategory = fetchStoreCategories()[indexPath.row]
             
             cell.updateWithStoreCategory(storeCategory)
             
@@ -164,10 +159,10 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         if collectionView == storeCategoriesCollectionView {
             
-            let selectedStoreCategory = self.storeCategories[indexPath.row]
+            let selectedStoreCategory = fetchStoreCategories()[indexPath.row]
             
-            guard let cell = collectionView.cellForItemAtIndexPath(indexPath)
-                , selectedStoreCategoryIndex = storeCategories.indexOf(selectedStoreCategory)
+            guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? StoreCategoryCollectionViewCell
+                 , selectedStoreCategoryIndex = fetchStoreCategories().indexOf(selectedStoreCategory)
                 else {
                 
                     NSLog("Error: Could not either unwrap the cell or identify the Store Category index.")
@@ -216,6 +211,17 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     // MARK: - Methods
     //==================================================
     
+    func fetchStoreCategories() -> [StoreCategory] {
+        
+        guard let currentStoreCategories = StoreCategoryModelController.sharedController.fetchStoreCategories() else {
+            
+            NSLog("Error: Could not get current set of Store Categories.")
+            return [StoreCategory]()
+        }
+        
+        return currentStoreCategories
+    }
+    
     func refreshCollectionViews() {
         
         self.storeCategoriesCollectionView.reloadData()
@@ -263,25 +269,10 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         storesCollectionViewFlowLayout.minimumLineSpacing = 2.0
     }
     
-    func setupStoreCategories(completion: (() -> Void)? = nil) {
-    
-        guard let storeCategories = StoreCategoryModelController.sharedController.fetchStoreCategories() else {
-            
-            NSLog("Error: Could not unwrap the Store Categories.")
-            return
-        }
-        
-        self.storeCategories = storeCategories
-        
-        if let completion = completion {
-            completion()
-        }
-    }
-    
     func setupSelectedStoreCategory() {
         
         guard let defaultStoreCategory = StoreCategoryModelController.sharedController.fetchStoreCategoryByName(self.defaultStoreCategoryName)
-            , defaultStoreCategoryIndex = storeCategories.indexOf(defaultStoreCategory)
+            , defaultStoreCategoryIndex = fetchStoreCategories().indexOf(defaultStoreCategory)
             else {
                 
                 NSLog("Error: Could not identify the Store Category's index.")
@@ -323,7 +314,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         if let newStoreViewController = segue.destinationViewController as? NewStoreViewController {
             
             // What do we need to pack?
-            let selectedStoreCategory = self.storeCategories[self.selectedStoreCategoryIndex]
+            let selectedStoreCategory = fetchStoreCategories()[self.selectedStoreCategoryIndex]
             
             // Are we done packing?
             newStoreViewController.selectedStoreCategory = selectedStoreCategory

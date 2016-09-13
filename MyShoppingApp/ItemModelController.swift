@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 
 class ItemModelController {
     
@@ -153,6 +154,36 @@ class ItemModelController {
                     completion()
                 }
             })
+        }
+    }
+    
+    func subscribeToItemsForOptionType(optionType: CKSubscriptionOptions, completion: ((success: Bool, error: NSError?) -> Void)?) {
+        
+        var optionTypeString: String
+        switch optionType {
+        case CKSubscriptionOptions.FiresOnRecordCreation: optionTypeString = "New"
+        case CKSubscriptionOptions.FiresOnRecordUpdate: optionTypeString = "Updated"
+        case CKSubscriptionOptions.FiresOnRecordDeletion: optionTypeString = "Deleted"
+        default:
+            NSLog("Error: Unsupported CKSubscriptionOption (\(optionType))used for Item.")
+            return
+        }
+        
+        let predicate = NSPredicate(value: true)
+        let desiredKeys = [Item.nameKey, Item.quantityKey, Item.notesKey, Item.storeKey]
+        
+        cloudKitManager.subscribe(cloudKitManager.privateDatabase, type: Item.type, predicate: predicate, subscriptionID: "all\(optionTypeString)Items", contentAvailable: true, desiredKeys: desiredKeys, options: optionType) { (subscription, error) in
+            
+            if error != nil {
+                
+                NSLog("Error: There was a problem creating the \(optionTypeString.lowercaseString) Item subscription.  \(error!.localizedDescription)")
+            }
+            
+            if let completion = completion {
+                
+                let success = subscription != nil
+                completion(success: success, error: error)
+            }
         }
     }
 }
