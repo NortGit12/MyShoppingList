@@ -31,11 +31,11 @@ class Store: SyncableObject, CloudKitManagedObject {
         
         let temporaryDirectory = NSTemporaryDirectory()
         let temporaryDirectoryURL = NSURL(fileURLWithPath: temporaryDirectory)
-        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName).URLByAppendingPathExtension("jpg")
+        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName)!.URLByAppendingPathExtension("jpg")
         
-        self.image.writeToURL(fileURL, atomically: true)
+        self.image.writeToURL(fileURL!, atomically: true)
         
-        return fileURL
+        return fileURL!
     }()
     
     var cloudKitRecord: CKRecord? {

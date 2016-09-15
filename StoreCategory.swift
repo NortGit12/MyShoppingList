@@ -31,11 +31,11 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         
         let temporaryDirectory = NSTemporaryDirectory()
         let temporaryDirectoryURL = NSURL(fileURLWithPath: temporaryDirectory)
-        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName).URLByAppendingPathExtension("jpg")
+        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName)!.URLByAppendingPathExtension("jpg")
         
-        self.image.writeToURL(fileURL, atomically: true)
+        self.image.writeToURL(fileURL!, atomically: true)
         
-        return fileURL
+        return fileURL!
     }()
     
     lazy var temporaryFlatImageURL: NSURL = {
@@ -44,11 +44,11 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
         
         let temporaryDirectory = NSTemporaryDirectory()
         let temporaryDirectoryURL = NSURL(fileURLWithPath: temporaryDirectory)
-        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName).URLByAppendingPathExtension("jpg")
+        let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName)!.URLByAppendingPathExtension("jpg")
         
-        self.image_flat.writeToURL(fileURL, atomically: true)
+        self.image_flat.writeToURL(fileURL!, atomically: true)
         
-        return fileURL
+        return fileURL!
     }()
     
     var cloudKitRecord: CKRecord? {
@@ -68,7 +68,7 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
                 for store in stores {
                     
                     guard let recordIDData = store.recordIDData
-                        , recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
+                        , let recordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData!) as? CKRecordID
                         else { continue }
                     
                     let storeReference = CKReference(recordID: recordID, action: .DeleteSelf)
@@ -105,10 +105,10 @@ class StoreCategory: SyncableObject, CloudKitManagedObject {
     convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         
         guard let name = record[StoreCategory.nameKey] as? String
-            , imageAssetData = record[StoreCategory.imageKey] as? CKAsset
-            , imageData = NSData(contentsOfURL: imageAssetData.fileURL)
-            , imageFlatAssetData = record[StoreCategory.imageFlatKey] as? CKAsset
-            , imageFlatData = NSData(contentsOfURL: imageFlatAssetData.fileURL)
+            , let imageAssetData = record[StoreCategory.imageKey] as? CKAsset
+            , let imageData = NSData(contentsOfURL: imageAssetData.fileURL)
+            , let imageFlatAssetData = record[StoreCategory.imageFlatKey] as? CKAsset
+            , let imageFlatData = NSData(contentsOfURL: imageFlatAssetData.fileURL)
             else {
         
                 NSLog("Error: Could not create the Store Category from the CloudKit record.")

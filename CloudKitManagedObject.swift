@@ -88,5 +88,4 @@ extension CloudKitManagedObject {
             print("Unable to save Managed Object Context: \(error)")
         }
     }
-    
 }

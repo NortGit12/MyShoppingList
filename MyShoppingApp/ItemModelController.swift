@@ -88,7 +88,7 @@ class ItemModelController {
         return resultsArray ?? nil
     }
     
-    func updateItem(item: Item, store: Store, completion: (() -> Void)? = nil) {
+    func updateItem(item: Item, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
         let request = NSFetchRequest(entityName: Item.type)
         let predicate = NSPredicate(format: "recordName = %@", argumentArray: [item.recordName])
@@ -103,29 +103,37 @@ class ItemModelController {
         
         PersistenceController.sharedController.saveContext()
         
-        if let completion = completion {
-            completion()
-        }
-        
-        if let itemCloudKitRecord = item.cloudKitRecord {
-        
-            cloudKitManager.modifyRecords(cloudKitManager.privateDatabase, records: [itemCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
+        if sourceIsRemoteNotification {
             
-                if error != nil {
-                    
-                    NSLog("Error: Could not modify the existing \"\(item.name)\" item in CloudKit: \(error?.localizedDescription)")
-                    
-                    if let completion = completion {
-                        completion()
-                    }
-                }
+            if let itemCloudKitRecord = item.cloudKitRecord {
                 
-                if let _ = records {
+                cloudKitManager.modifyRecords(cloudKitManager.privateDatabase, records: [itemCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
                     
-                    NSLog("Updated \"\(item.name)\" item saved successfully to CloudKit.")
-                }
-            })
-        
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
+                    
+                    if error != nil {
+                        
+                        NSLog("Error: Could not modify the existing \"\(item.name)\" item in CloudKit: \(error?.localizedDescription)")
+                        return
+                    }
+                    
+                    if let _ = records {
+                        
+                        NSLog("Updated \"\(item.name)\" item saved successfully to CloudKit.")
+                    }
+                })
+                
+            }
+        } else {
+            
+            if let completion = completion {
+                completion()
+            }
         }
     }
     

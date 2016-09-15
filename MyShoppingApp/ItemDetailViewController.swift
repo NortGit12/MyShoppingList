@@ -127,8 +127,9 @@ class ItemDetailViewController: UIViewController, UITextFieldDelegate {
             item.name = name
             item.quantity = quantity
             item.notes = notes
+            item.store = store
             
-            ItemModelController.sharedController.updateItem(item, store: store)
+            ItemModelController.sharedController.updateItem(item)
             
         // Save a new Item
         } else {

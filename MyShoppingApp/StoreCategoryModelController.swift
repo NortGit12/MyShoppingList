@@ -102,14 +102,11 @@ class StoreCategoryModelController {
         return resultsArray?.first
     }
     
-//    func getStoreCategoriesWithCompletion(completion: ((categories: [StoreCategory]?) -> Void)? = nil) {
     func fetchStoreCategories() -> [StoreCategory]? {
     
         let request = NSFetchRequest(entityName: StoreCategory.type)
         let predicate = NSPredicate(value: true)
         request.predicate = predicate
-        
-//        var resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory]
         
         var resultsArray = [StoreCategory]()
         do {
@@ -120,17 +117,12 @@ class StoreCategoryModelController {
             NSLog("Error: Troublems.  \(error.localizedDescription)")
         }
         
-//        resultsArray?.sortInPlace({ $0.0.name < $0.1.name })
         resultsArray.sortInPlace({ $0.0.name < $0.1.name })
-        
-//        if let completion = completion {
-//            completion(categories: resultsArray)
-//        }
         
         return resultsArray
     }
     
-    func getStoresForStoreCategory(storeCategory: StoreCategory) -> [Store]? {
+    func fetchStoresForStoreCategory(storeCategory: StoreCategory) -> [Store]? {
         
         guard let storesSet = storeCategory.stores
             , storesArray = Array(storesSet) as? [Store]
@@ -145,6 +137,60 @@ class StoreCategoryModelController {
         return sortedStoresArray
     }
     
+    func updateStoreCategory(storeCategory: StoreCategory, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
+        
+        let request = NSFetchRequest(entityName: StoreCategory.type)
+        let predicate = NSPredicate(format: "recordName = %@", argumentArray: [storeCategory.recordName])
+        request.predicate = predicate
+        
+        let resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [StoreCategory]
+        guard let existingStoreCategory = resultsArray?.first else {
+            
+            NSLog("Error: Existing StoreCategory could not be found.")
+            return
+        }
+        
+        existingStoreCategory.name = storeCategory.name
+        existingStoreCategory.image = storeCategory.image
+        existingStoreCategory.image_flat = storeCategory.image_flat
+        existingStoreCategory.stores = storeCategory.stores
+        
+        PersistenceController.sharedController.saveContext()
+        
+        if sourceIsRemoteNotification {
+            
+            if let storeCategoryCloudKitRecord = storeCategory.cloudKitRecord {
+                
+                cloudKitManager.modifyRecords(cloudKitManager.publicDatabase, records: [storeCategoryCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
+                    
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
+                    
+                    if error != nil {
+                        
+                        NSLog("Error: Could not modify the existing \"\(storeCategory.name)\" store category in CloudKit: \(error?.localizedDescription)")
+                        return
+                    }
+                    
+                    if let _ = records {
+                        
+                        NSLog("Updated \"\(storeCategory.name)\" store category saved successfully to CloudKit.")
+                    }
+                })
+                
+            }
+        } else {
+            
+            if let completion = completion {
+                completion()
+            }
+        }
+    }
+    
     func subscribeToStoreCategoriesForOptionType(optionType: CKSubscriptionOptions, completion: ((success: Bool, error: NSError?) -> Void)?) {
         
         var optionTypeString: String
@@ -157,13 +203,7 @@ class StoreCategoryModelController {
             return
         }
         
-        cloudKitManager.fetchSubscriptions(cloudKitManager.publicDatabase) { (subscriptions, error) in
-            
-            print("See what subscriptions contains")
-        }
-        
         let predicate = NSPredicate(value: true)
-//        let desiredKeys = [StoreCategory.nameKey, StoreCategory.imageKey, StoreCategory.imageFlatKey]
         let desiredKeys = [StoreCategory.nameKey]
         
         cloudKitManager.subscribe(cloudKitManager.publicDatabase, type: StoreCategory.type, predicate: predicate, subscriptionID: "all\(optionTypeString)StoreCategories", contentAvailable: true, desiredKeys: desiredKeys, options: optionType) { (subscription, error) in

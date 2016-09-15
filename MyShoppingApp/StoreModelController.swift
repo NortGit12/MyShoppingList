@@ -97,7 +97,7 @@ class StoreModelController {
         return resultsArray ?? nil
     }
     
-    func updateStore(store: Store, completion: (() -> Void)? = nil) {
+    func updateStore(store: Store, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
         let request = NSFetchRequest(entityName: Store.type)
         let predicate = NSPredicate(format: "recordName = %@", argumentArray: [store.recordName])
@@ -112,29 +112,36 @@ class StoreModelController {
         
         PersistenceController.sharedController.saveContext()
         
-        if let completion = completion {
-            completion()
-        }
+        if sourceIsRemoteNotification {
         
-        if let storeCloudKitRecord = store.cloudKitRecord {
-            
-            cloudKitManager.modifyRecords(cloudKitManager.privateDatabase, records: [storeCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
-            
-                if error != nil {
-                    
-                    NSLog("Error: Could not modify the existing \"\(store.name)\" store in CloudKit: \(error?.localizedDescription)")
-                    
-                    if let completion = completion {
-                        completion()
-                    }
-                }
+            if let storeCloudKitRecord = store.cloudKitRecord {
                 
-                if let _ = records {
+                cloudKitManager.modifyRecords(cloudKitManager.privateDatabase, records: [storeCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
                     
-                    NSLog("Updated \"\(store.name)\" store saved successfully to CloudKit.")
-                }
-            })
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
+                    
+                    if error != nil {
+                        
+                        NSLog("Error: Could not modify the existing \"\(store.name)\" store in CloudKit: \(error?.localizedDescription)")
+                        return
+                    }
+                    
+                    if let _ = records {
+                        
+                        NSLog("Updated \"\(store.name)\" store saved successfully to CloudKit.")
+                    }
+                })
+            }
+        } else {
             
+            if let completion = completion {
+                completion()
+            }
         }
     }
     
@@ -179,7 +186,6 @@ class StoreModelController {
         }
         
         let predicate = NSPredicate(value: true)
-//        let desiredKeys = [Store.nameKey, Store.imageKey, Store.categoriesKey, Store.itemsKey]
         let desiredKeys = [Store.nameKey]
         
         cloudKitManager.subscribe(cloudKitManager.privateDatabase, type: Store.type, predicate: predicate, subscriptionID: "all\(optionTypeString)Stores", contentAvailable: true, desiredKeys: desiredKeys, options: optionType) { (subscription, error) in

@@ -91,7 +91,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             
             if let selectedStoreCategory = self.selectedStoreCategory {
                 
-                numberOfItemsInSection = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?.count ?? 0
+                numberOfItemsInSection = StoreCategoryModelController.sharedController.fetchStoresForStoreCategory(selectedStoreCategory)?.count ?? 0
             }
         }
         
@@ -134,7 +134,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             if let selectedStoreCategory = self.selectedStoreCategory {
                 
                 guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("storeCollectionViewCell", forIndexPath: indexPath) as? StoreCollectionViewCell
-                    , store = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
+                    , store = StoreCategoryModelController.sharedController.fetchStoresForStoreCategory(selectedStoreCategory)?[indexPath.row]
                     else {
                         
                         NSLog("Error: Could not either cast the UITableViewCell as a StoreCollectionViewCell or get all of the stores for the selected StoreCategory.")
@@ -336,7 +336,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
                     return
             }
             
-            guard let stores = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)
+            guard let stores = StoreCategoryModelController.sharedController.fetchStoresForStoreCategory(selectedStoreCategory)
                 else {
                 
                     NSLog("Error: Could not get all the stores for the the selected StoreCategory when attempting to segue to an existing store.")
@@ -359,7 +359,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             // What do we need to pack?
             guard let index = storesCollectionView.indexPathsForSelectedItems()?.first?.row
                 , selectedStoreCategory = self.selectedStoreCategory
-                , stores = StoreCategoryModelController.sharedController.getStoresForStoreCategory(selectedStoreCategory)
+                , stores = StoreCategoryModelController.sharedController.fetchStoresForStoreCategory(selectedStoreCategory)
                 else {
                     
                     NSLog("Error: Problem identifying the selected store for the upcoming items list when attempting to segue to the items list.")

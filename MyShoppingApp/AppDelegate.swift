@@ -36,6 +36,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        
+        NSLog("\nInfo: Notification settings = \(notificationSettings)")
+        
+        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
+        
+        NSLog("Info: Current user notification settings = \(settings)")
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+        NSLog("\nInfo: Received a device token \"\(deviceToken)\"")
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        
+        NSLog("Error: Failed to register for remote notifications.  \(error.localizedDescription)")
+    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -67,69 +86,93 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          Right now this only handles notification related to new records.  Make it so that it also supports update and deletes.
          */
         
-//        guard let notificationInfo = userInfo as? [String : NSObject] else {
-//            
-//            NSLog("Error: Unable to get userInfo dictionary when receiving a remote notification.")
-//            return
-//        }
-//        
-//        let queryNotification = CKQueryNotification(fromRemoteNotificationDictionary: notificationInfo)
-//        
-//        guard let recordID =  queryNotification.recordID else {
-//            
-//            NSLog("Error: No Record ID available from CKQueryNotification.")
-//            return
-//        }
-//        
-//        let cloudKitManager = PersistenceController.sharedController.cloudKitManager
-//        let managedObjectType = PersistenceController.sharedController.identifyManagedObjectType(recordID)
-//        
-//        /*
-//         StoreCategories are in the public database and Stores and Items are in the private database
-//         */
-//        var database: CKDatabase
-//        switch managedObjectType {
-//        case StoreCategory.type: database = cloudKitManager.publicDatabase
-//        default: database = cloudKitManager.privateDatabase
-//        }
-//        
-//        cloudKitManager.fetchRecordWithID(database, recordID: recordID) { (record, error) in
-//            
-//            guard let record = record else {
-//                
-//                NSLog("Error: Unable to fetch CKRecord for \(managedObjectType) from Record ID.")
-//                return
-//            }
-//            
-//            switch record.recordType {
-//                
-//            case StoreCategory.type: let _ = StoreCategory(record: record)
-//            case Store.type: let _ = Store(record: record)
-//            case Item.type: let _ = Item(record: record)
-//            default:
-//                NSLog("Error: Couldn't switch on the record type and create a \(record.recordType) successfully.")
-//                return
-//            }
-//            
-//            PersistenceController.sharedController.saveContext()
-//        }
+        let notification = CKNotification(fromRemoteNotificationDictionary: (userInfo as? [String : NSObject])!)
         
-        print("See what's in the userInfo dictionary")
-        
-        PersistenceController.sharedController.fetchNewRecords(StoreCategory.type) {
+        if notification.notificationType == .Query {
             
-            print("Fetching new StoreCategories from CloudKit (triggered by remote notification)...")
+            let queryNotification = notification as! CKQueryNotification
             
-            PersistenceController.sharedController.fetchNewRecords(Store.type) {
+            if queryNotification.queryNotificationReason == .RecordDeleted {
                 
-                print("Fetching new Stores from CloudKit (triggered by remote notification)...")
+                // TODO: Delete the local record
+            } else {
                 
-                PersistenceController.sharedController.fetchNewRecords(Item.type) {
-                    
-                    print("Fetching new Items from CloudKit (triggered by remote notification)...")
+                let cloudKitManager = CloudKitManager()
+                let database: CKDatabase
+                if queryNotification.isPublicDatabase {
+                    database = CKContainer.defaultContainer().publicCloudDatabase
+                } else {
+                    database = CKContainer.defaultContainer().privateCloudDatabase
                 }
+                
+                cloudKitManager.fetchRecordWithID(database, recordID: queryNotification.recordID!, completion: { (record, error) in
+                    
+                    if error != nil {
+                        NSLog("Error: Record identified in remote notification could not be fetched.  \(error?.localizedDescription)")
+                    }
+                    
+                    if let record = record {
+                        
+                        let managedObjectType = PersistenceController.sharedController.identifyManagedObjectType(record.recordID)
+                    
+                        if queryNotification.queryNotificationReason == .RecordUpdated {
+                            
+                            switch managedObjectType {
+                            case StoreCategory.type:
+                                
+                                guard let updatedStoreCategoryFromCloudKit = StoreCategory(record: record)
+                                    else {
+                                    
+                                        NSLog("Error: Could not fetch store category with record name \"\(record.recordID.recordName)\".")
+                                        return
+                                    }
+                                
+                                StoreCategoryModelController.sharedController.updateStoreCategory(updatedStoreCategoryFromCloudKit, sourceIsRemoteNotification: true)
+                                
+                            case Store.type:
+                                
+                                guard let updatedStoreFromCloudKit = Store(record: record)
+                                    else {
+                                        
+                                        NSLog("Error: Could not fetch store with record name \"\(record.recordID.recordName)\".")
+                                        return
+                                }
+                                
+                                StoreModelController.sharedController.updateStore(updatedStoreFromCloudKit, sourceIsRemoteNotification: true)
+                                
+                            default:
+                                
+                                guard let updatedItemFromCloudKit = Item(record: record)
+                                    else {
+                                        
+                                        NSLog("Error: Could not fetch item with record name \"\(record.recordID.recordName)\".")
+                                        return
+                                }
+                                
+                                ItemModelController.sharedController.updateItem(updatedItemFromCloudKit, sourceIsRemoteNotification: true)
+                            }
+                            
+                            PersistenceController.sharedController.saveContext()
+                            NSLog("Info: New record received from remote notification saved.")
+                            
+                        } else {
+                            
+                            switch managedObjectType {
+                            case StoreCategory.type: let _ = StoreCategory(record: record)
+                            case Store.type: let _ = Store(record: record)
+                            default: let _ = Item(record: record)
+                            }
+                            
+                            PersistenceController.sharedController.saveContext()
+                            NSLog("Info: New record received from remote notification saved.")
+                        }
+                    }
+                })
             }
         }
+        
+        
+        
         
         completionHandler(UIBackgroundFetchResult.NewData)
     }
