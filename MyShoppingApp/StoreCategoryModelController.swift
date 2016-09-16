@@ -35,7 +35,7 @@ class StoreCategoryModelController {
     // MARK: - Method(s)
     //==================================================
     
-    func createStoreCategory(name: String, image: UIImage, imageFlat: UIImage, completion: (() -> Void)? = nil) {
+    func createStoreCategory(name: String, image: UIImage, imageFlat: UIImage, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
         guard let imageData = UIImagePNGRepresentation(image)
             , imageFlatData = UIImagePNGRepresentation(imageFlat)
@@ -48,31 +48,41 @@ class StoreCategoryModelController {
         
         PersistenceController.sharedController.saveContext()
         
-        if let completion = completion {
-            completion()
-        }
-        
-        if let storeCategoryCloudKitRecord = storeCategory.cloudKitRecord {
+        if sourceIsRemoteNotification == false {
             
-            cloudKitManager.saveRecord(cloudKitManager.publicDatabase, record: storeCategoryCloudKitRecord, completion: { (record, error) in
+            if let storeCategoryCloudKitRecord = storeCategory.cloudKitRecord {
                 
-                if error != nil {
+                cloudKitManager.saveRecord(cloudKitManager.publicDatabase, record: storeCategoryCloudKitRecord, completion: { (record, error) in
                     
-                    NSLog("Error: New Store Category could not be saved to CloudKit: \(error)")
-                    return
-                }
-                
-                if let record = record {
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
                     
-                    let moc = PersistenceController.sharedController.moc
+                    if error != nil {
+                        
+                        NSLog("Error: New Store Category could not be saved to CloudKit: \(error)")
+                        return
+                    }
                     
-                    /*
-                     The "...AndWait" makes the subsequent work wait for the performBlock to finish.  By default, the moc.performBlock(...) is asynchronous, so the work in there would be done asynchronously on another thread and the subsequent lines would run immediately.
-                     */
-                    
-                    moc.performBlockAndWait({ storeCategory.updateRecordIDData(record) })
-                }
-            })
+                    if let record = record {
+                        
+                        let moc = PersistenceController.sharedController.moc
+                        
+                        /*
+                         The "...AndWait" makes the subsequent work wait for the performBlock to finish.  By default, the moc.performBlock(...) is asynchronous, so the work in there would be done asynchronously on another thread and the subsequent lines would run immediately.
+                         */
+                        
+                        moc.performBlockAndWait({
+                            
+                            storeCategory.updateRecordIDData(record)
+                            NSLog("New Store Category \"\(storeCategory.name)\" successfully saved to CloudKit.")
+                        })
+                    }
+                })
+            }
         }
     }
     
@@ -157,7 +167,7 @@ class StoreCategoryModelController {
         
         PersistenceController.sharedController.saveContext()
         
-        if sourceIsRemoteNotification {
+        if sourceIsRemoteNotification == false {
             
             if let storeCategoryCloudKitRecord = storeCategory.cloudKitRecord {
                 

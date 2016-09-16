@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0B23771D8C1161003FD3F0 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B23761D8C1161003FD3F0 /* NotificationController.swift */; };
 		1F1564DB1D70FE860007B56B /* AllStoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */; };
 		1F1775EF1D6CC09700604DFA /* StoreCategoryModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */; };
 		1F1775F21D6CC12300604DFA /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1775F11D6CC12300604DFA /* CloudKitManager.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F0B23761D8C1161003FD3F0 /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStoresViewController.swift; sourceTree = "<group>"; };
 		1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreCategoryModelController.swift; sourceTree = "<group>"; };
 		1F1775F11D6CC12300604DFA /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
@@ -103,8 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				1F34762D1D6E45EA00B74073 /* ItemModelController.swift */,
-				1F34762B1D6E425500B74073 /* StoreModelController.swift */,
 				1F1775EE1D6CC09700604DFA /* StoreCategoryModelController.swift */,
+				1F34762B1D6E425500B74073 /* StoreModelController.swift */,
 			);
 			name = ModelController;
 			sourceTree = "<group>";
@@ -156,16 +158,16 @@
 		1F8561C81D6BB3F7009A6B7A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1F8561DD1D6BB5C1009A6B7A /* CloudKitManagedObject.swift */,
 				1F8561D11D6BB5B1009A6B7A /* Item+CoreDataProperties.swift */,
 				1F8561D21D6BB5B1009A6B7A /* Item.swift */,
+				1F8561B51D6BB1B2009A6B7A /* Model.xcdatamodeld */,
 				1F8561CD1D6BB5B1009A6B7A /* Store+CoreDataProperties.swift */,
 				1F8561CE1D6BB5B1009A6B7A /* Store.swift */,
 				1F8561D31D6BB5B1009A6B7A /* StoreCategory+CoreDataProperties.swift */,
 				1F8561D41D6BB5B1009A6B7A /* StoreCategory.swift */,
 				1F8561CF1D6BB5B1009A6B7A /* SyncableObject+CoreDataProperties.swift */,
 				1F8561D01D6BB5B1009A6B7A /* SyncableObject.swift */,
-				1F8561DD1D6BB5C1009A6B7A /* CloudKitManagedObject.swift */,
-				1F8561B51D6BB1B2009A6B7A /* Model.xcdatamodeld */,
 			);
 			name = Model;
 			path = ..;
@@ -174,16 +176,16 @@
 		1F8561DF1D6BB633009A6B7A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */,
-				1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */,
-				1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */,
+				1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */,
+				1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */,
 				1F1775F51D6CE38000604DFA /* CategoriesViewController.swift */,
+				1F6416E61D76443D00EA371B /* ItemDetailViewController.swift */,
+				1F6A90A71D777978004A2AF8 /* ItemsListTableViewCell.swift */,
+				1F6416E41D763D4E00EA371B /* ItemsTableViewController.swift */,
 				1F1775F71D6CE91100604DFA /* StoreCategoryCollectionViewCell.swift */,
 				1FEE27AA1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift */,
-				1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */,
 				1F3476331D6E55C300B74073 /* NewStoreCategoryTableViewCell.swift */,
-				1F1564DA1D70FE860007B56B /* AllStoresViewController.swift */,
-				1F3E07ED1D78E2AC004744E0 /* AllStoresTableViewCell.swift */,
+				1F34762F1D6E527D00B74073 /* NewStoreViewController.swift */,
 				1F2C7B4C1D81CDB700104707 /* Extensions */,
 			);
 			name = ViewController;
@@ -192,11 +194,12 @@
 		1F8561E01D6BB643009A6B7A /* OtherController */ = {
 			isa = PBXGroup;
 			children = (
+				1F2C7B4F1D81CF0A00104707 /* AppearanceController.swift */,
+				1F1775F11D6CC12300604DFA /* CloudKitManager.swift */,
+				1F0B23761D8C1161003FD3F0 /* NotificationController.swift */,
+				1F1775F31D6CC14500604DFA /* PersistenceController.swift */,
 				1F8561CB1D6BB4FF009A6B7A /* Stack.swift */,
 				1F79D7011D7E192200115608 /* UserController.swift */,
-				1F1775F31D6CC14500604DFA /* PersistenceController.swift */,
-				1F1775F11D6CC12300604DFA /* CloudKitManager.swift */,
-				1F2C7B4F1D81CF0A00104707 /* AppearanceController.swift */,
 			);
 			name = OtherController;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				1F1775EF1D6CC09700604DFA /* StoreCategoryModelController.swift in Sources */,
 				1F8561D61D6BB5B1009A6B7A /* Store.swift in Sources */,
 				1FEE27AB1D6F9D0C00041FB7 /* StoreCollectionViewCell.swift in Sources */,
+				1F0B23771D8C1161003FD3F0 /* NotificationController.swift in Sources */,
 				1F34762C1D6E425500B74073 /* StoreModelController.swift in Sources */,
 				1F1775F61D6CE38000604DFA /* CategoriesViewController.swift in Sources */,
 				1F8561DE1D6BB5C1009A6B7A /* CloudKitManagedObject.swift in Sources */,

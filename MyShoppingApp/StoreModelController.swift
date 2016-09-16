@@ -23,7 +23,7 @@ class StoreModelController {
     // MARK: - Methods
     //==================================================
     
-    func createStore(name: String, image: UIImage?, categories: [StoreCategory], completion: (() -> Void)? = nil) {
+    func createStore(name: String, image: UIImage?, categories: [StoreCategory], sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
         var storeImage: UIImage
         if let image = image {
@@ -42,34 +42,42 @@ class StoreModelController {
         
         PersistenceController.sharedController.saveContext()
         
-        if let completion = completion {
+        if sourceIsRemoteNotification == false {
             
-            completion()
-        }
-        
-        if let storeCloudKitRecord = store.cloudKitRecord {
-            
-            cloudKitManager.saveRecord(cloudKitManager.privateDatabase, record: storeCloudKitRecord, completion: { (record, error) in
-            
-                if error != nil {
-                    
-                    NSLog("Error: New Store could not be saved to CloudKit: \(error)")
-                }
+            if let storeCloudKitRecord = store.cloudKitRecord {
                 
-                if let record = record {
+                cloudKitManager.saveRecord(cloudKitManager.privateDatabase, record: storeCloudKitRecord, completion: { (record, error) in
                     
-                    let moc = PersistenceController.sharedController.moc
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
                     
-                    /*
-                     The "...AndWait" makes the subsequent work wait for the performBlock to finish.  By default, the moc.performBlock(...) is asynchronous, so the work in there would be done asynchronously on another thread and the subsequent lines would run immediately.
-                     */
+                    if error != nil {
+                        
+                        NSLog("Error: New Store could not be saved to CloudKit: \(error)")
+                        return
+                    }
                     
-                    moc.performBlockAndWait({ store.updateRecordIDData(record) })
-                }
-            })
+                    if let record = record {
+                        
+                        let moc = PersistenceController.sharedController.moc
+                        
+                        /*
+                         The "...AndWait" makes the subsequent work wait for the performBlock to finish.  By default, the moc.performBlock(...) is asynchronous, so the work in there would be done asynchronously on another thread and the subsequent lines would run immediately.
+                         */
+                        
+                        moc.performBlockAndWait({
+                            
+                            store.updateRecordIDData(record)
+                            NSLog("New Store \"\(store.name)\" successfully saved to CloudKit.")
+                        })
+                    }
+                })
+            }
         }
-        
-        
     }
     
     func fetchStoreByIdName(idName: String) -> Store? {
@@ -112,7 +120,7 @@ class StoreModelController {
         
         PersistenceController.sharedController.saveContext()
         
-        if sourceIsRemoteNotification {
+        if sourceIsRemoteNotification == false {
         
             if let storeCloudKitRecord = store.cloudKitRecord {
                 
@@ -145,31 +153,68 @@ class StoreModelController {
         }
     }
     
-    func deleteStore(store: Store, completion: (() -> Void)? = nil) {
+    func deleteStore(store: Store, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
+        
+//        if sourceIsRemoteNotification == false {
+//            
+//            if let storeCloudKitRecord = store.cloudKitRecord {
+//                
+//                cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: storeCloudKitRecord.recordID, completion: { (recordID, error) in
+//                    
+//                    defer {
+//                        
+//                        if let completion = completion {
+//                            completion()
+//                        }
+//                    }
+//                    
+//                    if error != nil {
+//                        
+//                        NSLog("Error: Store could not be deleted in CloudKit: \(error)")
+//                        return
+//                    }
+//                    
+//                    if let _ = recordID {
+//                        
+//                        print("Store \"\(store.name)\" successfully deleted \"\(store.name)\" from CloudKit")
+//                    }
+//                    
+//                    PersistenceController.sharedController.moc.deleteObject(store)
+//                    
+//                    PersistenceController.sharedController.saveContext()
+//                })
+//            }
+//        }
+        
         
         if let storeCloudKitRecord = store.cloudKitRecord {
             
-            cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: storeCloudKitRecord.recordID, completion: { (recordID, error) in
+            PersistenceController.sharedController.moc.deleteObject(store)
+            PersistenceController.sharedController.saveContext()
             
-                if error != nil {
+            if sourceIsRemoteNotification == false {
+                
+                cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: storeCloudKitRecord.recordID, completion: { (recordID, error) in
                     
-                    NSLog("Error: Store could not be deleted in CloudKit: \(error)")
-                }
-                
-                if let _ = recordID {
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
                     
-                    print("Store \"\(store.name)\" successfully deleted \"\(store.name)\" from CloudKit")
-                }
-                
-                PersistenceController.sharedController.moc.deleteObject(store)
-                
-                PersistenceController.sharedController.saveContext()
-                
-                if let completion = completion {
+                    if error != nil {
+                        
+                        NSLog("Error: Store could not be deleted in CloudKit: \(error)")
+                        return
+                    }
                     
-                    completion()
-                }
-            })
+                    if let _ = recordID {
+                        
+                        print("Store \"\(store.name)\" successfully deleted \"\(store.name)\" from CloudKit")
+                    }
+                })
+            }
         }
     }
     

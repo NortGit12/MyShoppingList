@@ -86,7 +86,7 @@ class ItemsTableViewController: UITableViewController {
             
             let item = storeItems[indexPath.row]
             
-            ItemModelController.sharedController.deleteItem(item, store: store, completion: {
+            ItemModelController.sharedController.deleteItem(item, completion: {
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     

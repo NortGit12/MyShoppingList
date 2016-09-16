@@ -60,14 +60,17 @@ class ItemDetailViewController: UIViewController, UITextFieldDelegate {
         nameTextField.backgroundColor = .basicBlueColor()
         nameTextField.attributedPlaceholder = NSAttributedString(string: "Name...", attributes: [NSForegroundColorAttributeName: UIColor.basicGrayColor()])
         nameTextField.textColor = .whiteColor()
+        nameTextField.tintColor = .whiteColor()
         
         quantityTextField.backgroundColor = .basicBlueColor()
         quantityTextField.attributedPlaceholder = NSAttributedString(string: "Quantity... (2, 1-3pk, etc.)", attributes: [NSForegroundColorAttributeName: UIColor.basicGrayColor()])
         quantityTextField.textColor = .whiteColor()
+        quantityTextField.tintColor = .whiteColor()
         
         notesTextView.backgroundColor = .basicBlueColor()
         notesTextView.attributedText = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
         notesTextView.textColor = .whiteColor()
+        notesTextView.tintColor = .whiteColor()
     }
     
     func updateWithItem(item: Item) {
