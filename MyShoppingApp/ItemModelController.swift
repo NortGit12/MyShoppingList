@@ -151,7 +151,6 @@ class ItemModelController {
         
         guard let name = record[Item.nameKey] as? String
             , let quantity = record[Item.quantityKey] as? String
-            , let notes = record[Item.notesKey] as? String
             , let storeReference = record[Item.storeKey] as? CKReference
             else {
                 
@@ -159,6 +158,7 @@ class ItemModelController {
                 return
         }
         
+        let notes = record[Item.notesKey] as? String
         let recordName = record.recordID.recordName
         
         let storeIDName = storeReference.recordID.recordName

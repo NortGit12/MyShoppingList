@@ -162,7 +162,7 @@ class NotificationController {
                             switch managedObjectType {
                             case StoreCategory.type:
                                 let _ = StoreCategory(record: record)
-                                NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
+                                NSNotificationCenter.defaultCenter().postNotificationName("storeCategoriesUpdated", object: self)
                             case Store.type:
                                 let _ = Store(record: record)
                                 NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
