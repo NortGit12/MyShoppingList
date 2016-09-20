@@ -48,6 +48,7 @@ class NotificationController {
                     
                     StoreModelController.sharedController.deleteStore(store, sourceIsRemoteNotification: true)
                     NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
+                    NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                     
                 case Item.type:
                     
@@ -59,13 +60,12 @@ class NotificationController {
                     
                     ItemModelController.sharedController.deleteItem(item, sourceIsRemoteNotification: true)
                     NSNotificationCenter.defaultCenter().postNotificationName("itemsUpdated", object: self)
+                    NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                     
                 default:
                     
                     NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for deleted record.")
                 }
-                
-                NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                 
             } else {
                 
@@ -94,7 +94,7 @@ class NotificationController {
                             switch managedObjectType {
                             case StoreCategory.type:
                                 
-                                cloudKitManager.fetchRecordWithID(recordID: record.recordID, completion: { (record, error) in
+                                cloudKitManager.fetchRecordWithID(cloudKitManager.privateDatabase, recordID: record.recordID, completion: { (record, error) in
                                     
                                     if error != nil {
                                         
@@ -106,12 +106,13 @@ class NotificationController {
                                         
                                         StoreCategoryModelController.sharedController.updateStoreCategory(record, sourceIsRemoteNotification: true)
                                         NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
+                                        NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                                     }
                                 })
                                 
                             case Store.type:
                                 
-                                cloudKitManager.fetchRecordWithID(recordID: record.recordID, completion: { (record, error) in
+                                cloudKitManager.fetchRecordWithID(cloudKitManager.privateDatabase, recordID: record.recordID, completion: { (record, error) in
                                     
                                     if error != nil {
                                         
@@ -123,12 +124,13 @@ class NotificationController {
                                         
                                         StoreModelController.sharedController.updateStore(record, sourceIsRemoteNotification: true)
                                         NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
+                                        NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                                     }
                                 })
                                 
                             case Item.type:
                                 
-                                cloudKitManager.fetchRecordWithID(recordID: record.recordID, completion: { (record, error) in
+                                cloudKitManager.fetchRecordWithID(cloudKitManager.privateDatabase, recordID: record.recordID, completion: { (record, error) in
                                     
                                     if error != nil {
                                         
@@ -140,6 +142,7 @@ class NotificationController {
                                         
                                         ItemModelController.sharedController.updateItem(record, sourceIsRemoteNotification: true)
                                         NSNotificationCenter.defaultCenter().postNotificationName("itemsUpdated", object: self)
+                                        NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                                     }
                                 })
                                 
@@ -147,8 +150,6 @@ class NotificationController {
                                 
                                 NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for updated record.")
                             }
-                            
-                            NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                             
                         } else {
                             
@@ -172,7 +173,6 @@ class NotificationController {
                             }
                             
                             PersistenceController.sharedController.saveContext()
-                            
                             NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                         }
                     }

@@ -233,9 +233,10 @@ class StoreCategoryModelController {
             return
         }
         
-        existingStoreCategory.name = name
         existingStoreCategory.image = image
         existingStoreCategory.image_flat = image_flat
+        existingStoreCategory.name = name
+        existingStoreCategory.recordIDData = nil
         existingStoreCategory.stores = stores
         
         PersistenceController.sharedController.saveContext()

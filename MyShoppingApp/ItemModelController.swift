@@ -180,8 +180,9 @@ class ItemModelController {
         }
         
         existingItem.name = name
-        existingItem.quantity = quantity
         existingItem.notes = notes
+        existingItem.quantity = quantity
+        existingItem.recordIDData = nil
         existingItem.store = store
         
         PersistenceController.sharedController.saveContext()

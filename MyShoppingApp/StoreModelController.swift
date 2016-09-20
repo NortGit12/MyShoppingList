@@ -184,9 +184,10 @@ class StoreModelController {
             return
         }
         
-        existingStore.name = name
-        existingStore.image = image
         existingStore.categories = storeCategories
+        existingStore.image = image
+        existingStore.name = name
+        existingStore.recordIDData = nil
         
         PersistenceController.sharedController.saveContext()
         
