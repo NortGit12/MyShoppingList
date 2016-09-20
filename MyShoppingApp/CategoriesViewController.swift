@@ -38,7 +38,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshCollectionViews), name: "storesUpdated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshStoreCategoriesCollectionView), name: "storeCategoriesUpdated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshStoresCollectionView), name: "storesUpdated", object: nil)
         
         activityIndicatorView.hidesWhenStopped = true
         
@@ -228,6 +229,24 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         
         self.storeCategoriesCollectionView.reloadData()
         self.storesCollectionView.reloadData()
+    }
+    
+    func refreshStoreCategoriesCollectionView() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.storeCategoriesCollectionView.reloadData()
+        })
+        
+    }
+    
+    func refreshStoresCollectionView() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.storesCollectionView.reloadData()
+        })
+        
     }
     
     func requestFullSync(completion: (() -> Void)? = nil) {

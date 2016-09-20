@@ -105,7 +105,7 @@ class NotificationController {
                                     if let record = record {
                                         
                                         StoreCategoryModelController.sharedController.updateStoreCategory(record, sourceIsRemoteNotification: true)
-                                        NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
+                                        NSNotificationCenter.defaultCenter().postNotificationName("storeCategoriesUpdated", object: self)
                                         NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                                     }
                                 })

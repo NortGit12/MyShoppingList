@@ -155,8 +155,8 @@ class StoreModelController {
     
     func updateStore(record: CKRecord, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
-        guard let name = record[StoreCategory.nameKey] as? String
-            , let imageAssetData = record[StoreCategory.imageKey] as? CKAsset
+        guard let name = record[Store.nameKey] as? String
+            , let imageAssetData = record[Store.imageKey] as? CKAsset
             , let image = NSData(contentsOfURL: imageAssetData.fileURL)
             else {
                 
