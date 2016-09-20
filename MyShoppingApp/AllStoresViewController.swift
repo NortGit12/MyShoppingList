@@ -23,6 +23,8 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "storesUpdated", object: nil)
+        
         self.automaticallyAdjustsScrollViewInsets = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
@@ -89,6 +91,15 @@ class AllStoresViewController: UIViewController, UITableViewDataSource, UITableV
     func editStoreButtonTapped(cell: AllStoresTableViewCell) {
         
         self.performSegueWithIdentifier("allStoresToExistinStoreSegue", sender: cell)
+    }
+    
+    //==================================================
+    // MARK: - Methods
+    //==================================================
+    
+    func refreshTableView() {
+        
+        tableView.reloadData()
     }
     
     //==================================================

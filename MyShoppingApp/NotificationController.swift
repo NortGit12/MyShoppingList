@@ -47,6 +47,7 @@ class NotificationController {
                     }
                     
                     StoreModelController.sharedController.deleteStore(store, sourceIsRemoteNotification: true)
+                    NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
                     
                 case Item.type:
                     
@@ -57,6 +58,7 @@ class NotificationController {
                     }
                     
                     ItemModelController.sharedController.deleteItem(item, sourceIsRemoteNotification: true)
+                    NSNotificationCenter.defaultCenter().postNotificationName("itemsUpdated", object: self)
                     
                 default:
                     
@@ -103,6 +105,7 @@ class NotificationController {
                                     if let record = record {
                                         
                                         StoreCategoryModelController.sharedController.updateStoreCategory(record, sourceIsRemoteNotification: true)
+                                        NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
                                     }
                                 })
                                 
@@ -119,6 +122,7 @@ class NotificationController {
                                     if let record = record {
                                         
                                         StoreModelController.sharedController.updateStore(record, sourceIsRemoteNotification: true)
+                                        NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
                                     }
                                 })
                                 
@@ -135,6 +139,7 @@ class NotificationController {
                                     if let record = record {
                                         
                                         ItemModelController.sharedController.updateItem(record, sourceIsRemoteNotification: true)
+                                        NSNotificationCenter.defaultCenter().postNotificationName("itemsUpdated", object: self)
                                     }
                                 })
                                 
@@ -143,7 +148,6 @@ class NotificationController {
                                 NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for updated record.")
                             }
                             
-                            NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
                             NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                             
                         } else {
@@ -155,9 +159,15 @@ class NotificationController {
                             notificationType = "New"
                             
                             switch managedObjectType {
-                            case StoreCategory.type: let _ = StoreCategory(record: record)
-                            case Store.type: let _ = Store(record: record)
-                            case Item.type: let _ = Item(record: record)
+                            case StoreCategory.type:
+                                let _ = StoreCategory(record: record)
+                                NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
+                            case Store.type:
+                                let _ = Store(record: record)
+                                NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
+                            case Item.type:
+                                let _ = Item(record: record)
+                                NSNotificationCenter.defaultCenter().postNotificationName("itemsUpdated", object: self)
                             default: NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for new record.")
                             }
                             

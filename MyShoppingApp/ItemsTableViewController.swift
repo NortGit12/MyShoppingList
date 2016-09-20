@@ -23,6 +23,8 @@ class ItemsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "itemsUpdated", object: nil)
+        
         self.tabBarController?.tabBar.hidden = true
 
         if let store = store {
@@ -41,7 +43,9 @@ class ItemsTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
 
+    //==================================================
     // MARK: - Table view data source
+    //==================================================
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -97,6 +101,15 @@ class ItemsTableViewController: UITableViewController {
     }
     
     //==================================================
+    // MARK: - Methods
+    //==================================================
+    
+    func refreshTableView() {
+        
+        tableView.reloadData()
+    }
+    
+    //==================================================
     // MARK: - Navigation
     //==================================================
 
@@ -140,6 +153,5 @@ class ItemsTableViewController: UITableViewController {
             itemDetailViewController.item = item
         }
     }
- 
 
 }
