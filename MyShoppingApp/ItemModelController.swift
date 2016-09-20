@@ -147,41 +147,81 @@ class ItemModelController {
         }
     }
     
+    func updateItem(record: CKRecord, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
+        
+        guard let name = record[Item.nameKey] as? String
+            , let quantity = record[Item.quantityKey] as? String
+            , let notes = record[Item.notesKey] as? String
+            , let storeReference = record[Item.storeKey] as? CKReference
+            else {
+                
+                print("Error: Could not extract the required item data from the CloudKit record.")
+                return
+        }
+        
+        let recordName = record.recordID.recordName
+        
+        let storeIDName = storeReference.recordID.recordName
+        guard let store = StoreModelController.sharedController.fetchStoreByIdName(storeIDName) else {
+            
+            NSLog("Error: Could not identify the item's store by its ID name \"\(storeIDName)\".")
+            return
+        }
+        
+        let request = NSFetchRequest(entityName: Item.type)
+        let predicate = NSPredicate(format: "recordName = %@", argumentArray: [recordName])
+        request.predicate = predicate
+        
+        let resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Item]
+        guard let existingItem = resultsArray?.first else {
+            
+            NSLog("Error: Existing StoreCategory could not be found.")
+            return
+        }
+        
+        existingItem.name = name
+        existingItem.quantity = quantity
+        existingItem.notes = notes
+        existingItem.store = store
+        
+        PersistenceController.sharedController.saveContext()
+        
+        if sourceIsRemoteNotification == false {
+            
+            if let itemCloudKitRecord = existingItem.cloudKitRecord {
+                
+                cloudKitManager.modifyRecords(cloudKitManager.publicDatabase, records: [itemCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
+                    
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
+                    
+                    if error != nil {
+                        
+                        NSLog("Error: Could not modify the existing \"\(existingItem.name)\" item in CloudKit: \(error?.localizedDescription)")
+                        return
+                    }
+                    
+                    if let _ = records {
+                        
+                        NSLog("Updated \"\(existingItem.name)\" item saved successfully to CloudKit.")
+                    }
+                })
+                
+            }
+        } else {
+            
+            if let completion = completion {
+                completion()
+            }
+        }
+    }
+    
     func deleteItem(item: Item, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
-//        if sourceIsRemoteNotification == false {
-//        
-//            if let itemCloudKitRecord = item.cloudKitRecord {
-//                
-//                cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: itemCloudKitRecord.recordID, completion: { (recordID, error) in
-//                    
-//                    defer {
-//                        
-//                        if let completion = completion {
-//                            completion()
-//                        }
-//                    }
-//                    
-//                    if error != nil {
-//                        
-//                        NSLog("Error: Item could not be deleted in CloudKit: \(error)")
-//                        return
-//                    }
-//                    
-//                    if let recordID = recordID {
-//                        
-//                        print("Item with the ID of \"\(recordID)\" successfully deleted \"\(item.name)\" from CloudKit")
-//                    }
-//                    
-//                    PersistenceController.sharedController.moc.deleteObject(item)
-//                    
-//                    PersistenceController.sharedController.saveContext()
-//                })
-//            }
-//        }
-        
-        
-            
         if let itemCloudKitRecord = item.cloudKitRecord {
             
             PersistenceController.sharedController.moc.deleteObject(item)
@@ -217,6 +257,10 @@ class ItemModelController {
         }
 
     }
+    
+    //==================================================
+    // MARK: - Subscription
+    //==================================================
     
     func subscribeToItemsForOptionType(optionType: CKSubscriptionOptions, completion: ((success: Bool, error: NSError?) -> Void)?) {
         

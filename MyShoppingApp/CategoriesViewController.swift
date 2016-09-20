@@ -38,6 +38,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadCollectionView), name: "storesUpdated", object: nil)
+        
         activityIndicatorView.hidesWhenStopped = true
         
         self.setupCollectionViews()
@@ -73,6 +75,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         self.tabBarController?.tabBar.hidden = false
         
         self.refreshCollectionViews()
+    }
+    
+    
+    func reloadCollectionView() {
+        self.storesCollectionView.reloadData()
     }
     
     //==================================================

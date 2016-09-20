@@ -92,42 +92,58 @@ class NotificationController {
                             switch managedObjectType {
                             case StoreCategory.type:
                                 
-                                guard let updatedStoreCategoryFromCloudKit = StoreCategory(record: record)
-                                    else {
+                                cloudKitManager.fetchRecordWithID(recordID: record.recordID, completion: { (record, error) in
+                                    
+                                    if error != nil {
                                         
-                                        NSLog("Error: Could not fetch store category with record name \"\(record.recordID.recordName)\".")
+                                        NSLog("Error: Could not fetch store category from the push notification.  \(error).")
                                         return
-                                }
-                                
-                                StoreCategoryModelController.sharedController.updateStoreCategory(updatedStoreCategoryFromCloudKit, sourceIsRemoteNotification: true)
+                                    }
+                                    
+                                    if let record = record {
+                                        
+                                        StoreCategoryModelController.sharedController.updateStoreCategory(record, sourceIsRemoteNotification: true)
+                                    }
+                                })
                                 
                             case Store.type:
                                 
-                                guard let updatedStoreFromCloudKit = Store(record: record)
-                                    else {
+                                cloudKitManager.fetchRecordWithID(recordID: record.recordID, completion: { (record, error) in
+                                    
+                                    if error != nil {
                                         
-                                        NSLog("Error: Could not fetch store with record name \"\(record.recordID.recordName)\".")
+                                        NSLog("Error: Could not fetch store from the push notification.  \(error).")
                                         return
-                                }
-                                
-                                StoreModelController.sharedController.updateStore(updatedStoreFromCloudKit, sourceIsRemoteNotification: true)
+                                    }
+                                    
+                                    if let record = record {
+                                        
+                                        StoreModelController.sharedController.updateStore(record, sourceIsRemoteNotification: true)
+                                    }
+                                })
                                 
                             case Item.type:
                                 
-                                guard let updatedItemFromCloudKit = Item(record: record)
-                                    else {
+                                cloudKitManager.fetchRecordWithID(recordID: record.recordID, completion: { (record, error) in
+                                    
+                                    if error != nil {
                                         
-                                        NSLog("Error: Could not fetch item with record name \"\(record.recordID.recordName)\".")
+                                        NSLog("Error: Could not fetch item from the push notification.  \(error).")
                                         return
-                                }
-                                
-                                ItemModelController.sharedController.updateItem(updatedItemFromCloudKit, sourceIsRemoteNotification: true)
+                                    }
+                                    
+                                    if let record = record {
+                                        
+                                        ItemModelController.sharedController.updateItem(record, sourceIsRemoteNotification: true)
+                                    }
+                                })
                                 
                             default:
                                 
                                 NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for updated record.")
                             }
                             
+                            NSNotificationCenter.defaultCenter().postNotificationName("storesUpdated", object: self)
                             NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                             
                         } else {

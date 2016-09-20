@@ -153,6 +153,77 @@ class StoreModelController {
         }
     }
     
+    func updateStore(record: CKRecord, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
+        
+        guard let name = record[StoreCategory.nameKey] as? String
+            , let imageAssetData = record[StoreCategory.imageKey] as? CKAsset
+            , let image = NSData(contentsOfURL: imageAssetData.fileURL)
+            else {
+                
+                print("Error: Could not extract the required store data from the CloudKit record.")
+                return
+        }
+        
+        let recordName = record.recordID.recordName
+        var storeCategories = NSOrderedSet()
+        if let storeCategoriesReferencesArray = record[Store.categoriesKey] as? [CKReference] {
+            
+            let storeCategoriesArray = setStoreCategories(storeCategoriesReferencesArray)
+            
+            storeCategories = NSOrderedSet(array: storeCategoriesArray)
+        }
+        
+        let request = NSFetchRequest(entityName: Store.type)
+        let predicate = NSPredicate(format: "recordName = %@", argumentArray: [recordName])
+        request.predicate = predicate
+        
+        let resultsArray = (try? PersistenceController.sharedController.moc.executeFetchRequest(request)) as? [Store]
+        guard let existingStore = resultsArray?.first else {
+            
+            NSLog("Error: Existing StoreCategory could not be found.")
+            return
+        }
+        
+        existingStore.name = name
+        existingStore.image = image
+        existingStore.categories = storeCategories
+        
+        PersistenceController.sharedController.saveContext()
+        
+        if sourceIsRemoteNotification == false {
+            
+            if let storeCloudKitRecord = existingStore.cloudKitRecord {
+                
+                cloudKitManager.modifyRecords(cloudKitManager.publicDatabase, records: [storeCloudKitRecord], perRecordCompletion: nil, completion: { (records, error) in
+                    
+                    defer {
+                        
+                        if let completion = completion {
+                            completion()
+                        }
+                    }
+                    
+                    if error != nil {
+                        
+                        NSLog("Error: Could not modify the existing \"\(existingStore.name)\" store in CloudKit: \(error?.localizedDescription)")
+                        return
+                    }
+                    
+                    if let _ = records {
+                        
+                        NSLog("Updated \"\(existingStore.name)\" store saved successfully to CloudKit.")
+                    }
+                })
+                
+            }
+        } else {
+            
+            if let completion = completion {
+                completion()
+            }
+        }
+    }
+    
     func deleteStore(store: Store, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
         if let storeCloudKitRecord = store.cloudKitRecord {
@@ -189,6 +260,10 @@ class StoreModelController {
         }
     }
     
+    //==================================================
+    // MARK: - Subscription
+    //==================================================
+    
     func subscribeToStoresForOptionType(optionType: CKSubscriptionOptions, completion: ((success: Bool, error: NSError?) -> Void)?) {
         
         var optionTypeString: String
@@ -217,6 +292,25 @@ class StoreModelController {
                 completion(success: success, error: error)
             }
         }
+    }
+    
+    //==================================================
+    // MARK: - Methods
+    //==================================================
+    
+    func setStoreCategories(storeCategoriesReferencesArray: [CKReference]) -> [StoreCategory] {
+        
+        var storeCategoriesArray = [StoreCategory]()
+        for storeCategoryReference in storeCategoriesReferencesArray {
+            
+            let storeCategoryIDName = storeCategoryReference.recordID.recordName
+            if let storeCategory = StoreCategoryModelController.sharedController.fetchStoreCategoryByIdName(storeCategoryIDName) {
+                
+                storeCategoriesArray.append(storeCategory)
+            }
+        }
+        
+        return storeCategoriesArray
     }
 }
 
