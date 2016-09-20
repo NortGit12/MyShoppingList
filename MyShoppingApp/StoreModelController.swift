@@ -57,7 +57,7 @@ class StoreModelController {
                     
                     if error != nil {
                         
-                        NSLog("Error: New Store could not be saved to CloudKit: \(error)")
+                        NSLog("Error: New Store \"\(store.name)\" could not be saved to CloudKit: \(error)")
                         return
                     }
                     
@@ -155,38 +155,6 @@ class StoreModelController {
     
     func deleteStore(store: Store, sourceIsRemoteNotification: Bool = false, completion: (() -> Void)? = nil) {
         
-//        if sourceIsRemoteNotification == false {
-//            
-//            if let storeCloudKitRecord = store.cloudKitRecord {
-//                
-//                cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: storeCloudKitRecord.recordID, completion: { (recordID, error) in
-//                    
-//                    defer {
-//                        
-//                        if let completion = completion {
-//                            completion()
-//                        }
-//                    }
-//                    
-//                    if error != nil {
-//                        
-//                        NSLog("Error: Store could not be deleted in CloudKit: \(error)")
-//                        return
-//                    }
-//                    
-//                    if let _ = recordID {
-//                        
-//                        print("Store \"\(store.name)\" successfully deleted \"\(store.name)\" from CloudKit")
-//                    }
-//                    
-//                    PersistenceController.sharedController.moc.deleteObject(store)
-//                    
-//                    PersistenceController.sharedController.saveContext()
-//                })
-//            }
-//        }
-        
-        
         if let storeCloudKitRecord = store.cloudKitRecord {
             
             PersistenceController.sharedController.moc.deleteObject(store)
@@ -196,22 +164,25 @@ class StoreModelController {
                 
                 cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: storeCloudKitRecord.recordID, completion: { (recordID, error) in
                     
-                    defer {
+                    if let storeName = storeCloudKitRecord[Store.nameKey] {
                         
-                        if let completion = completion {
-                            completion()
+                        defer {
+                            
+                            if let completion = completion {
+                                completion()
+                            }
                         }
-                    }
-                    
-                    if error != nil {
                         
-                        NSLog("Error: Store could not be deleted in CloudKit: \(error)")
-                        return
-                    }
-                    
-                    if let _ = recordID {
+                        if error != nil {
+                            
+                            NSLog("Error: Store \"\(storeName)\" could not be deleted in CloudKit: \(error)")
+                            return
+                        }
                         
-                        print("Store \"\(store.name)\" successfully deleted \"\(store.name)\" from CloudKit")
+                        if let _ = recordID {
+                            
+                            print("Store \"\(storeName)\" successfully deleted from CloudKit")
+                        }
                     }
                 })
             }

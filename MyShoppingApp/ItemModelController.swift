@@ -48,7 +48,7 @@ class ItemModelController {
                     
                     if error != nil {
                         
-                        NSLog("Error: New Item could not be saved to CloudKit: \(error?.localizedDescription)")
+                        NSLog("Error: New Item \"\(item.name)\" could not be saved to CloudKit: \(error?.localizedDescription)")
                         return
                     }
                     
@@ -192,22 +192,25 @@ class ItemModelController {
                 
                 cloudKitManager.deleteRecordWithID(cloudKitManager.privateDatabase, recordID: itemCloudKitRecord.recordID, completion: { (recordID, error) in
                     
-                    defer {
+                    if let itemName = itemCloudKitRecord[Item.nameKey] {
                         
-                        if let completion = completion {
-                            completion()
+                        defer {
+                            
+                            if let completion = completion {
+                                completion()
+                            }
                         }
-                    }
-                    
-                    if error != nil {
                         
-                        NSLog("Error: Item could not be deleted in CloudKit: \(error)")
-                        return
-                    }
-                    
-                    if let recordID = recordID {
+                        if error != nil {
+                            
+                            NSLog("Error: Item \"\(itemName)\" could not be deleted in CloudKit: \(error)")
+                            return
+                        }
                         
-                        print("Item with the ID of \"\(recordID)\" successfully deleted \"\(item.name)\" from CloudKit")
+                        if let _ = recordID {
+                            
+                            print("Item \"\(itemName)\" successfully deleted from CloudKit")
+                        }
                     }
                 })
             }

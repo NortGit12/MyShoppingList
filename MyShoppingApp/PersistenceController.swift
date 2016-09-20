@@ -66,38 +66,10 @@ class PersistenceController {
         
         var predicate: NSPredicate!
         let moc = PersistenceController.sharedController.moc
-//        moc.performBlockAndWait {
         
             /*
              All users will use the same set of ten Store Categories.  They should only see their Stores and Items.
              */
-//            if type != StoreCategory.type {
-//            
-//                guard let creatorUserRecord = UserController.sharedController.loggedInUserRecord
-//                    , creatorUserRecordID = creatorUserRecord.creatorUserRecordID
-//                    else {
-//                        
-//                        NSLog("Error: Could not either identify the logged in user or get their record ID.")
-//                        return
-//                }
-//                
-//                referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
-//
-//                predicate = NSPredicate(format: " NOT(recordID IN %@)", argumentArray: [referencesToExclude])
-//                let specificUserPredicate = NSPredicate(format: "creatorUserRecordID == %@", argumentArray: [creatorUserRecordID])
-//                
-//                predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [recordExclusionPredicate, specificUserPredicate])
-//            }
-            
-//            referencesToExclude = self.syncedManagedObjects(type).flatMap({ $0.cloudKitReference })
-//            
-//            if referencesToExclude.isEmpty {
-//                predicate = NSPredicate(value: true)
-//            }
-//        }
-        
-//        // Get all of the records (StoreCategories from the public database and Stores and Items from the private database)
-//        let predicate = NSPredicate(value: true)
         
         predicate = NSPredicate(value: true)
 

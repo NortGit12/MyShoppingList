@@ -21,6 +21,7 @@ class NotificationController {
             
             let queryNotification = notification as! CKQueryNotification
             
+            var managedObjectType = String()
             var notificationType = String()
             if queryNotification.queryNotificationReason == .RecordDeleted {
                 
@@ -30,8 +31,8 @@ class NotificationController {
                     return
                 }
                 
+                managedObjectType = PersistenceController.sharedController.identifyManagedObjectType(recordID)
                 notificationType = "Deleted"
-                let managedObjectType = PersistenceController.sharedController.identifyManagedObjectType(recordID)
                 
                 switch managedObjectType {
                     
@@ -47,7 +48,7 @@ class NotificationController {
                     
                     StoreModelController.sharedController.deleteStore(store, sourceIsRemoteNotification: true)
                     
-                default:
+                case Item.type:
                     
                     guard let item = ItemModelController.sharedController.fetchItemByIdName(recordID.recordName) else {
                         
@@ -56,7 +57,13 @@ class NotificationController {
                     }
                     
                     ItemModelController.sharedController.deleteItem(item, sourceIsRemoteNotification: true)
+                    
+                default:
+                    
+                    NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for deleted record.")
                 }
+                
+                NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                 
             } else {
                 
@@ -76,7 +83,7 @@ class NotificationController {
                     
                     if let record = record {
                         
-                        let managedObjectType = PersistenceController.sharedController.identifyManagedObjectType(record.recordID)
+                        managedObjectType = PersistenceController.sharedController.identifyManagedObjectType(record.recordID)
                         
                         if queryNotification.queryNotificationReason == .RecordUpdated {
                             
@@ -105,7 +112,7 @@ class NotificationController {
                                 
                                 StoreModelController.sharedController.updateStore(updatedStoreFromCloudKit, sourceIsRemoteNotification: true)
                                 
-                            default:
+                            case Item.type:
                                 
                                 guard let updatedItemFromCloudKit = Item(record: record)
                                     else {
@@ -115,22 +122,32 @@ class NotificationController {
                                 }
                                 
                                 ItemModelController.sharedController.updateItem(updatedItemFromCloudKit, sourceIsRemoteNotification: true)
+                                
+                            default:
+                                
+                                NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for updated record.")
                             }
                             
-                            PersistenceController.sharedController.saveContext()
-                            NSLog("Info: New record received from remote notification saved.")
+                            NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                             
                         } else {
                             
+                            /*
+                             New records don't yet exist in Core Data, so I can't use PersistenceController.sharedController.identifyManagedObjectType(record.recordID) because all instances inside of it will be nil.
+                             */
+                            managedObjectType = record.recordType
                             notificationType = "New"
+                            
                             switch managedObjectType {
                             case StoreCategory.type: let _ = StoreCategory(record: record)
                             case Store.type: let _ = Store(record: record)
-                            default: let _ = Item(record: record)
+                            case Item.type: let _ = Item(record: record)
+                            default: NSLog("Info: Unknown managed object type \"\(managedObjectType)\" for new record.")
                             }
                             
                             PersistenceController.sharedController.saveContext()
-                            NSLog("Info: \(notificationType) record received from remote notification successfully processed.")
+                            
+                            NSLog("Info: \(notificationType) \(managedObjectType) record, received from remote notification, successfully processed.")
                         }
                     }
                 })
@@ -151,8 +168,8 @@ class NotificationController {
             if notification.notificationType == .Query {
                 
                 let queryNotification = notification as! CKQueryNotification
-                let reason = queryNotification.queryNotificationReason
-                let recordID = queryNotification.recordID
+//                let reason = queryNotification.queryNotificationReason
+//                let recordID = queryNotification.recordID
                 
                 // TODO: Implement what I want done here
                 

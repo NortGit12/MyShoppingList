@@ -75,7 +75,6 @@ class Item: SyncableObject, CloudKitManagedObject {
         
         guard let name = record[Item.nameKey] as? String
             , quantity = record[Item.quantityKey] as? String
-//            , notes = record[Item.notesKey] as? String
             , storeReference = record[Item.storeKey] as? CKReference
             else {
                 
@@ -102,7 +101,7 @@ class Item: SyncableObject, CloudKitManagedObject {
         let storeIDName = storeReference.recordID.recordName
         guard let store = StoreModelController.sharedController.fetchStoreByIdName(storeIDName) else {
             
-            NSLog("Error: Could not identify the store by its ID name \"\(storeIDName)\"")
+            NSLog("Error: Could not identify the store by its ID name \"\(storeIDName)\".")
             return nil
         }
         

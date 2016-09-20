@@ -63,7 +63,7 @@ class StoreCategoryModelController {
                     
                     if error != nil {
                         
-                        NSLog("Error: New Store Category could not be saved to CloudKit: \(error)")
+                        NSLog("Error: New Store Category \"\(storeCategory.name)\" could not be saved to CloudKit: \(error)")
                         return
                     }
                     
