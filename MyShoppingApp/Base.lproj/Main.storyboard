@@ -177,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ga-hh-MYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2840" y="441"/>
+            <point key="canvasLocation" x="3294" y="358"/>
         </scene>
         <!--Items List-->
         <scene sceneID="E1L-RX-Pa6">
@@ -262,7 +262,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eHm-dT-Cki" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2840" y="1092"/>
+            <point key="canvasLocation" x="3294" y="1092"/>
         </scene>
         <!--Item Detail View Controller-->
         <scene sceneID="sVz-vw-1jk">
@@ -362,7 +362,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yb1-k0-ri6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3272" y="1092"/>
+            <point key="canvasLocation" x="4073" y="1092"/>
         </scene>
         <!--My Shopping App-->
         <scene sceneID="mOe-fF-Slr">
@@ -520,7 +520,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CwI-pC-SpR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2399" y="441"/>
+            <point key="canvasLocation" x="2486" y="358"/>
         </scene>
         <!--My Shopping App-->
         <scene sceneID="r5Q-Kg-z6O">
@@ -628,7 +628,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWG-9i-gKy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2399" y="1092"/>
+            <point key="canvasLocation" x="2487" y="1092"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="YII-Ci-VS6">
@@ -636,6 +636,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Wd9-Ae-f6o" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Tbn-DS-kfc">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
@@ -646,7 +647,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eib-Xe-FvG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1195" y="766"/>
+            <point key="canvasLocation" x="623" y="739"/>
         </scene>
         <!--Categories-->
         <scene sceneID="Q4r-OS-4dM">
@@ -667,7 +668,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sdd-C9-tKC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1867" y="441"/>
+            <point key="canvasLocation" x="1710" y="358"/>
         </scene>
         <!--All Stores-->
         <scene sceneID="XoU-px-gdW">
@@ -688,7 +689,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="epi-XB-8vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1867" y="1092"/>
+            <point key="canvasLocation" x="1710" y="1092"/>
         </scene>
     </scenes>
     <resources>
@@ -697,8 +698,8 @@
         <image name="triangle_right-pointing" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AR2-GN-9e0"/>
-        <segue reference="ugk-QQ-oGs"/>
+        <segue reference="U29-3f-cxf"/>
+        <segue reference="Czn-zW-54I"/>
         <segue reference="Jsa-3N-Xt7"/>
     </inferredMetricsTieBreakers>
 </document>

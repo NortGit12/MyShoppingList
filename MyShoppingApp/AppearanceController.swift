@@ -41,9 +41,14 @@ class AppearanceController {
         // TabBar
         
         UITabBar.appearance().barTintColor = .basicBlueColor()
-        UITabBar.appearance().tintColor = .whiteColor()
         
-        let tabBarAttributes = [NSFontAttributeName: UIFont(name: AppearanceController.fontName, size: AppearanceController.fontSize)!]
-        UITabBarItem.appearance().setTitleTextAttributes(tabBarAttributes, forState: .Normal)
+        let unselectedTabBarTextColor = UIColor(red: 0.757, green: 0.757, blue: 0.757, alpha: 1.00)
+        let selectedTabBarTextColor = UIColor.whiteColor()
+        
+        let unselectedTabBarAttributes = [NSFontAttributeName: UIFont(name: AppearanceController.fontName, size: AppearanceController.fontSize)!, NSForegroundColorAttributeName: unselectedTabBarTextColor]
+        let selectedTabBarAttributes = [NSFontAttributeName: UIFont(name: AppearanceController.fontName, size: AppearanceController.fontSize)!, NSForegroundColorAttributeName: selectedTabBarTextColor]
+        
+        UITabBarItem.appearance().setTitleTextAttributes(unselectedTabBarAttributes, forState: .Normal)
+        UITabBarItem.appearance().setTitleTextAttributes(selectedTabBarAttributes, forState: .Selected)
     }
 }
